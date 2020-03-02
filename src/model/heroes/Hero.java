@@ -122,4 +122,6 @@ abstract public class Hero {
         }
         return result;
     }
+
+    public abstract void buildDeck() throws IOException;
 }
