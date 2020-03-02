@@ -24,9 +24,6 @@ abstract public class Card {
         this.manaCost = manaCost;
     }
 
-    public void setRarity(Rarity rarity) {
-        this.rarity = rarity;
-    }
 
     public int getManaCost() {
         return manaCost;
