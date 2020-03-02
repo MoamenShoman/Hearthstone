@@ -12,6 +12,27 @@ abstract public class Card {
         this.rarity=rarity;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setManaCost(int manaCost) {
+        this.manaCost = manaCost;
+    }
+
+    public void setRarity(Rarity rarity) {
+        this.rarity = rarity;
+    }
+
+    public int getManaCost() {
+        return manaCost;
+    }
+
+    public Rarity getRarity() {
+        return rarity;
+    }
 }
