@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 abstract public class Hero {
 
@@ -77,7 +79,7 @@ abstract public class Hero {
         this.field = field;
     }
 
-    private static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
+    public final static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
         String currentLine = "";
         ArrayList<Minion> neutralMinions = new ArrayList<>();
         FileReader fileReader = new FileReader(filePath);
@@ -87,10 +89,10 @@ abstract public class Hero {
             String name = result[0];
             int manaCost = Integer.parseInt(result[1]);
             Rarity rarity = result[2].equals("b") ? Rarity.BASIC :
-                            result[2].equals("c") ? Rarity.COMMON :
+                    result[2].equals("c") ? Rarity.COMMON :
                             result[2].equals("r") ? Rarity.RARE :
-                            result[2].equals("e") ? Rarity.EPIC :
-                            Rarity.LEGENDARY;
+                                    result[2].equals("e") ? Rarity.EPIC :
+                                            Rarity.LEGENDARY;
             int attack = Integer.parseInt(result[3]);
             int maxHP = Integer.parseInt(result[4]);
             boolean taunt = result[5].equals("TRUE");
@@ -100,5 +102,24 @@ abstract public class Hero {
             neutralMinions.add(minion);
         }
         return neutralMinions;
+    }
+
+
+    public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count) {
+        ArrayList<Minion> result = new ArrayList<>();
+        Random r = new Random();
+        HashMap<Integer, Integer> mapMinions = new HashMap<>();
+
+        while (result.size() < count) {
+            int idx = r.nextInt(minions.size());
+            if (mapMinions.containsKey(idx) && mapMinions.get(idx) == 1) {
+                mapMinions.put(idx, 2);
+                result.add(minions.get(idx));
+            } else if (!mapMinions.containsKey(idx)) {
+                mapMinions.put(idx, 1);
+                result.add(minions.get(idx));
+            }
+        }
+        return result;
     }
 }
