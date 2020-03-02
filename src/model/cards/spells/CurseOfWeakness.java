@@ -4,7 +4,7 @@ import model.cards.Rarity;
 
 public class CurseOfWeakness extends Spell implements AOESpell {
 
-    public CurseOfWeakness (String name, int manaCost , Rarity rarity){
+    public CurseOfWeakness (){
         super("Curse of Weakness",2,Rarity.RARE);
     }
 }
