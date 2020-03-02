@@ -77,7 +77,7 @@ abstract public class Hero {
         this.field = field;
     }
 
-    final static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
+    public final static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
         String currentLine = "";
         ArrayList<Minion> neutralMinions = new ArrayList<>();
         FileReader fileReader = new FileReader(filePath);
