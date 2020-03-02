@@ -1,6 +1,6 @@
 package exceptions;
 
-public class HearthstoneException extends Exception {
+abstract public class HearthstoneException extends Exception {
     public HearthstoneException() {
         super("Invalid action.");
     }
