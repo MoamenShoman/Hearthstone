@@ -23,8 +23,10 @@ abstract public class Hero {
     private ArrayList<Card> hand;
     private int fatigueDamage;
 
-    public Hero(String name) {
+    public Hero(String name) throws IOException{
         this.name = name;
+        currentHP = 30;
+        buildDeck();
     }
 
     public String getName() {
