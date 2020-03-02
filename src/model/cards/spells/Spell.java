@@ -1,5 +1,4 @@
 package model.cards.spells;
-
 import model.cards.Card;
 import model.cards.Rarity;
 
