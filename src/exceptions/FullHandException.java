@@ -7,7 +7,7 @@ public class FullHandException extends  HearthstoneException{
     private Card burned;
 
     public FullHandException(Card burned){
-        super();
+        super("You reached the max number of cards.");
         this.burned = burned;
     }
 
@@ -15,4 +15,8 @@ public class FullHandException extends  HearthstoneException{
         super(s);
         this.burned = burned;
     }
+
+
+
+
 }

@@ -4,7 +4,7 @@ public class InvalidTargetException extends HearthstoneException {
 
 
     public InvalidTargetException(){
-        super();
+        super("You can not attack the target.");
     }
 
     public InvalidTargetException(String s){
