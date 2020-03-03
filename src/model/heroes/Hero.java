@@ -77,9 +77,6 @@ abstract public class Hero {
         this.currentManaCrystals = currentManaCrystals;
     }
 
-    public void setField(ArrayList<Minion> field) {
-        this.field = field;
-    }
 
     public final static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
         String currentLine = "";
