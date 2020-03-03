@@ -112,7 +112,6 @@ abstract public class Hero {
         while (result.size() < count) {
             //  0 <= idx < minions.size();
             int idx = r.nextInt(minions.size());
-
             // The minion must not appear more than 2 times in the list result
             if (mapMinions.containsKey(idx) && mapMinions.get(idx) == 1) {
                 mapMinions.put(idx, 2);
