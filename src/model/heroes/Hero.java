@@ -28,6 +28,8 @@ abstract public class Hero {
         this.name = name;
         currentHP = 30;
         deck = new ArrayList<>();
+        field = new ArrayList<>();
+        hand = new ArrayList<>();
         buildDeck();
     }
 
