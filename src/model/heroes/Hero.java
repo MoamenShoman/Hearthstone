@@ -69,8 +69,8 @@ abstract public class Hero {
         this.heroPowerUsed = heroPowerUsed;
     }
 
-    public void setTotalManaCrystals(int totalManaCrystals) {
-        this.totalManaCrystals = totalManaCrystals;
+    public void setTotalManaCrystals(int totalManaCrystals){
+            this.totalManaCrystals = totalManaCrystals;
     }
 
     public void setCurrentManaCrystals(int currentManaCrystals) {
@@ -113,7 +113,10 @@ abstract public class Hero {
         HashMap<Integer, Integer> mapMinions = new HashMap<>();
 
         while (result.size() < count) {
+            //  0 <= idx < minions.size();
             int idx = r.nextInt(minions.size());
+
+            // The minion must not appear more than 2 times in the list result
             if (mapMinions.containsKey(idx) && mapMinions.get(idx) == 1) {
                 mapMinions.put(idx, 2);
                 result.add(minions.get(idx));
