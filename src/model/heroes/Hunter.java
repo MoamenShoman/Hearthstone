@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Hunter extends Hero {
-    public Hunter() {
+    public Hunter() throws IOException {
         super("Rexxar");
     }
 
