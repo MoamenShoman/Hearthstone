@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Paladin extends Hero {
-    public Paladin() {
+    public Paladin() throws IOException {
         super("Uther Lightbringer");
     }
 

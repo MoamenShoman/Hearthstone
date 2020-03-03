@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Mage extends Hero {
-    public Mage() {
+    public Mage() throws IOException {
         super("Jaina Proudmoore");
     }
     public void buildDeck() throws IOException {
