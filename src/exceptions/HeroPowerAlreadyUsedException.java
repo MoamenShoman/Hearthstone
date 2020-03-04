@@ -2,7 +2,7 @@ package exceptions;
 
 public class HeroPowerAlreadyUsedException extends HearthstoneException {
     public HeroPowerAlreadyUsedException() {
-        super("You already used your power this turn");
+        super("You already used your hero power this turn");
     }
 
     public HeroPowerAlreadyUsedException(String message) {

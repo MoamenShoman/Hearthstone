@@ -23,7 +23,7 @@ public class Paladin extends Hero {
         getDeck().add(new SealOfChampions());
         getDeck().add(new LevelUp());
         getDeck().add(new LevelUp());
-        Minion minion = new Minion("TirionFordring", 4, Rarity.LEGENDARY, 6, 6, true, true,
+        Minion minion = new Minion("Tirion Fordring", 4, Rarity.LEGENDARY, 6, 6, true, true,
                 false);
         getDeck().add(minion);
         Collections.shuffle(getDeck());

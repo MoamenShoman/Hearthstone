@@ -27,6 +27,6 @@ public class Game {
             currentHero = p2;
             opponent = p1;
         }
-        currentHero.setCurrentManaCrystals(1);
+        currentHero.setTotalManaCrystals(1);
     }
 }

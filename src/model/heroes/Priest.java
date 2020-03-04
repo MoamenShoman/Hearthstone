@@ -10,7 +10,6 @@ import java.util.Collections;
 
 public class Priest extends Hero {
 
-
     public Priest() throws IOException {
         super("Anduin Wrynn");
 

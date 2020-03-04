@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Warlock extends Hero {
+
     public Warlock() throws IOException {
-        super("Gul’dan");
+        super("Gul'dan");
     }
 
     @Override

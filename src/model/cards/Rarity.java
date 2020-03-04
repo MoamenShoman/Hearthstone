@@ -1,5 +1,5 @@
 package model.cards;
 
 public enum Rarity {
-    BASIC,COMMON,RARE,EPIC ,LEGENDARY;
+    BASIC, COMMON, RARE, EPIC, LEGENDARY
 }
