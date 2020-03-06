@@ -133,10 +133,16 @@ abstract public class Hero {
             // The minion must not appear more than 2 times in the list result
             if (mapMinions.containsKey(idx) && mapMinions.get(idx) == 1 && minions.get(idx).getRarity() != Rarity.LEGENDARY) {
                 mapMinions.put(idx, 2);
-                result.add(minions.get(idx));
+                result.add(new Minion(minions.get(idx).getName() ,minions.get(idx).getManaCost() ,
+                        minions.get(idx).getRarity() , minions.get(idx).getAttack() ,
+                        minions.get(idx).getMaxHP() , minions.get(idx).isTaunt() ,
+                        minions.get(idx).isDivine(),minions.get(idx).isCharge() ));
             } else if (!mapMinions.containsKey(idx)) {
                 mapMinions.put(idx, 1);
-                result.add(minions.get(idx));
+                result.add(new Minion(minions.get(idx).getName() ,minions.get(idx).getManaCost() ,
+                        minions.get(idx).getRarity() , minions.get(idx).getAttack() ,
+                        minions.get(idx).getMaxHP() , minions.get(idx).isTaunt() ,
+                        minions.get(idx).isDivine(),minions.get(idx).isCharge() ));
             }
         }
         return result;
