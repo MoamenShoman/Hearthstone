@@ -81,6 +81,7 @@ abstract public class Hero {
         else if (totalManaCrystals > 10)
             this.totalManaCrystals = 10;
         else this.totalManaCrystals = 0;
+        setCurrentManaCrystals(this.totalManaCrystals);
     }
 
     public void setCurrentManaCrystals(int currentManaCrystals) {
