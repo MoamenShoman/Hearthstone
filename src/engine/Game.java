@@ -5,7 +5,6 @@ import model.cards.Card;
 import model.cards.minions.Minion;
 import model.heroes.Hero;
 import model.heroes.HeroListener;
-
 import java.util.Random;
 
 public class Game implements HeroListener, ActionValidator {
