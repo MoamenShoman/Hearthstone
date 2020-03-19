@@ -5,6 +5,8 @@ import model.cards.Card;
 import model.cards.minions.Minion;
 import model.heroes.Hero;
 import model.heroes.HeroListener;
+
+import java.io.IOException;
 import java.util.Random;
 
 public class Game implements HeroListener, ActionValidator {
@@ -103,11 +105,21 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void damageOpponent(int amount) {
-
+    opponent.setCurrentHP(opponent.getCurrentHP()-amount);
     }
 
     @Override
     public void endTurn() throws FullHandException, CloneNotSupportedException {
-
+        Hero temp = currentHero;
+        currentHero = opponent;
+        opponent = temp;
+        currentHero.setTotalManaCrystals(currentHero.getTotalManaCrystals()+1);
+        currentHero.setHeroPowerUsed(false);
+        for (Minion m : currentHero.getField()){
+            m.setAttacked(false);
+            m.setSleeping(false);
+        }
     }
+
+
 }
