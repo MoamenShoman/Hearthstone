@@ -1,7 +1,10 @@
 package model.cards;
 
 
-abstract public class Card {
+import model.cards.minions.Minion;
+import model.cards.spells.Spell;
+
+abstract public class Card implements Cloneable {
     private String name;
     private int manaCost;   // 0 <= manaCost <= 10
     private Rarity rarity;
@@ -17,6 +20,11 @@ abstract public class Card {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public Card clone() throws CloneNotSupportedException {
+        return (Card) super.clone();
     }
 
     public void setName(String name) {

@@ -94,4 +94,5 @@ public class Minion extends Card {
     public void setCharge(boolean charge) {
         this.charge = charge;
     }
+
 }
