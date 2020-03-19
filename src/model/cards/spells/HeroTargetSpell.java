@@ -1,5 +1,7 @@
 package model.cards.spells;
 
-public interface HeroTargetSpell {
+import model.heroes.Hero;
 
+public interface HeroTargetSpell {
+    public void performAction(Hero h);
 }
