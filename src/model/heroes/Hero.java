@@ -93,6 +93,9 @@ abstract public class Hero implements MinionListener {
         else this.currentManaCrystals = 0;
     }
 
+    public void onMinionDeath(Minion m) {
+        field.remove(m);
+    }
 
     public final static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
         String currentLine = "";
