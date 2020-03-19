@@ -1,5 +1,6 @@
 package model.heroes;
 
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.*;
@@ -25,6 +26,11 @@ public class Mage extends Hero {
         Minion minion =new Minion("Kalycgos",10, Rarity.LEGENDARY,4,12,false,false,false);
         getDeck().add(minion);
         Collections.shuffle(getDeck());
+        for (Card m: getDeck()){
+            if (m instanceof Minion){
+                ((Minion) m).setListener(this);
+            }
+        }
 
 
     }

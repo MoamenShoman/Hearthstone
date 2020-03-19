@@ -1,5 +1,6 @@
 package model.heroes;
 
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.KillCommand;
@@ -25,5 +26,11 @@ public class Hunter extends Hero {
         Minion minion =new Minion("King Krush",9, Rarity.LEGENDARY,8,8,false,false,true);
         getDeck().add(minion);
         Collections.shuffle(getDeck());
+        for (Card m: getDeck()){
+            if (m instanceof Minion){
+                ((Minion) m).setListener(this);
+            }
+        }
+
     }
 }

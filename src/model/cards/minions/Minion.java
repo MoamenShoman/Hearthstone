@@ -13,6 +13,11 @@ public class Minion extends Card {
     private boolean sleeping;
     private boolean attacked;
     private boolean charge;
+    private MinionListener listener;
+
+    public void setListener(MinionListener listener) {
+        this.listener = listener;
+    }
 
     public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine, boolean charge) {
         super(name, manaCost, rarity);
@@ -55,6 +60,11 @@ public class Minion extends Card {
         else this.currentHP = maxHP;
     }
 
+    @Override
+    public Minion clone() throws CloneNotSupportedException {
+        return (Minion) super.clone();
+    }
+
     public boolean isTaunt() {
         return taunt;
     }
@@ -93,6 +103,25 @@ public class Minion extends Card {
 
     public void setCharge(boolean charge) {
         this.charge = charge;
+    }
+
+    public void attack(Minion target) {
+        if (!isDivine()) {
+            setCurrentHP(getCurrentHP() - target.getAttack());
+        } else {
+            setDivine(false);
+        }
+        if (!target.isDivine()) {
+            target.setCurrentHP(target.getCurrentHP() - getAttack());
+        } else {
+            setDivine(false);
+        }
+        if (target.getCurrentHP() <= 0) {
+            target.listener.onMinionDeath(target);
+        }
+        if (getCurrentHP() <= 0) {
+            listener.onMinionDeath(this);
+        }
     }
 
 }

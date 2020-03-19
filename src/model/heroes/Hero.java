@@ -127,7 +127,7 @@ abstract public class Hero implements MinionListener {
     }
 
 
-    public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count) {
+    public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count) throws CloneNotSupportedException {
         ArrayList<Minion> result = new ArrayList<>();
         Random r = new Random();
         HashMap<Integer, Integer> mapMinions = new HashMap<>();
@@ -138,17 +138,12 @@ abstract public class Hero implements MinionListener {
             // The minion must not appear more than 2 times in the list result
             if (mapMinions.containsKey(idx) && mapMinions.get(idx) == 1 && minions.get(idx).getRarity() != Rarity.LEGENDARY) {
                 mapMinions.put(idx, 2);
-                result.add(new Minion(minions.get(idx).getName(), minions.get(idx).getManaCost(),
-                        minions.get(idx).getRarity(), minions.get(idx).getAttack(),
-                        minions.get(idx).getMaxHP(), minions.get(idx).isTaunt(),
-                        minions.get(idx).isDivine(), minions.get(idx).isCharge()));
+                result.add(minions.get(idx).clone());
             } else if (!mapMinions.containsKey(idx)) {
                 mapMinions.put(idx, 1);
-                result.add(new Minion(minions.get(idx).getName(), minions.get(idx).getManaCost(),
-                        minions.get(idx).getRarity(), minions.get(idx).getAttack(),
-                        minions.get(idx).getMaxHP(), minions.get(idx).isTaunt(),
-                        minions.get(idx).isDivine(), minions.get(idx).isCharge()));
+                result.add(minions.get(idx).clone());
             }
+
         }
         return result;
     }
