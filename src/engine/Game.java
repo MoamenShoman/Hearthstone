@@ -85,16 +85,23 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void validateManaCost(Card card) throws NotEnoughManaException {
-
+        if(currentHero.getCurrentManaCrystals() < card.getManaCost())
+            throw new NotEnoughManaException();
     }
 
     @Override
     public void validatePlayingMinion(Minion minion) throws FullFieldException {
-
+        if(currentHero.getField().size() == 7)
+            throw new FullFieldException();
     }
 
     @Override
     public void validateUsingHeroPower(Hero hero) throws NotEnoughManaException, HeroPowerAlreadyUsedException {
+        if(hero.getCurrentManaCrystals() < 2 )
+            throw new NotEnoughManaException();
+
+        if(hero.isHeroPowerUsed())
+            throw new HeroPowerAlreadyUsedException();
 
     }
 
