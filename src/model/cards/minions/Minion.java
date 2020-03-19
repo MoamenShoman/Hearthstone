@@ -1,7 +1,9 @@
 package model.cards.minions;
 
+import exceptions.InvalidTargetException;
 import model.cards.Card;
 import model.cards.Rarity;
+import model.heroes.Hero;
 
 public class Minion extends Card {
 
@@ -122,6 +124,12 @@ public class Minion extends Card {
         if (getCurrentHP() <= 0) {
             listener.onMinionDeath(this);
         }
+    }
+    public void attack(Hero target) throws InvalidTargetException{
+        if (getName().equals("Icehowl")){
+            throw new InvalidTargetException();
+        }
+        target.setCurrentHP(target.getCurrentHP()-getAttack());
     }
 
 }
