@@ -4,6 +4,7 @@ import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
+import model.cards.minions.MinionListener;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-abstract public class Hero {
+abstract public class Hero implements MinionListener {
 
     private String name;
     private int currentHP;
