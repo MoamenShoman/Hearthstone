@@ -36,36 +36,50 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void validateTurn(Hero user) throws NotYourTurnException {
-        if(user == opponent){
+        if (user == opponent) {
             throw new NotYourTurnException();
         }
     }
 
     @Override
     public void validateAttack(Minion attacker, Minion target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-        if(currentHero.getHand().contains(attacker) && !currentHero.getField().contains(attacker)){
+        if (currentHero.getHand().contains(attacker) && !currentHero.getField().contains(attacker)) {
             throw new NotSummonedException();
         }
-        if(attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0){
+        if (attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0) {
             throw new CannotAttackException();
         }
-        if(!target.isTaunt()){
+        if (!target.isTaunt()) {
             boolean flag = false;
-            for(Minion m : opponent.getField()){
-                if(m.isTaunt())
+            for (Minion m : opponent.getField()) {
+                if (m.isTaunt())
                     flag = true;
             }
-            if(flag)
+            if (flag)
                 throw new TauntBypassException();
         }
-        if(currentHero.getField().contains(target)){
+        if (currentHero.getField().contains(target)) {
             throw new InvalidTargetException();
         }
     }
 
     @Override
     public void validateAttack(Minion attacker, Hero target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-
+        if (currentHero.getHand().contains(attacker) && !currentHero.getField().contains(attacker)) {
+            throw new NotSummonedException();
+        }
+        if (attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0) {
+            throw new CannotAttackException();
+        }
+        boolean flag = false;
+        for (Minion m : opponent.getField()) {
+            if (m.isTaunt())
+                flag = true;
+        }
+        if (flag)
+            throw new TauntBypassException();
+        if(currentHero == target || attacker.getName().equals("Icehowl"))
+            throw new InvalidTargetException();
     }
 
     @Override
