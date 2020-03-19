@@ -36,7 +36,9 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void validateTurn(Hero user) throws NotYourTurnException {
-
+        if(user == opponent){
+            throw new NotYourTurnException();
+        }
     }
 
     @Override
