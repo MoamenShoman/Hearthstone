@@ -1,10 +1,11 @@
 package engine;
 
 import model.heroes.Hero;
+import model.heroes.HeroListener;
 
 import java.util.Random;
 
-public class Game {
+public class Game implements HeroListener {
     private Hero firstHero, secondHero, currentHero, opponent;
 
     public Hero getCurrentHero() {
