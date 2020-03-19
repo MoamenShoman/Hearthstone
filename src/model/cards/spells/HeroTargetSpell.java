@@ -1,5 +1,4 @@
 package model.cards.spells;
-
 import model.heroes.Hero;
 
 public interface HeroTargetSpell {
