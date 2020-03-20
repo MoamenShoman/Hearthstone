@@ -60,6 +60,8 @@ public class Minion extends Card {
         if (currentHP <= maxHP)
             this.currentHP = currentHP;
         else this.currentHP = maxHP;
+        if(this.currentHP <= 0)
+            listener.onMinionDeath(this);
     }
 
     @Override
@@ -117,13 +119,6 @@ public class Minion extends Card {
             target.setCurrentHP(target.getCurrentHP() - getAttack());
         } else {
             setDivine(false);
-        }
-
-        if (target.getCurrentHP() <= 0) {
-            target.listener.onMinionDeath(target);
-        }
-        if (getCurrentHP() <= 0) {
-            listener.onMinionDeath(this);
         }
     }
 

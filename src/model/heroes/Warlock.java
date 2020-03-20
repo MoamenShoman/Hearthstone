@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -13,7 +14,7 @@ import java.util.Collections;
 
 public class Warlock extends Hero {
 
-    public Warlock() throws IOException {
+    public Warlock() throws IOException, CloneNotSupportedException {
         super("Gul'dan");
     }
 
@@ -37,5 +38,12 @@ public class Warlock extends Hero {
                 ((Minion) m).setListener(this);
             }
         }
+    }
+
+
+    public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+        super.useHeroPower();
+        this.drawCard();
+        target.getListener().damageOpponent(2);
     }
 }

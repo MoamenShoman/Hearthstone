@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -11,7 +12,7 @@ import java.util.Collections;
 
 public class Priest extends Hero {
 
-    public Priest() throws IOException {
+    public Priest() throws IOException, CloneNotSupportedException {
         super("Anduin Wrynn");
 
     }
@@ -36,6 +37,16 @@ public class Priest extends Hero {
                 ((Minion) m).setListener(this);
             }
         }
+    }
 
+    @Override
+    public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+        super.useHeroPower();
+        this.setCurrentHP(this.getCurrentHP() + 2);
+    }
+
+    public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+        super.useHeroPower();
+        target.setCurrentHP(target.getCurrentHP() + 2);
     }
 }

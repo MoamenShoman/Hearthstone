@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Mage extends Hero {
-    public Mage() throws IOException {
+    public Mage() throws IOException, CloneNotSupportedException {
         super("Jaina Proudmoore");
     }
     public void buildDeck() throws IOException, CloneNotSupportedException {
@@ -31,7 +32,15 @@ public class Mage extends Hero {
                 ((Minion) m).setListener(this);
             }
         }
-
-
     }
+
+    public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+        super.useHeroPower();
+        getListener().damageOpponent(1);
+    }
+    public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+        super.useHeroPower();
+        target.setCurrentHP(target.getCurrentHP() - 1);
+    }
+
 }
