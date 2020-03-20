@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -11,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Hunter extends Hero {
-    public Hunter() throws IOException {
+    public Hunter() throws IOException, CloneNotSupportedException {
         super("Rexxar");
     }
 
-    public void buildDeck() throws IOException{
+    public void buildDeck() throws IOException, CloneNotSupportedException {
         ArrayList<Minion> allneutralMinions = getAllNeutralMinions("neutral_minions.csv") ;
         ArrayList<Minion> neutralMinions = getNeutralMinions(allneutralMinions,15);
         getDeck().addAll(neutralMinions);
@@ -32,5 +33,9 @@ public class Hunter extends Hero {
             }
         }
 
+    }
+    public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+        super.useHeroPower();
+        getListener().damageOpponent(2);
     }
 }

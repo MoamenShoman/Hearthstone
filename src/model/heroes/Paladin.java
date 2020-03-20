@@ -1,5 +1,6 @@
 package model.heroes;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Paladin extends Hero {
-    public Paladin() throws IOException {
+    public Paladin() throws IOException, CloneNotSupportedException {
         super("Uther Lightbringer");
     }
 
     @Override
-    public void buildDeck() throws IOException {
+    public void buildDeck() throws IOException, CloneNotSupportedException {
         ArrayList<Minion> allNeutralMinions = getAllNeutralMinions("neutral_minions.csv");
         ArrayList<Minion> neutralMinions = getNeutralMinions(allNeutralMinions, 15);
         getDeck().addAll(neutralMinions);
@@ -33,5 +34,12 @@ public class Paladin extends Hero {
                 ((Minion) m).setListener(this);
             }
         }
+    }
+
+    @Override
+    public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+        super.useHeroPower();
+        Minion m = new Minion("Silver Hand Recruit" , 1 , Rarity.BASIC , 1,1 ,false , false , false);
+        this.playMinion(m);
     }
 }

@@ -31,7 +31,7 @@ abstract public class Hero implements MinionListener {
 
 
 
-    public Hero(String name) throws IOException {
+    public Hero(String name) throws IOException, CloneNotSupportedException {
         this.name = name;
         currentHP = 30;
         deck = new ArrayList<>();
@@ -168,9 +168,10 @@ abstract public class Hero implements MinionListener {
     public void useHeroPower() throws NotEnoughManaException,
             HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
             FullFieldException, CloneNotSupportedException {
-
-
+        validator.validateUsingHeroPower(this);
+        validator.validateTurn(this);
+        currentManaCrystals-=2;
     }
 
-    public abstract void buildDeck() throws IOException;
+    public abstract void buildDeck() throws IOException, CloneNotSupportedException;
 }
