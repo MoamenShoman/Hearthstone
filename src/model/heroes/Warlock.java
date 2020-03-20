@@ -18,7 +18,7 @@ public class Warlock extends Hero {
     }
 
     @Override
-    public void buildDeck() throws IOException {
+    public void buildDeck() throws IOException, CloneNotSupportedException {
         ArrayList<Minion> allNeutralMinions = getAllNeutralMinions("neutral_minions.csv");
         ArrayList<Minion> neutralMinions = getNeutralMinions(allNeutralMinions, 13);
         getDeck().addAll(neutralMinions);

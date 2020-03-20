@@ -25,7 +25,7 @@ abstract public class Hero implements MinionListener {
     private ArrayList<Card> hand;
     private int fatigueDamage;
 
-    public Hero(String name) throws IOException {
+    public Hero(String name) throws IOException, CloneNotSupportedException {
         this.name = name;
         currentHP = 30;
         deck = new ArrayList<>();
@@ -148,5 +148,5 @@ abstract public class Hero implements MinionListener {
         return result;
     }
 
-    public abstract void buildDeck() throws IOException;
+    public abstract void buildDeck() throws IOException, CloneNotSupportedException;
 }

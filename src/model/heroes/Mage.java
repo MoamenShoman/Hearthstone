@@ -13,7 +13,7 @@ public class Mage extends Hero {
     public Mage() throws IOException {
         super("Jaina Proudmoore");
     }
-    public void buildDeck() throws IOException {
+    public void buildDeck() throws IOException, CloneNotSupportedException {
         ArrayList<Minion> allneutralMinions = getAllNeutralMinions("neutral_minions.csv") ;
         ArrayList<Minion> neutralMinions =getNeutralMinions(allneutralMinions,13);
         getDeck().addAll(neutralMinions);

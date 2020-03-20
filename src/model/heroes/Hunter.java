@@ -15,7 +15,7 @@ public class Hunter extends Hero {
         super("Rexxar");
     }
 
-    public void buildDeck() throws IOException{
+    public void buildDeck() throws IOException, CloneNotSupportedException {
         ArrayList<Minion> allneutralMinions = getAllNeutralMinions("neutral_minions.csv") ;
         ArrayList<Minion> neutralMinions = getNeutralMinions(allneutralMinions,15);
         getDeck().addAll(neutralMinions);
