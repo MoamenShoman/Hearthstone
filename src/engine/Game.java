@@ -20,9 +20,17 @@ public class Game implements HeroListener, ActionValidator {
         return opponent;
     }
 
+    public void setListener(GameListener listener) {
+        this.listener = listener;
+    }
+
     public Game(Hero p1, Hero p2) {
         firstHero = p1;
         secondHero = p2;
+        firstHero.setListener(this);
+        secondHero.setListener(this);
+        firstHero.setValidator(this);
+        secondHero.setValidator(this);
         Random r = new Random();
         int x = r.nextInt(2);
         if (x == 0) {
