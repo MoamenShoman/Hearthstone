@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Game implements HeroListener, ActionValidator {
     private Hero firstHero, secondHero, currentHero, opponent;
-
+    private GameListener listener;
     public Hero getCurrentHero() {
         return currentHero;
     }
@@ -107,7 +107,7 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void onHeroDeath() {
-
+        listener.onGameOver();
     }
 
     @Override
