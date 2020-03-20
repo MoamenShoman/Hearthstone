@@ -57,11 +57,16 @@ public class Minion extends Card {
     }
 
     public void setCurrentHP(int currentHP) {
-        if (currentHP <= maxHP)
-            this.currentHP = currentHP;
-        else this.currentHP = maxHP;
-        if(this.currentHP <= 0)
-            listener.onMinionDeath(this);
+        if (isDivine() && this.currentHP > currentHP) {
+            setDivine(false);
+        } else {
+            if (currentHP <= maxHP)
+                this.currentHP = currentHP;
+            else this.currentHP = maxHP;
+
+            if (this.currentHP <= 0)
+                listener.onMinionDeath(this);
+        }
     }
 
     @Override
@@ -112,21 +117,17 @@ public class Minion extends Card {
     public void attack(Minion target) {
         if (!isDivine()) {
             setCurrentHP(getCurrentHP() - target.getAttack());
-        } else {
-            setDivine(false);
         }
         if (!target.isDivine()) {
             target.setCurrentHP(target.getCurrentHP() - getAttack());
-        } else {
-            setDivine(false);
         }
     }
 
-    public void attack(Hero target) throws InvalidTargetException{
-        if (getName().equals("Icehowl")){
+    public void attack(Hero target) throws InvalidTargetException {
+        if (getName().equals("Icehowl")) {
             throw new InvalidTargetException();
         }
-        target.setCurrentHP(target.getCurrentHP()-getAttack());
+        target.setCurrentHP(target.getCurrentHP() - getAttack());
     }
 
 }
