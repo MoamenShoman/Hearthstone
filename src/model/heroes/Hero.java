@@ -1,5 +1,7 @@
 package model.heroes;
 
+import engine.ActionValidator;
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
@@ -24,6 +26,10 @@ abstract public class Hero implements MinionListener {
     private ArrayList<Minion> field;
     private ArrayList<Card> hand;
     private int fatigueDamage;
+    private HeroListener listener;
+    private ActionValidator validator;
+
+
 
     public Hero(String name) throws IOException {
         this.name = name;
@@ -97,6 +103,18 @@ abstract public class Hero implements MinionListener {
         field.remove(m);
     }
 
+    public HeroListener getListener() {
+        return listener;
+    }
+
+    public void setListener(HeroListener listener) {
+        this.listener = listener;
+    }
+
+    public void setValidator(ActionValidator validator) {
+        this.validator = validator;
+    }
+
     public final static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
         String currentLine = "";
         ArrayList<Minion> neutralMinions = new ArrayList<>();
@@ -126,7 +144,6 @@ abstract public class Hero implements MinionListener {
         return neutralMinions;
     }
 
-
     public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions, int count) throws CloneNotSupportedException {
         ArrayList<Minion> result = new ArrayList<>();
         Random r = new Random();
@@ -146,6 +163,13 @@ abstract public class Hero implements MinionListener {
 
         }
         return result;
+    }
+
+    public void useHeroPower() throws NotEnoughManaException,
+            HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+            FullFieldException, CloneNotSupportedException {
+
+
     }
 
     public abstract void buildDeck() throws IOException;

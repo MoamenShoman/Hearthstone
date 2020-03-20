@@ -118,6 +118,7 @@ public class Minion extends Card {
         } else {
             setDivine(false);
         }
+
         if (target.getCurrentHP() <= 0) {
             target.listener.onMinionDeath(target);
         }
@@ -125,6 +126,7 @@ public class Minion extends Card {
             listener.onMinionDeath(this);
         }
     }
+
     public void attack(Hero target) throws InvalidTargetException{
         if (getName().equals("Icehowl")){
             throw new InvalidTargetException();
