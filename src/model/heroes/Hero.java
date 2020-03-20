@@ -171,9 +171,9 @@ abstract public class Hero implements MinionListener {
     public void useHeroPower() throws NotEnoughManaException,
             HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
             FullFieldException, CloneNotSupportedException {
-        validator.validateUsingHeroPower(this);
         validator.validateTurn(this);
-        currentManaCrystals-=2;
+        validator.validateUsingHeroPower(this);
+
     }
 
     public abstract void buildDeck() throws IOException, CloneNotSupportedException;
@@ -200,8 +200,20 @@ abstract public class Hero implements MinionListener {
         attacker.attack(target);
     }
 
+    public int reduceManaCost(){
+        if(this instanceof Mage) {
+            for (Card c : field)
+                if (c.getName().equals("Kalycgos"))
+                    return 4;
+            return 0;
+        }
+        return 0;
+    }
+
+
     public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException{
         validator.validateTurn(this);
+        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         s.performAction(field);
         hand.remove(s);
@@ -209,6 +221,7 @@ abstract public class Hero implements MinionListener {
 
     public void castSpell(AOESpell s, ArrayList<Minion >oppField) throws NotYourTurnException, NotEnoughManaException{
         validator.validateTurn(this);
+        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         s.performAction(oppField, field);
         hand.remove(s);
@@ -216,6 +229,7 @@ abstract public class Hero implements MinionListener {
 
     public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException{
         validator.validateTurn(this);
+        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         s.performAction(m);
         hand.remove(s);
@@ -223,6 +237,7 @@ abstract public class Hero implements MinionListener {
 
     public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException{
         validator.validateTurn(this);
+        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         s.performAction(h);
         hand.remove(s);
@@ -230,6 +245,7 @@ abstract public class Hero implements MinionListener {
 
     public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException{
         validator.validateTurn(this);
+        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         setCurrentHP(getCurrentHP() + s.performAction(m));
         hand.remove(s);
@@ -244,11 +260,21 @@ abstract public class Hero implements MinionListener {
         if(deck.isEmpty()){
             fatigueDamage++;
             setCurrentHP(getCurrentHP() - fatigueDamage);
-        }else{
+        }else {
             ret = deck.remove(0);
-            if(hand.size() == 10)
+            if (hand.size() == 10)
                 throw new FullHandException(ret);
-            else hand.add(ret);
+            else {
+                boolean flag = false;
+                for (Card c : field)
+                    if (c.getName().equals("Chromaggus"))
+                        flag = true;
+                hand.add(ret);
+                if(hand.size() == 10)
+                    throw new FullHandException(ret.clone());
+                else if ( flag )
+                    hand.add(ret.clone());
+            }
         }
         return ret;
     }

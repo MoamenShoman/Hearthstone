@@ -42,6 +42,12 @@ public class Priest extends Hero {
     @Override
     public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
         super.useHeroPower();
+        for(Card c : getField())
+            if(c.getName().equals("Prophet Velen"))
+            {
+                this.setCurrentHP(this.getCurrentHP() + 8) ;
+                return;
+            }
         this.setCurrentHP(this.getCurrentHP() + 2);
     }
 

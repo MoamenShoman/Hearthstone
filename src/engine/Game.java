@@ -87,6 +87,7 @@ public class Game implements HeroListener, ActionValidator {
     public void validateManaCost(Card card) throws NotEnoughManaException {
         if(currentHero.getCurrentManaCrystals() < card.getManaCost())
             throw new NotEnoughManaException();
+        currentHero.setCurrentManaCrystals(currentHero.getCurrentManaCrystals() - card.getManaCost());
     }
 
     @Override
@@ -102,7 +103,7 @@ public class Game implements HeroListener, ActionValidator {
 
         if(hero.isHeroPowerUsed())
             throw new HeroPowerAlreadyUsedException();
-
+        hero.setCurrentManaCrystals(hero.getCurrentManaCrystals() - 2);
     }
 
     @Override
@@ -129,6 +130,4 @@ public class Game implements HeroListener, ActionValidator {
             m.setSleeping(false);
         }
     }
-
-
 }
