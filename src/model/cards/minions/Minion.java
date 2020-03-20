@@ -57,7 +57,7 @@ public class Minion extends Card {
     }
 
     public void setCurrentHP(int currentHP) {
-        if (isDivine() && this.currentHP > currentHP) {
+        if (isDivine() && this.currentHP > currentHP && currentHP == maxHP) {
             setDivine(false);
         } else {
             if (currentHP <= maxHP)
