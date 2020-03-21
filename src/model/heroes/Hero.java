@@ -31,7 +31,6 @@ abstract public class Hero implements MinionListener {
     private ActionValidator validator;
 
 
-
     public Hero(String name) throws IOException, CloneNotSupportedException {
         this.name = name;
         currentHP = 30;
@@ -77,7 +76,7 @@ abstract public class Hero implements MinionListener {
         if (currentHP <= 30)
             this.currentHP = currentHP;
         else this.currentHP = 30;
-        if(this.currentHP <= 0)
+        if (this.currentHP <= 0)
             listener.onHeroDeath();
     }
 
@@ -173,12 +172,12 @@ abstract public class Hero implements MinionListener {
             FullFieldException, CloneNotSupportedException {
         validator.validateTurn(this);
         validator.validateUsingHeroPower(this);
-
+        setHeroPowerUsed(true);
     }
 
     public abstract void buildDeck() throws IOException, CloneNotSupportedException;
 
-    public void playMinion(Minion m) throws NotYourTurnException, NotEnoughManaException, FullFieldException{
+    public void playMinion(Minion m) throws NotYourTurnException, NotEnoughManaException, FullFieldException {
         validator.validateTurn(this);
         validator.validateManaCost(m);
         validator.validatePlayingMinion(m);
@@ -187,21 +186,21 @@ abstract public class Hero implements MinionListener {
     }
 
     public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, NotYourTurnException,
-            TauntBypassException, InvalidTargetException, NotSummonedException{
+            TauntBypassException, InvalidTargetException, NotSummonedException {
         validator.validateTurn(this);
         validator.validateAttack(attacker, target);
         attacker.attack(target);
     }
 
     public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, NotYourTurnException,
-            TauntBypassException, NotSummonedException, InvalidTargetException{
+            TauntBypassException, NotSummonedException, InvalidTargetException {
         validator.validateTurn(this);
         validator.validateAttack(attacker, target);
         attacker.attack(target);
     }
 
-    public int reduceManaCost(){
-        if(this instanceof Mage) {
+    public int reduceManaCost() {
+        if (this instanceof Mage) {
             for (Card c : field)
                 if (c.getName().equals("Kalycgos"))
                     return 4;
@@ -211,69 +210,86 @@ abstract public class Hero implements MinionListener {
     }
 
 
-    public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException{
+    public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
         validator.validateTurn(this);
-        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
+        ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         s.performAction(field);
         hand.remove(s);
     }
 
-    public void castSpell(AOESpell s, ArrayList<Minion >oppField) throws NotYourTurnException, NotEnoughManaException{
+    public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
         validator.validateTurn(this);
-        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
+        ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         s.performAction(oppField, field);
         hand.remove(s);
     }
 
-    public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException{
+    public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
         validator.validateTurn(this);
-        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
+        ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         s.performAction(m);
         hand.remove(s);
     }
 
-    public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException{
+    public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
         validator.validateTurn(this);
-        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
+        ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         s.performAction(h);
         hand.remove(s);
     }
 
-    public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException{
+    public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException {
         validator.validateTurn(this);
-        ((Spell)s).setManaCost(((Spell)s).getManaCost() - reduceManaCost());
+        ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
         setCurrentHP(getCurrentHP() + s.performAction(m));
         hand.remove(s);
     }
 
-    public void endTurn() throws FullHandException, CloneNotSupportedException{
+    public void endTurn() throws FullHandException, CloneNotSupportedException {
         listener.endTurn();
     }
 
-    public Card drawCard() throws FullHandException, CloneNotSupportedException{
+    public boolean isChromaggus() {
+        for (Card c : getField())
+            if (c.getName().equals("Chromaggus"))
+                return true;
+        return false;
+    }
+
+    public boolean isWilfred() {
+        if (this instanceof Warlock && isHeroPowerUsed()) {
+            for (Card c : getField())
+                if (c.getName().equals("Wilfred Fizzlebang"))
+                    return true;
+        }
+        return false;
+    }
+
+    public Card drawCard() throws FullHandException, CloneNotSupportedException {
         Card ret = null;
-        if(deck.isEmpty()){
+        if (deck.isEmpty()) {
             fatigueDamage++;
             setCurrentHP(getCurrentHP() - fatigueDamage);
-        }else {
+        } else {
             ret = deck.remove(0);
             if (hand.size() == 10)
                 throw new FullHandException(ret);
             else {
-                boolean flag = false;
-                for (Card c : field)
-                    if (c.getName().equals("Chromaggus"))
-                        flag = true;
+                if(isWilfred()){
+                    ret.setManaCost(0);
+                }
                 hand.add(ret);
-                if(hand.size() == 10)
-                    throw new FullHandException(ret.clone());
-                else if ( flag )
-                    hand.add(ret.clone());
+                if(isChromaggus()){
+                    Card nCard = ret.clone();
+                    if(hand.size() == 10)
+                        throw new FullHandException(nCard);
+                    else hand.add(nCard);
+                }
             }
         }
         return ret;
