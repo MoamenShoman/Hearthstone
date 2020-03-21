@@ -46,4 +46,5 @@ public class Warlock extends Hero {
         this.drawCard();
         target.getListener().damageOpponent(2);
     }
+
 }
