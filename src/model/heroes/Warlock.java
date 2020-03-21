@@ -47,4 +47,5 @@ public class Warlock extends Hero {
 
         target.getListener().damageOpponent(2);
     }
+
 }
