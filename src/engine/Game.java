@@ -88,7 +88,7 @@ public class Game implements HeroListener, ActionValidator {
         }
         if (flag)
             throw new TauntBypassException();
-        if(currentHero == target || attacker.getName().equals("Icehowl"))
+        if(currentHero == target)
             throw new InvalidTargetException();
     }
 

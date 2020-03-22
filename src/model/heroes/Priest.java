@@ -39,20 +39,23 @@ public class Priest extends Hero {
         }
     }
 
+    private int isProphet(){
+        for(Card c : getField()){
+            if(c.getName().equals("Prophet Velen")){
+                return 8;
+            }
+        }
+        return 2;
+    }
+
     @Override
     public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
         super.useHeroPower();
-        for(Card c : getField())
-            if(c.getName().equals("Prophet Velen"))
-            {
-                this.setCurrentHP(this.getCurrentHP() + 8) ;
-                return;
-            }
-        this.setCurrentHP(this.getCurrentHP() + 2);
+        this.setCurrentHP(this.getCurrentHP() + isProphet());
     }
 
     public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
         super.useHeroPower();
-        target.setCurrentHP(target.getCurrentHP() + 2);
+        target.setCurrentHP(target.getCurrentHP() + isProphet());
     }
 }
