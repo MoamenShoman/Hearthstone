@@ -122,8 +122,6 @@ public class Game implements HeroListener, ActionValidator {
     @Override
     public void damageOpponent(int amount) {
         opponent.setCurrentHP(opponent.getCurrentHP()-amount);
-        if(opponent.getCurrentHP() <= 0)
-            onHeroDeath();
     }
 
     @Override
