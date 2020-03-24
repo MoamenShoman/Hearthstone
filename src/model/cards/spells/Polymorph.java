@@ -14,12 +14,12 @@ public class Polymorph extends Spell implements MinionTargetSpell {
         m.setMaxHP(1);
         m.setCurrentHP(1);
         m.setAttack(1);
-        m.setAttacked(false);
         m.setName("Sheep");
         m.setManaCost(1);
         m.setDivine(false);
         m.setTaunt(false);
         m.setCharge(false);
         m.setSleeping(true);
+        m.setAttacked(false);
     }
 }
