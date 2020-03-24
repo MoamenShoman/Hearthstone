@@ -19,5 +19,7 @@ public class Polymorph extends Spell implements MinionTargetSpell {
         m.setDivine(false);
         m.setTaunt(false);
         m.setCharge(false);
+        m.setSleeping(true);
+        m.setAttacked(false);
     }
 }
