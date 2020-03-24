@@ -48,10 +48,9 @@ public class Priest extends Hero {
         return 2;
     }
 
-    @Override
-    public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+    public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
         super.useHeroPower();
-        this.setCurrentHP(this.getCurrentHP() + isProphet());
+        target.setCurrentHP(target.getCurrentHP() + isProphet());
     }
 
     public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {

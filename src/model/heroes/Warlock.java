@@ -41,10 +41,10 @@ public class Warlock extends Hero {
     }
 
 
-    public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+    public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
         super.useHeroPower();
         this.drawCard();
-        target.getListener().damageOpponent(2);
+        getListener().damageOpponent(2);
     }
 
 }
