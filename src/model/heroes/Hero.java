@@ -193,7 +193,6 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         validator.validateAttack(attacker, target);
         attacker.attack(target);
-        attacker.setAttacked(true);
     }
 
     public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, NotYourTurnException,
@@ -201,7 +200,6 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         validator.validateAttack(attacker, target);
         attacker.attack(target);
-        attacker.setAttacked(true);
     }
 
     private int reduceManaCost() {

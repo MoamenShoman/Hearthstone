@@ -56,7 +56,13 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void validateAttack(Minion attacker, Minion target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-        if (!currentHero.getField().contains(attacker) || !opponent.getField().contains(target)) {
+        if (!currentHero.getField().contains(attacker)) {
+            throw new NotSummonedException();
+        }
+        if (currentHero.getField().contains(target)) {
+            throw new InvalidTargetException();
+        }
+        if (! opponent.getField().contains(target)){
             throw new NotSummonedException();
         }
         if (attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0) {
@@ -71,9 +77,7 @@ public class Game implements HeroListener, ActionValidator {
             if (flag)
                 throw new TauntBypassException();
         }
-        if (currentHero.getField().contains(target)) {
-            throw new InvalidTargetException();
-        }
+
     }
 
     @Override

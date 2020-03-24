@@ -117,6 +117,7 @@ public class Minion extends Card implements Cloneable {
     public void attack(Minion target) {
         setCurrentHP(getCurrentHP() - target.getAttack());
         target.setCurrentHP(target.getCurrentHP() - getAttack());
+        setAttacked(true);
     }
 
     public void attack(Hero target) throws InvalidTargetException {
@@ -124,6 +125,7 @@ public class Minion extends Card implements Cloneable {
             throw new InvalidTargetException();
         }
         target.setCurrentHP(target.getCurrentHP() - getAttack());
+        setAttacked(true);
     }
 
 }
