@@ -18,13 +18,20 @@ public class MultiShot extends Spell implements AOESpell {
         } else {
             if (oppField.size() != 0) {
                 Random r = new Random();
-                int idx1 = r.nextInt(oppField.size());
-                int idx2;
-                do {
-                    idx2 = r.nextInt(oppField.size());
-                } while (idx1 == idx2);
-                oppField.get(idx1).setCurrentHP(oppField.get(idx1).getCurrentHP()-3);
-                oppField.get(idx2).setCurrentHP(oppField.get(idx2).getCurrentHP()-3);
+                int idx = r.nextInt(oppField.size());
+                int s = oppField.size();
+                oppField.get(idx).setCurrentHP(oppField.get(idx).getCurrentHP() - 3);
+                if (oppField.size() < s) {
+                    idx = r.nextInt(oppField.size());
+                    oppField.get(idx).setCurrentHP(oppField.get(idx).getCurrentHP() - 3);
+                } else {
+                    int idx2;
+                    do {
+                        idx2 = r.nextInt(oppField.size());
+                    } while (idx2 == idx);
+                    oppField.get(idx2).setCurrentHP(oppField.get(idx2).getCurrentHP() - 3);
+                }
+
             }
         }
     }

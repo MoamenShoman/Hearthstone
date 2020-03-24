@@ -29,12 +29,12 @@ public class Warlock extends Hero {
         getDeck().add(new SiphonSoul());
         getDeck().add(new TwistingNether());
         getDeck().add(new TwistingNether());
-        Minion minion = new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4,4 , false, false,
+        Minion minion = new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false,
                 false);
         getDeck().add(minion);
         Collections.shuffle(getDeck());
-        for (Card m: getDeck()){
-            if (m instanceof Minion){
+        for (Card m : getDeck()) {
+            if (m instanceof Minion) {
                 ((Minion) m).setListener(this);
             }
         }
@@ -44,7 +44,7 @@ public class Warlock extends Hero {
     public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
         super.useHeroPower();
         this.drawCard();
-        getListener().damageOpponent(2);
+        this.setCurrentHP(this.getCurrentHP() - 2);
     }
 
 }
