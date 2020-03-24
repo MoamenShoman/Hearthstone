@@ -3,10 +3,7 @@ package engine;
 import exceptions.*;
 import model.cards.Card;
 import model.cards.minions.Minion;
-import model.heroes.Hero;
-import model.heroes.HeroListener;
-
-import java.io.IOException;
+import model.heroes.*;
 import java.util.Random;
 
 public class Game implements HeroListener, ActionValidator {
@@ -24,7 +21,7 @@ public class Game implements HeroListener, ActionValidator {
         this.listener = listener;
     }
 
-    public Game(Hero p1, Hero p2) {
+    public Game(Hero p1, Hero p2) throws FullHandException, CloneNotSupportedException {
         firstHero = p1;
         secondHero = p2;
         firstHero.setListener(this);
@@ -41,6 +38,10 @@ public class Game implements HeroListener, ActionValidator {
             opponent = p1;
         }
         currentHero.setTotalManaCrystals(1);
+        for(int i = 0; i < 3; i++){
+            currentHero.drawCard();
+            opponent.drawCard();
+        }
     }
 
     @Override
@@ -87,7 +88,7 @@ public class Game implements HeroListener, ActionValidator {
         }
         if (flag)
             throw new TauntBypassException();
-        if(currentHero == target || attacker.getName().equals("Icehowl"))
+        if(currentHero == target)
             throw new InvalidTargetException();
     }
 
@@ -121,8 +122,6 @@ public class Game implements HeroListener, ActionValidator {
     @Override
     public void damageOpponent(int amount) {
         opponent.setCurrentHP(opponent.getCurrentHP()-amount);
-        if(opponent.getCurrentHP() <= 0)
-            onHeroDeath();
     }
 
     @Override
