@@ -193,6 +193,7 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         validator.validateAttack(attacker, target);
         attacker.attack(target);
+        attacker.setAttacked(true);
     }
 
     public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, NotYourTurnException,
@@ -200,6 +201,7 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         validator.validateAttack(attacker, target);
         attacker.attack(target);
+        attacker.setAttacked(true);
     }
 
     private int reduceManaCost() {
@@ -288,7 +290,7 @@ abstract public class Hero implements MinionListener {
             if (hand.size() == 10)
                 throw new FullHandException(ret);
             else {
-                if (isWilfred()) {
+                if (isWilfred() && ret instanceof Minion) {
                     ret.setManaCost(0);
                 }
                 hand.add(ret);
