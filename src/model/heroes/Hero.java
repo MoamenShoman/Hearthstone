@@ -199,7 +199,7 @@ abstract public class Hero implements MinionListener {
         attacker.attack(target);
     }
 
-    public int reduceManaCost() {
+    private int reduceManaCost() {
         if (this instanceof Mage) {
             for (Card c : field)
                 if (c.getName().equals("Kalycgos"))
@@ -254,14 +254,14 @@ abstract public class Hero implements MinionListener {
         listener.endTurn();
     }
 
-    public boolean isChromaggus() {
+    private boolean isChromaggus() {
         for (Card c : getField())
             if (c.getName().equals("Chromaggus"))
                 return true;
         return false;
     }
 
-    public boolean isWilfred() {
+    private boolean isWilfred() {
         if (this instanceof Warlock && isHeroPowerUsed()) {
             for (Card c : getField())
                 if (c.getName().equals("Wilfred Fizzlebang"))
