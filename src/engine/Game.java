@@ -4,11 +4,13 @@ import exceptions.*;
 import model.cards.Card;
 import model.cards.minions.Minion;
 import model.heroes.*;
+
 import java.util.Random;
 
 public class Game implements HeroListener, ActionValidator {
     private Hero firstHero, secondHero, currentHero, opponent;
     private GameListener listener;
+
     public Hero getCurrentHero() {
         return currentHero;
     }
@@ -38,10 +40,11 @@ public class Game implements HeroListener, ActionValidator {
             opponent = p1;
         }
         currentHero.setTotalManaCrystals(1);
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             currentHero.drawCard();
             opponent.drawCard();
         }
+        opponent.drawCard();
     }
 
     @Override
@@ -88,30 +91,28 @@ public class Game implements HeroListener, ActionValidator {
         }
         if (flag)
             throw new TauntBypassException();
-        if(currentHero == target)
+        if (currentHero == target)
             throw new InvalidTargetException();
     }
 
     @Override
     public void validateManaCost(Card card) throws NotEnoughManaException {
-        if(currentHero.getCurrentManaCrystals() < card.getManaCost())
+        if (currentHero.getCurrentManaCrystals() < card.getManaCost())
             throw new NotEnoughManaException();
-        currentHero.setCurrentManaCrystals(currentHero.getCurrentManaCrystals() - card.getManaCost());
     }
 
     @Override
     public void validatePlayingMinion(Minion minion) throws FullFieldException {
-        if(currentHero.getField().size() == 7)
+        if (currentHero.getField().size() == 7)
             throw new FullFieldException();
     }
 
     @Override
     public void validateUsingHeroPower(Hero hero) throws NotEnoughManaException, HeroPowerAlreadyUsedException {
-        if(hero.getCurrentManaCrystals() < 2 )
+        if (hero.getCurrentManaCrystals() < 2)
             throw new NotEnoughManaException();
-        if(hero.isHeroPowerUsed())
+        if (hero.isHeroPowerUsed())
             throw new HeroPowerAlreadyUsedException();
-        hero.setCurrentManaCrystals(hero.getCurrentManaCrystals() - 2);
     }
 
     @Override
@@ -121,7 +122,7 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void damageOpponent(int amount) {
-        opponent.setCurrentHP(opponent.getCurrentHP()-amount);
+        opponent.setCurrentHP(opponent.getCurrentHP() - amount);
     }
 
     @Override
@@ -129,9 +130,9 @@ public class Game implements HeroListener, ActionValidator {
         Hero temp = currentHero;
         currentHero = opponent;
         opponent = temp;
-        currentHero.setTotalManaCrystals(currentHero.getTotalManaCrystals()+1);
+        currentHero.setTotalManaCrystals(currentHero.getTotalManaCrystals() + 1);
         currentHero.setHeroPowerUsed(false);
-        for (Minion m : currentHero.getField()){
+        for (Minion m : currentHero.getField()) {
             m.setAttacked(false);
             m.setSleeping(false);
         }

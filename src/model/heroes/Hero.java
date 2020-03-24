@@ -37,6 +37,7 @@ abstract public class Hero implements MinionListener {
         deck = new ArrayList<>();
         field = new ArrayList<>();
         hand = new ArrayList<>();
+        fatigueDamage = 1;
         buildDeck();
     }
 
@@ -102,7 +103,7 @@ abstract public class Hero implements MinionListener {
     }
 
     public void onMinionDeath(Minion m) {
-        field.remove(m);
+        getField().remove(m);
     }
 
     public HeroListener getListener() {
@@ -173,6 +174,7 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         validator.validateUsingHeroPower(this);
         setHeroPowerUsed(true);
+        setCurrentManaCrystals(getCurrentManaCrystals() - 2);
     }
 
     public abstract void buildDeck() throws IOException, CloneNotSupportedException;
@@ -183,6 +185,7 @@ abstract public class Hero implements MinionListener {
         validator.validatePlayingMinion(m);
         hand.remove(m);
         field.add(m);
+        setCurrentManaCrystals(getCurrentManaCrystals() - m.getManaCost());
     }
 
     public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, NotYourTurnException,
@@ -216,6 +219,7 @@ abstract public class Hero implements MinionListener {
         validator.validateManaCost((Spell) s);
         s.performAction(field);
         hand.remove(s);
+        setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
     }
 
     public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
@@ -224,6 +228,7 @@ abstract public class Hero implements MinionListener {
         validator.validateManaCost((Spell) s);
         s.performAction(oppField, field);
         hand.remove(s);
+        setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
     }
 
     public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
@@ -232,6 +237,7 @@ abstract public class Hero implements MinionListener {
         validator.validateManaCost((Spell) s);
         s.performAction(m);
         hand.remove(s);
+        setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
     }
 
     public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
@@ -240,6 +246,7 @@ abstract public class Hero implements MinionListener {
         validator.validateManaCost((Spell) s);
         s.performAction(h);
         hand.remove(s);
+        setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
     }
 
     public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException {
@@ -248,6 +255,7 @@ abstract public class Hero implements MinionListener {
         validator.validateManaCost((Spell) s);
         setCurrentHP(getCurrentHP() + s.performAction(m));
         hand.remove(s);
+        setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
     }
 
     public void endTurn() throws FullHandException, CloneNotSupportedException {
@@ -273,22 +281,21 @@ abstract public class Hero implements MinionListener {
     public Card drawCard() throws FullHandException, CloneNotSupportedException {
         Card ret = null;
         if (deck.isEmpty()) {
-            fatigueDamage++;
             setCurrentHP(getCurrentHP() - fatigueDamage);
+            fatigueDamage++;
         } else {
             ret = deck.remove(0);
             if (hand.size() == 10)
                 throw new FullHandException(ret);
             else {
-                if(isWilfred()){
+                if (isWilfred()) {
                     ret.setManaCost(0);
                 }
                 hand.add(ret);
-                if(isChromaggus()){
+                if (isChromaggus()) {
                     Card nCard = ret.clone();
-                    if(hand.size() == 10)
-                        throw new FullHandException(nCard);
-                    else hand.add(nCard);
+                    if (hand.size() < 10)
+                        hand.add(nCard);
                 }
             }
         }
