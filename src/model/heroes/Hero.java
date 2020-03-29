@@ -280,22 +280,22 @@ abstract public class Hero implements MinionListener {
 
     public Card drawCard() throws FullHandException, CloneNotSupportedException {
         Card ret = null;
-        if (deck.isEmpty()) {
+        if (getDeck().isEmpty()) {
             setCurrentHP(getCurrentHP() - fatigueDamage);
             fatigueDamage++;
         } else {
-            ret = deck.remove(0);
-            if (hand.size() == 10)
+            ret = getDeck().remove(0);
+            if (getHand().size() == 10)
                 throw new FullHandException(ret);
             else {
                 if (isWilfred() && ret instanceof Minion) {
                     ret.setManaCost(0);
                 }
-                hand.add(ret);
+                getHand().add(ret);
                 if (isChromaggus()) {
                     Card nCard = ret.clone();
-                    if (hand.size() < 10)
-                        hand.add(nCard);
+                    if (getHand().size() < 10)
+                        getHand().add(nCard);
                 }
             }
         }
