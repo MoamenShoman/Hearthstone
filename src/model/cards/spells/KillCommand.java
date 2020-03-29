@@ -12,11 +12,15 @@ public class KillCommand extends Spell implements MinionTargetSpell, HeroTargetS
 
     @Override
     public void performAction(Hero h) {
-        h.setCurrentHP(h.getCurrentHP()-3);
+        h.setCurrentHP(h.getCurrentHP() - 3);
     }
 
     @Override
     public void performAction(Minion m) throws InvalidTargetException {
-        m.setCurrentHP(m.getCurrentHP()-5);
+        if (m.isDivine()) {
+            m.setDivine(false);
+        } else {
+            m.setCurrentHP(m.getCurrentHP() - 5);
+        }
     }
 }

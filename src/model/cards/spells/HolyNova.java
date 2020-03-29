@@ -15,7 +15,11 @@ public class HolyNova extends Spell implements AOESpell {
         for (int i = 0; i < oppField.size(); i++) {
             int s = oppField.size();
             Minion m = oppField.get(i);
-            m.setCurrentHP(m.getCurrentHP() - 2);
+            if (m.isDivine()) {
+                m.setDivine(false);
+            } else {
+                m.setCurrentHP(m.getCurrentHP() - 2);
+            }
             if (s > oppField.size())
                 i--;
         }

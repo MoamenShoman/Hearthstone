@@ -14,9 +14,10 @@ public class Mage extends Hero {
     public Mage() throws IOException, CloneNotSupportedException {
         super("Jaina Proudmoore");
     }
+
     public void buildDeck() throws IOException, CloneNotSupportedException {
-        ArrayList<Minion> allneutralMinions = getAllNeutralMinions("neutral_minions.csv") ;
-        ArrayList<Minion> neutralMinions =getNeutralMinions(allneutralMinions,13);
+        ArrayList<Minion> allneutralMinions = getAllNeutralMinions("neutral_minions.csv");
+        ArrayList<Minion> neutralMinions = getNeutralMinions(allneutralMinions, 13);
         getDeck().addAll(neutralMinions);
         getDeck().add(new Polymorph());
         getDeck().add(new Polymorph());
@@ -24,11 +25,11 @@ public class Mage extends Hero {
         getDeck().add(new Flamestrike());
         getDeck().add(new Pyroblast());
         getDeck().add(new Pyroblast());
-        Minion minion =new Minion("Kalycgos",10, Rarity.LEGENDARY,4,12,false,false,false);
+        Minion minion = new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false, false, false);
         getDeck().add(minion);
         Collections.shuffle(getDeck());
-        for (Card m: getDeck()){
-            if (m instanceof Minion){
+        for (Card m : getDeck()) {
+            if (m instanceof Minion) {
                 ((Minion) m).setListener(this);
             }
         }
@@ -41,7 +42,11 @@ public class Mage extends Hero {
 
     public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
         super.useHeroPower();
-        target.setCurrentHP(target.getCurrentHP() - 1);
+        if (target.isDivine()) {
+            target.setDivine(false);
+        } else {
+            target.setCurrentHP(target.getCurrentHP() - 1);
+        }
     }
 
 }
