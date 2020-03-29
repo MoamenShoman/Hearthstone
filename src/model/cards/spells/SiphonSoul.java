@@ -10,7 +10,6 @@ public class SiphonSoul extends Spell implements LeechingSpell{
 
     @Override
     public int performAction(Minion m) {
-        m.setDivine(false);
         m.setCurrentHP(0);
         return 3;
     }
