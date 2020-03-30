@@ -37,7 +37,6 @@ abstract public class Hero implements MinionListener {
         deck = new ArrayList<>();
         field = new ArrayList<>();
         hand = new ArrayList<>();
-        fatigueDamage = 1;
         buildDeck();
     }
 
@@ -279,6 +278,9 @@ abstract public class Hero implements MinionListener {
     }
 
     public Card drawCard() throws FullHandException, CloneNotSupportedException {
+        if (getDeck().size()==1){
+            fatigueDamage=1;
+        }
         Card ret = null;
         if (getDeck().isEmpty()) {
             setCurrentHP(getCurrentHP() - fatigueDamage);
