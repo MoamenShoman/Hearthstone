@@ -49,20 +49,20 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void validateTurn(Hero user) throws NotYourTurnException {
-        if (user == opponent) {
+        if (user != getCurrentHero()) {
             throw new NotYourTurnException();
         }
     }
 
     @Override
     public void validateAttack(Minion attacker, Minion target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-        if (!currentHero.getField().contains(attacker)) {
+        if (!getCurrentHero().getField().contains(attacker)) {
             throw new NotSummonedException();
         }
-        if (currentHero.getField().contains(target)) {
+        if (getCurrentHero().getField().contains(target)) {
             throw new InvalidTargetException();
         }
-        if (! opponent.getField().contains(target)){
+        if (!getOpponent().getField().contains(target)){
             throw new NotSummonedException();
         }
         if (attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0) {
@@ -70,7 +70,7 @@ public class Game implements HeroListener, ActionValidator {
         }
         if (!target.isTaunt()) {
             boolean flag = false;
-            for (Minion m : opponent.getField()) {
+            for (Minion m : getOpponent().getField()) {
                 if (m.isTaunt())
                     flag = true;
             }
@@ -82,33 +82,33 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void validateAttack(Minion attacker, Hero target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-        if (!currentHero.getField().contains(attacker)) {
+        if (!getCurrentHero().getField().contains(attacker)) {
             throw new NotSummonedException();
         }
         if (attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0) {
             throw new CannotAttackException();
         }
         boolean flag = false;
-        for (Minion m : opponent.getField()) {
+        for (Minion m : getOpponent().getField()) {
             if (m.isTaunt())
                 flag = true;
         }
         if (flag)
             throw new TauntBypassException();
-        if (currentHero == target)
+        if (getCurrentHero() == target)
             throw new InvalidTargetException();
 
     }
 
     @Override
     public void validateManaCost(Card card) throws NotEnoughManaException {
-        if (currentHero.getCurrentManaCrystals() < card.getManaCost())
+        if (getCurrentHero().getCurrentManaCrystals() < card.getManaCost())
             throw new NotEnoughManaException();
     }
 
     @Override
     public void validatePlayingMinion(Minion minion) throws FullFieldException {
-        if (currentHero.getField().size() == 7)
+        if (getCurrentHero().getField().size() == 7)
             throw new FullFieldException();
     }
 
@@ -127,7 +127,7 @@ public class Game implements HeroListener, ActionValidator {
 
     @Override
     public void damageOpponent(int amount) {
-        opponent.setCurrentHP(opponent.getCurrentHP() - amount);
+        getOpponent().setCurrentHP(getOpponent().getCurrentHP() - amount);
     }
 
     @Override
