@@ -62,7 +62,7 @@ public class Game implements HeroListener, ActionValidator {
         if (currentHero.getField().contains(target)) {
             throw new InvalidTargetException();
         }
-        if (! opponent.getField().contains(target)){
+        if (!opponent.getField().contains(target)){
             throw new NotSummonedException();
         }
         if (attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0) {

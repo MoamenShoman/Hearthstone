@@ -216,7 +216,7 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
-        s.performAction(field);
+        s.performAction(getField());
         hand.remove(s);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
     }
@@ -225,7 +225,7 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
-        s.performAction(oppField, field);
+        s.performAction(oppField, getField());
         hand.remove(s);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
     }
