@@ -216,45 +216,45 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
-        s.performAction(getField());
-        hand.remove(s);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
+        hand.remove(s);
+        s.performAction(getField());
     }
 
     public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
-        s.performAction(oppField, getField());
-        hand.remove(s);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
+        hand.remove(s);
+        s.performAction(oppField, getField());
     }
 
     public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
-        s.performAction(m);
-        hand.remove(s);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
+        hand.remove(s);
+        s.performAction(m);
     }
 
     public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
-        s.performAction(h);
-        hand.remove(s);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
+        hand.remove(s);
+        s.performAction(h);
     }
 
     public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException {
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
-        setCurrentHP(getCurrentHP() + s.performAction(m));
-        hand.remove(s);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
+        hand.remove(s);
+        setCurrentHP(getCurrentHP() + s.performAction(m));
     }
 
     public void endTurn() throws FullHandException, CloneNotSupportedException {
