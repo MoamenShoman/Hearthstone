@@ -278,8 +278,8 @@ abstract public class Hero implements MinionListener {
     }
 
     public Card drawCard() throws FullHandException, CloneNotSupportedException {
-        if (getDeck().size()==1){
-            fatigueDamage=1;
+        if (getDeck().size() == 1) {
+            fatigueDamage = 1;
         }
         Card ret = null;
         if (getDeck().isEmpty()) {

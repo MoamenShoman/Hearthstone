@@ -14,7 +14,6 @@ public class Priest extends Hero {
 
     public Priest() throws IOException, CloneNotSupportedException {
         super("Anduin Wrynn");
-
     }
 
     public void buildDeck() throws IOException, CloneNotSupportedException {
