@@ -5,40 +5,36 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-public class GameView extends JFrame  {
+public class GameView extends JFrame {
 
 
-    public GameView(){
+    public GameView() {
 
         super();
-        setSize(1000,800);
-        setLocation(300,20);
+        setSize(getMaximumSize());
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+
     }
 
-    public void setInitial(){
+    public void setInitial() {
         getContentPane().removeAll();
         revalidate();
         repaint();
 
-        this.setLayout(new GridLayout(3,6,10,10));
+        this.setLayout(new GridLayout(3, 1));
 
         JPanel player1 = new JPanel();
         JPanel player2 = new JPanel();
         JPanel start = new JPanel();
 
-        player1.setLayout(new GridLayout(1,6,10,10));
-        player2.setLayout(new GridLayout(1 ,6,10,10));
-        start.setLayout(new GridLayout(1,1,10,10));
+        player1.setLayout(new GridLayout(1, 6, 10, 0));
+        player2.setLayout(new GridLayout(1, 6, 10, 0));
+        start.setLayout(new BorderLayout());
 
-
-
-        player1.setPreferredSize(new Dimension( getWidth(),(int)(2*getHeight()/5)));
-        player2.setPreferredSize(new Dimension( getWidth(),(int)(2*getHeight()/5)));
-        start.setPreferredSize(new Dimension(getWidth()/4 , (int)getHeight()/5));
-
+        player1.setSize(new Dimension(getWidth(), (int) (2 * getHeight() / 5)));
+        player2.setSize(new Dimension(getWidth(), (int) (2 * getHeight() / 5)));
 
         JLabel label1 = new JLabel("   Choose First Hero");
         JLabel label2 = new JLabel("   Choose Second Hero");
@@ -46,26 +42,33 @@ public class GameView extends JFrame  {
         player1.add(label1);
         player2.add(label2);
 
+        String[] arr = {"Mage", "Hunter", "Paladin", "Priest", "Warlock"};
+
+        for (int i = 0; i < 5; i++) {
+            JButton button = new JButton(arr[i]);
+            //button.setPreferredSize(new Dimension(getWidth() / 7, getHeight() / 10));
+            player1.add(button);
+        }
 
 
-
-
-        String [] arr = {"Mage" , "Hunter" , "Paladin" , "Priest" , "Warlock"};
-
-        for(int i = 0 ; i < 5 ; i++)
-            player1.add(new JButton(arr[i]));
-
-        JButton startGame = new JButton("START GAME");
-        startGame.setSize(new Dimension(start.getWidth()/4, start.getHeight()));
-        start.add(startGame , BorderLayout.CENTER);
-        revalidate();
-        repaint();
-
-        for(int i = 0 ; i < 5 ; i++)
-            player2.add(new JButton(arr[i]));
+        for (int i = 0; i < 5; i++) {
+            JButton button = new JButton(arr[i]);
+            //button.setPreferredSize(new Dimension(getWidth() / 7, getHeight() / 10));
+            player2.add(button);
+        }
 
         this.add(player1);
-        this.add(start);
+        JButton startGame = new JButton("START GAME");
+        startGame.setSize(new Dimension(getWidth() / 4, getHeight() / 6));
+        JPanel startPanel = new JPanel(new GridLayout(1, 6));
+        startPanel.add(new JLabel());
+        startPanel.add(new JLabel());
+        startPanel.add(new JLabel());
+        startPanel.add(startGame);
+        startPanel.add(new JPanel());
+        startPanel.add(new JPanel());
+        startPanel.setSize(new Dimension(getWidth() / 4, startPanel.getHeight()));
+        this.add(startPanel);
         this.add(player2);
 
         revalidate();
