@@ -8,12 +8,14 @@ import model.heroes.*;
 import java.util.Random;
 
 public class Game implements HeroListener, ActionValidator {
+
     private Hero firstHero, secondHero, currentHero, opponent;
     private GameListener listener;
 
     public Hero getCurrentHero() {
         return currentHero;
     }
+
 
     public Hero getOpponent() {
         return opponent;
@@ -77,7 +79,6 @@ public class Game implements HeroListener, ActionValidator {
             if (flag)
                 throw new TauntBypassException();
         }
-
     }
 
     @Override
