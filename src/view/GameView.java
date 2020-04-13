@@ -1,9 +1,13 @@
 package view;
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GameView extends JFrame {
 
@@ -75,9 +79,22 @@ public class GameView extends JFrame {
         repaint();
     }
 
+    public void setGamePlay() throws IOException {
+        getContentPane().removeAll();
+        revalidate();
+        repaint();
 
-    public static void main(String[] args) {
-        new GameView().setInitial();
+        BufferedImage backgroundImage = ImageIO.read(new File("background.jpg"));
+        setContentPane(new Background(backgroundImage));
+        setTitle("Hearthstone");
+
+        revalidate();
+        repaint();
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        new GameView().setGamePlay();
     }
 
 }
