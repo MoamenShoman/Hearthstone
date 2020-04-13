@@ -20,9 +20,11 @@ public class GameView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
+
     }
 
     public void setInitial() {
+
         getContentPane().removeAll();
         revalidate();
         repaint();
@@ -41,7 +43,9 @@ public class GameView extends JFrame {
         player2.setSize(new Dimension(getWidth(), (int) (2 * getHeight() / 5)));
 
         JLabel label1 = new JLabel("   Choose First Hero");
+        label1.setFont(new Font("Algerian", Font.PLAIN, 25));
         JLabel label2 = new JLabel("   Choose Second Hero");
+        label2.setFont(new Font("Algerian", Font.PLAIN, 23));
 
         player1.add(label1);
         player2.add(label2);
@@ -50,19 +54,20 @@ public class GameView extends JFrame {
 
         for (int i = 0; i < 5; i++) {
             JButton button = new JButton(arr[i]);
-            //button.setPreferredSize(new Dimension(getWidth() / 7, getHeight() / 10));
+            button.setFont(new Font("Algerian", Font.PLAIN, 30));
             player1.add(button);
         }
 
 
         for (int i = 0; i < 5; i++) {
             JButton button = new JButton(arr[i]);
-            //button.setPreferredSize(new Dimension(getWidth() / 7, getHeight() / 10));
+            button.setFont(new Font("Algerian", Font.PLAIN, 30));
             player2.add(button);
         }
 
         this.add(player1);
         JButton startGame = new JButton("START GAME");
+        startGame.setFont(new Font("Algerian", Font.PLAIN, 24));
         startGame.setSize(new Dimension(getWidth() / 4, getHeight() / 6));
         JPanel startPanel = new JPanel(new GridLayout(1, 6));
         startPanel.add(new JLabel());
