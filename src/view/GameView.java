@@ -20,9 +20,11 @@ public class GameView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
+
     }
 
     public void setInitial() {
+
         getContentPane().removeAll();
         revalidate();
         repaint();
@@ -50,27 +52,23 @@ public class GameView extends JFrame {
 
         for (int i = 0; i < 5; i++) {
             JButton button = new JButton(arr[i]);
-            //button.setPreferredSize(new Dimension(getWidth() / 7, getHeight() / 10));
             player1.add(button);
         }
 
 
         for (int i = 0; i < 5; i++) {
             JButton button = new JButton(arr[i]);
-            //button.setPreferredSize(new Dimension(getWidth() / 7, getHeight() / 10));
             player2.add(button);
         }
 
         this.add(player1);
         JButton startGame = new JButton("START GAME");
         startGame.setSize(new Dimension(getWidth() / 4, getHeight() / 6));
-        JPanel startPanel = new JPanel(new GridLayout(1, 6));
-        startPanel.add(new JLabel());
-        startPanel.add(new JLabel());
-        startPanel.add(new JLabel());
-        startPanel.add(startGame);
-        startPanel.add(new JPanel());
-        startPanel.add(new JPanel());
+        JPanel startPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.ipadx = 100;
+        gbc.ipady = 70;
+        startPanel.add(startGame, gbc);
         startPanel.setSize(new Dimension(getWidth() / 4, startPanel.getHeight()));
         this.add(startPanel);
         this.add(player2);
@@ -94,7 +92,7 @@ public class GameView extends JFrame {
 
 
     public static void main(String[] args) throws IOException {
-        new GameView().setGamePlay();
+        new GameView().setInitial();
     }
 
 }
