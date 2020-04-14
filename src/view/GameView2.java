@@ -103,7 +103,7 @@ public class GameView2 extends JFrame {
         }
         size = oppField.getPreferredSize();
         oppPanel.add(oppField);
-        oppField.setBounds(insets.left + (5 * getWidth() / 16), insets.top + (115 * getHeight() / 412), size.width,
+        oppField.setBounds(insets.left + (5 * getWidth() / 16), insets.top + (115 * getHeight() / 412), size.width + (5 * getWidth() / 48),
                 size.height + (12 * getHeight() / 90));
 
         add(oppPanel);
