@@ -159,7 +159,7 @@ public class GameView extends JFrame {
         JTextArea manaCrystalsNum = new JTextArea("Remaining\nmana crystals :");
         manaCrystalsNum.setEditable(false);
         manaCrystalsNum.setOpaque(false);
-        manaCrystalsNum.setFont(new Font("Algerian", Font.PLAIN, 20));
+        manaCrystalsNum.setFont(new Font("Fonts/Algerian", Font.PLAIN, 20));
         gbc.insets.left -= 200;
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -180,6 +180,7 @@ public class GameView extends JFrame {
         gbc.ipady = 150;
         gbc.ipadx = 600;
         gbc.insets.right -= 600;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
         oppPanel.add(oppField, gbc);
 
 
