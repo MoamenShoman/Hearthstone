@@ -160,9 +160,8 @@ public class GameView extends JFrame {
         oppField.setOpaque(false);
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/Argent_Commander.png"));
-            ImageIcon imageIcon = new ImageIcon(getScaledInstance(image, 150, 200,
-                    RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR, true));
+         // BufferedImage image = ImageIO.read(new File("Minions/Icehowl3.ico"));
+            ImageIcon imageIcon = new ImageIcon("Minions/Icehowl2.png");
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
