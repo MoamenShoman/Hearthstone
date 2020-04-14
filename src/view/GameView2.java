@@ -111,6 +111,7 @@ public class GameView2 extends JFrame {
 
         revalidate();
         repaint();
+        setResizable(false);
     }
 
     public static void main(String[] args) throws IOException, FontFormatException {
