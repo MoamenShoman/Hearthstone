@@ -14,14 +14,13 @@ import java.io.IOException;
 public class GameView extends JFrame {
 
 
-    public GameView() {
-
+    public GameView(){
         super();
-        setSize(1000, 800);
-        setVisible(true);
+        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = d.width;
+        int height = width * 9 / 16;
+        setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
     }
 
     public void setInitial() {
@@ -78,7 +77,7 @@ public class GameView extends JFrame {
         repaint();
     }
 
-    public void setGamePlay() throws IOException {
+    public void setGamePlay() throws IOException, FontFormatException {
         getContentPane().removeAll();
         revalidate();
         repaint();
@@ -87,109 +86,101 @@ public class GameView extends JFrame {
         setContentPane(new Background(backgroundImage));
         setTitle("Hearthstone");
 
+        Font font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
+        font = font.deriveFont(Font.PLAIN, 24);
+
         setLayout(new GridLayout(2, 1));
         JPanel currentPanel = new JPanel();
         JPanel oppPanel = new JPanel();
-
-        oppPanel.setLayout(new GridBagLayout());
-        JLabel oppHero = new JLabel();
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(-200, 0, 0, 0);
-        Image oppImage = ImageIO.read(new File("Heroes/Anduin_Wrynn.png"));
-        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, 230, Image.SCALE_SMOOTH));
-        gbc.gridx = 2;
-        gbc.gridy = 0;
+        currentPanel.setOpaque(false);
         oppPanel.setOpaque(false);
-        oppHero.setIcon(oppIcon);
-        oppPanel.add(oppHero, gbc);
-        add(oppPanel);
 
-
-        Image oppHandImage = ImageIO.read(new File("handBack.png"));
-        ImageIcon oppHandIcon = new ImageIcon(oppHandImage.getScaledInstance(-250, 200, Image.SCALE_SMOOTH));
-        JLabel opphand = new JLabel();
-        gbc.insets = new Insets(-200, 0, 0, -500);
-        opphand.setIcon(oppHandIcon);
-        gbc.gridx = 3;
-        gbc.gridy = 0;
-        oppPanel.add(opphand, gbc);
-
-        JTextArea oppHandNum = new JTextArea("Remaining\ncards\nin the hand :");
-        oppHandNum.setEditable(false);
-        oppHandNum.setOpaque(false);
-        oppHandNum.setFont(new Font("Algerian", Font.PLAIN, 20));
-        gbc = new GridBagConstraints();
-        gbc.insets = new Insets(-200, 0, 0, -800);
-        gbc.gridx = 4;
-        gbc.gridy = 0;
-        oppPanel.add(oppHandNum, gbc);
-
-        JLabel oppManaCrystal = new JLabel();
-        Image oppManaCrystalImage = ImageIO.read(new File("manaCrystal.png"));
-        ImageIcon oppManaCrystalsIcon = new ImageIcon(oppManaCrystalImage.getScaledInstance(-100, 100, Image.SCALE_DEFAULT));
-        gbc.insets = new Insets(-100, -1150, 0, 0);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        oppManaCrystal.setIcon(oppManaCrystalsIcon);
-        oppPanel.add(oppManaCrystal, gbc);
+        oppPanel.setLayout(null);
+        Insets insets = oppPanel.getInsets();
 
         JLabel oppDeck = new JLabel();
         Image oppDeckImage = ImageIO.read(new File("FlippedCard.png"));
-        ImageIcon oppDeckIcon = new ImageIcon(oppDeckImage.getScaledInstance(220, -160, Image.SCALE_DEFAULT));
-        gbc.insets = new Insets(0, -680, 0, 0);
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.ipadx = 80;
-        gbc.ipady = 200;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        ImageIcon oppDeckIcon = new ImageIcon(oppDeckImage.getScaledInstance((11 * getWidth() / 72), -160, Image.SCALE_DEFAULT));
         oppDeck.setIcon(oppDeckIcon);
-        oppPanel.add(oppDeck, gbc);
-        gbc.anchor = GridBagConstraints.CENTER;
+        Dimension size = oppDeck.getPreferredSize();
+        oppPanel.add(oppDeck);
+        oppDeck.setBounds(insets.left, insets.top + (25 * getHeight() / 412), size.width, size.height);
 
-        JTextArea oppDeckNum = new JTextArea("Remaining\ncards\n in the deck :");
+        JTextArea oppDeckNum = new JTextArea("Remaining\ncards\nin the deck:");
         oppDeckNum.setEditable(false);
         oppDeckNum.setOpaque(false);
-        oppDeckNum.setFont(new Font("Algerian", Font.PLAIN, 20));
-        gbc.insets = new Insets(0, -550, -200, 0);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        oppPanel.add(oppDeckNum, gbc);
+        oppDeckNum.setFont(font);
+        size = oppDeckNum.getPreferredSize();
+        oppPanel.add(oppDeckNum);
+        oppDeckNum.setBounds(insets.left + (25 * getWidth() / 144), insets.top + (35 * getHeight() / 412), size.width, size.height);
+
+        JLabel oppHero = new JLabel();
+        Image oppImage = ImageIO.read(new File("Heroes/Anduin_Wrynn.png"));
+        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        oppHero.setIcon(oppIcon);
+        size = oppHero.getPreferredSize();
+        oppPanel.add(oppHero);
+        oppHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + (5 * getHeight() / 412), size.width, size.height);
+
+        JLabel oppHand = new JLabel();
+        Image oppHandImage = ImageIO.read(new File("handBack.png"));
+        ImageIcon oppHandIcon = new ImageIcon(oppHandImage.getScaledInstance(-250, (25 * getHeight() / 103), Image.SCALE_DEFAULT));
+        oppHand.setIcon(oppHandIcon);
+        size = oppHand.getPreferredSize();
+        oppPanel.add(oppHand);
+        oppHand.setBounds(insets.left + (95 * getWidth() / 144), insets.top, size.width, size.height);
+
+        JTextArea oppHandNum = new JTextArea("Remaining\ncards\nin the hand:");
+        oppHandNum.setEditable(false);
+        oppHandNum.setOpaque(false);
+        oppHandNum.setFont(font);
+        size = oppHandNum.getPreferredSize();
+        oppPanel.add(oppHandNum);
+        oppHandNum.setBounds(insets.left + (115 * getWidth() / 144), insets.top + (5 * getHeight() / 103), size.width, size.height);
+
+        JLabel oppManaCrystal = new JLabel();
+        Image oppManaCrystalImage = ImageIO.read(new File("manaCrystal.png"));
+        ImageIcon oppManaCrystalsIcon = new ImageIcon(oppManaCrystalImage.getScaledInstance(-100, (25 * getHeight() / 206), Image.SCALE_DEFAULT));
+        oppManaCrystal.setIcon(oppManaCrystalsIcon);
+        size = oppManaCrystal.getPreferredSize();
+        oppPanel.add(oppManaCrystal);
+        oppManaCrystal.setBounds(insets.left + (getWidth() / 72), insets.top + (115 * getHeight() / 412), size.width, size.height);
 
 
-        JTextArea manaCrystalsNum = new JTextArea("Remaining\nmana crystals :");
-        manaCrystalsNum.setEditable(false);
-        manaCrystalsNum.setOpaque(false);
-        manaCrystalsNum.setFont(new Font("Fonts/Algerian", Font.PLAIN, 20));
-        gbc.insets.left -= 200;
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        oppPanel.add(manaCrystalsNum, gbc);
+        JTextArea oppManaCrystalsNum = new JTextArea("Remaining\nmana crystals:");
+        oppManaCrystalsNum.setEditable(false);
+        oppManaCrystalsNum.setOpaque(false);
+        oppManaCrystalsNum.setFont(font);
+        oppPanel.add(oppManaCrystalsNum);
+        size = oppManaCrystalsNum.getPreferredSize();
+        oppManaCrystalsNum.setBounds(insets.left + (13 * getWidth() / 144), insets.top + (255 * getHeight() / 824), size.width, size.height);
 
         JPanel oppField = new JPanel();
         oppField.setLayout(new GridLayout(1, 7));
         oppField.setOpaque(false);
         for (int i = 0; i < 7; i++) {
-            JButton b = new JButton("" + i);
-            b.setPreferredSize(new Dimension(100, 100));
+            JButton b = new JButton(new ImageIcon("Minions/Chillwind_Yeti.png"));
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
             oppField.add(b);
         }
-        gbc = new GridBagConstraints();
-        gbc.insets.top -= 270;
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        gbc.ipady = 150;
-        gbc.ipadx = 600;
-        gbc.insets.right -= 600;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        oppPanel.add(oppField, gbc);
+        size = oppField.getPreferredSize();
+        oppPanel.add(oppField);
+        oppField.setBounds(insets.left + (5 * getWidth() / 16), insets.top + (115 * getHeight() / 412), size.width /*+ (5 * getWidth() / 48)*/,
+                size.height /*+ (12 * getHeight() / 90)*/);
 
+        add(oppPanel);
+        add(currentPanel);
 
         revalidate();
         repaint();
+        setResizable(false);
+        setVisible(true);
     }
 
 
-    public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) throws IOException, FontFormatException {
         new GameView().setGamePlay();
     }
 
