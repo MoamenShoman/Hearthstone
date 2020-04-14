@@ -22,7 +22,6 @@ public class GameView2 extends JFrame {
         getContentPane().removeAll();
         revalidate();
         repaint();
-        setVisible(true);
 
         BufferedImage backgroundImage = ImageIO.read(new File("background.jpg"));
         setContentPane(new Background(backgroundImage));
@@ -115,12 +114,11 @@ public class GameView2 extends JFrame {
         revalidate();
         repaint();
         setResizable(false);
+        setVisible(true);
     }
 
     public static void main(String[] args) throws IOException, FontFormatException {
         GameView2 gameView2 = new GameView2();
         gameView2.setGamePlay2();
-        System.out.println(gameView2.getWidth());
-        System.out.println(gameView2.getHeight());
     }
 }
