@@ -12,6 +12,7 @@ public class GameView2 extends JFrame {
     public GameView2(){
         super();
         setSize(getMaximumSize());
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void setGamePlay2() throws IOException, FontFormatException {
