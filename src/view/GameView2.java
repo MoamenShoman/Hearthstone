@@ -19,6 +19,7 @@ public class GameView2 extends JFrame {
         getContentPane().removeAll();
         revalidate();
         repaint();
+        setVisible(true);
 
         BufferedImage backgroundImage = ImageIO.read(new File("background.jpg"));
         setContentPane(new Background(backgroundImage));
@@ -42,7 +43,7 @@ public class GameView2 extends JFrame {
         oppDeck.setIcon(oppDeckIcon);
         Dimension size = oppDeck.getPreferredSize();
         oppPanel.add(oppDeck);
-        oppDeck.setBounds(insets.left, insets.top + 50, size.width, size.height);
+        oppDeck.setBounds(insets.left, insets.top + (25 * getHeight() / 412), size.width, size.height);
 
         JTextArea oppDeckNum = new JTextArea("Remaining\ncards\nin the deck:");
         oppDeckNum.setEditable(false);
@@ -50,7 +51,7 @@ public class GameView2 extends JFrame {
         oppDeckNum.setFont(font);
         size = oppDeckNum.getPreferredSize();
         oppPanel.add(oppDeckNum);
-        oppDeckNum.setBounds(insets.left + 250, insets.top + 70, size.width, size.height);
+        oppDeckNum.setBounds(insets.left + (25 * getWidth() / 144), insets.top + (35 * getHeight() / 412), size.width, size.height);
 
         JLabel oppHero = new JLabel();
         Image oppImage = ImageIO.read(new File("Heroes/Anduin_Wrynn.png"));
@@ -58,7 +59,7 @@ public class GameView2 extends JFrame {
         oppHero.setIcon(oppIcon);
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
-        oppHero.setBounds(insets.left + 640, insets.top + 10, size.width, size.height);
+        oppHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + (5 * getHeight() / 412), size.width, size.height);
 
         JLabel oppHand = new JLabel();
         Image oppHandImage = ImageIO.read(new File("handBack.png"));
@@ -66,7 +67,7 @@ public class GameView2 extends JFrame {
         oppHand.setIcon(oppHandIcon);
         size = oppHand.getPreferredSize();
         oppPanel.add(oppHand);
-        oppHand.setBounds(insets.left + 950, insets.top, size.width, size.height);
+        oppHand.setBounds(insets.left + (95 * getWidth() / 144), insets.top, size.width, size.height);
 
         JTextArea oppHandNum = new JTextArea("Remaining\ncards\nin the hand:");
         oppHandNum.setEditable(false);
@@ -74,7 +75,7 @@ public class GameView2 extends JFrame {
         oppHandNum.setFont(font);
         size = oppHandNum.getPreferredSize();
         oppPanel.add(oppHandNum);
-        oppHandNum.setBounds(insets.left + 1150, insets.top + 40, size.width, size.height);
+        oppHandNum.setBounds(insets.left + (115 * getWidth() / 144), insets.top + (5 * getHeight() / 103), size.width, size.height);
 
         JLabel oppManaCrystal = new JLabel();
         Image oppManaCrystalImage = ImageIO.read(new File("manaCrystal.png"));
@@ -82,7 +83,7 @@ public class GameView2 extends JFrame {
         oppManaCrystal.setIcon(oppManaCrystalsIcon);
         size = oppManaCrystal.getPreferredSize();
         oppPanel.add(oppManaCrystal);
-        oppManaCrystal.setBounds(insets.left + 20, insets.top + 230, size.width, size.height);
+        oppManaCrystal.setBounds(insets.left + (getWidth() / 72), insets.top + (115 * getHeight() / 412), size.width, size.height);
 
 
         JTextArea oppManaCrystalsNum = new JTextArea("Remaining\nmana crystals:");
@@ -91,7 +92,7 @@ public class GameView2 extends JFrame {
         oppManaCrystalsNum.setFont(font);
         oppPanel.add(oppManaCrystalsNum);
         size = oppManaCrystalsNum.getPreferredSize();
-        oppManaCrystalsNum.setBounds(insets.left + 130, insets.top + 255, size.width, size.height);
+        oppManaCrystalsNum.setBounds(insets.left + (13 * getWidth() / 144), insets.top + (255 * getHeight() / 824), size.width, size.height);
 
         JPanel oppField = new JPanel();
         oppField.setLayout(new GridLayout(1, 7));
@@ -103,7 +104,8 @@ public class GameView2 extends JFrame {
         }
         size = oppField.getPreferredSize();
         oppPanel.add(oppField);
-        oppField.setBounds(insets.left + 450, insets.top + 230, size.width, size.height + 40);
+        oppField.setBounds(insets.left + (5 * getWidth() / 16), insets.top + (115 * getHeight() / 412), size.width,
+                size.height + (5 * getHeight() / 103));
 
         add(oppPanel);
     }
@@ -111,7 +113,7 @@ public class GameView2 extends JFrame {
     public static void main(String[] args) throws IOException, FontFormatException {
         GameView2 gameView2 = new GameView2();
         gameView2.setGamePlay2();
-        gameView2.setVisible(true);
         System.out.println(gameView2.getWidth());
+        System.out.println(gameView2.getHeight());
     }
 }
