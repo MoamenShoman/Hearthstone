@@ -11,7 +11,10 @@ public class GameView2 extends JFrame {
 
     public GameView2(){
         super();
-        setSize(getMaximumSize());
+        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = d.width;
+        int height = width * 9 / 16;
+        setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
