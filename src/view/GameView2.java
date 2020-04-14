@@ -39,7 +39,7 @@ public class GameView2 extends JFrame {
 
         JLabel oppDeck = new JLabel();
         Image oppDeckImage = ImageIO.read(new File("FlippedCard.png"));
-        ImageIcon oppDeckIcon = new ImageIcon(oppDeckImage.getScaledInstance(220, -160, Image.SCALE_DEFAULT));
+        ImageIcon oppDeckIcon = new ImageIcon(oppDeckImage.getScaledInstance((11 * getWidth() / 72), -160, Image.SCALE_DEFAULT));
         oppDeck.setIcon(oppDeckIcon);
         Dimension size = oppDeck.getPreferredSize();
         oppPanel.add(oppDeck);
@@ -55,7 +55,7 @@ public class GameView2 extends JFrame {
 
         JLabel oppHero = new JLabel();
         Image oppImage = ImageIO.read(new File("Heroes/Anduin_Wrynn.png"));
-        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, 230, Image.SCALE_DEFAULT));
+        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
         oppHero.setIcon(oppIcon);
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
@@ -63,7 +63,7 @@ public class GameView2 extends JFrame {
 
         JLabel oppHand = new JLabel();
         Image oppHandImage = ImageIO.read(new File("handBack.png"));
-        ImageIcon oppHandIcon = new ImageIcon(oppHandImage.getScaledInstance(-250, 200, Image.SCALE_DEFAULT));
+        ImageIcon oppHandIcon = new ImageIcon(oppHandImage.getScaledInstance(-250, (25 * getHeight() / 103), Image.SCALE_DEFAULT));
         oppHand.setIcon(oppHandIcon);
         size = oppHand.getPreferredSize();
         oppPanel.add(oppHand);
@@ -79,7 +79,7 @@ public class GameView2 extends JFrame {
 
         JLabel oppManaCrystal = new JLabel();
         Image oppManaCrystalImage = ImageIO.read(new File("manaCrystal.png"));
-        ImageIcon oppManaCrystalsIcon = new ImageIcon(oppManaCrystalImage.getScaledInstance(-100, 100, Image.SCALE_DEFAULT));
+        ImageIcon oppManaCrystalsIcon = new ImageIcon(oppManaCrystalImage.getScaledInstance(-100, (25 * getHeight() / 206), Image.SCALE_DEFAULT));
         oppManaCrystal.setIcon(oppManaCrystalsIcon);
         size = oppManaCrystal.getPreferredSize();
         oppPanel.add(oppManaCrystal);
@@ -99,15 +99,18 @@ public class GameView2 extends JFrame {
         oppField.setOpaque(false);
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton("" + i);
-            b.setPreferredSize(new Dimension(100, 100));
             oppField.add(b);
         }
         size = oppField.getPreferredSize();
         oppPanel.add(oppField);
         oppField.setBounds(insets.left + (5 * getWidth() / 16), insets.top + (115 * getHeight() / 412), size.width,
-                size.height + (5 * getHeight() / 103));
+                size.height + (12 * getHeight() / 90));
 
         add(oppPanel);
+        add(currentPanel);
+
+        revalidate();
+        repaint();
     }
 
     public static void main(String[] args) throws IOException, FontFormatException {
