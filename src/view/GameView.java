@@ -160,9 +160,8 @@ public class GameView extends JFrame {
         oppField.setOpaque(false);
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/Argent_Commander.png"));
-            ImageIcon imageIcon = new ImageIcon(getScaledInstance(image, 150, 200,
-                    RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR, true));
+            BufferedImage image = ImageIO.read(new File("Minions/download.png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -181,57 +180,6 @@ public class GameView extends JFrame {
         setResizable(false);
         setVisible(true);
     }
-
-    public BufferedImage getScaledInstance(BufferedImage img,
-                                           int targetWidth,
-                                           int targetHeight,
-                                           Object hint,
-                                           boolean higherQuality)
-    {
-        int type = (img.getTransparency() == Transparency.OPAQUE) ?
-                BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
-        BufferedImage ret = (BufferedImage)img;
-        int w, h;
-        if (higherQuality) {
-            // Use multi-step technique: start with original size, then
-            // scale down in multiple passes with drawImage()
-            // until the target size is reached
-            w = img.getWidth();
-            h = img.getHeight();
-        } else {
-            // Use one-step technique: scale directly from original
-            // size to target size with a single drawImage() call
-            w = targetWidth;
-            h = targetHeight;
-        }
-
-        do {
-            if (higherQuality && w > targetWidth) {
-                w /= 2;
-                if (w < targetWidth) {
-                    w = targetWidth;
-                }
-            }
-
-            if (higherQuality && h > targetHeight) {
-                h /= 2;
-                if (h < targetHeight) {
-                    h = targetHeight;
-                }
-            }
-
-            BufferedImage tmp = new BufferedImage(w, h, type);
-            Graphics2D g2 = tmp.createGraphics();
-            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-            g2.drawImage(ret, 0, 0, w, h, null);
-            g2.dispose();
-
-            ret = tmp;
-        } while (w != targetWidth || h != targetHeight);
-
-        return ret;
-    }
-
 
 
     public static void main(String[] args) throws IOException, FontFormatException {
