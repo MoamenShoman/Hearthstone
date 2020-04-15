@@ -5,6 +5,7 @@ import engine.Game;
 import exceptions.FullHandException;
 import model.cards.minions.Minion;
 import model.cards.spells.ShadowWordDeath;
+import model.heroes.Hunter;
 import model.heroes.Paladin;
 import model.heroes.Priest;
 import model.heroes.Warlock;
@@ -96,13 +97,16 @@ public class GameView extends JFrame {
         }
 
         this.add(player2);
-        JButton startGame = new JButton("START GAME");
-        startGame.setFont(font);
-        startGame.setSize(new Dimension(getWidth() / 4, getHeight() / 6));
+        JButton startGame = new JButton();
+        Image startImage =ImageIO.read(new File("Play.png"));
+        ImageIcon startImageIcon =new ImageIcon(startImage.getScaledInstance(300,-1,Image.SCALE_SMOOTH));
+        startGame.setIcon(startImageIcon);
+        startGame.setContentAreaFilled(false);
+        startGame.setBorderPainted(false);
+
+
         JPanel startPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.ipadx = 100;
-        gbc.ipady = 70;
         startPanel.add(startGame, gbc);
         startPanel.setSize(new Dimension(getWidth() / 4, startPanel.getHeight()));
         this.add(startPanel);
@@ -530,7 +534,8 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) throws IOException, FontFormatException, CloneNotSupportedException, FullHandException {
         GameView g = new GameView();
-        g.setGamePlay(new Game(new Priest(), new Paladin()));
+       // g.setGamePlay(new Game(new Hunter(), new Paladin()));
+        g.setInitial();
     }
 
 }
