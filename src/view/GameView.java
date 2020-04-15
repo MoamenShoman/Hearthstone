@@ -21,6 +21,8 @@ public class GameView extends JFrame {
         int height = width * 9 / 16;
         setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        ImageIcon icon = new ImageIcon("Hearthstone_logo.png");
+        setIconImage(icon.getImage());
     }
 
     public void setInitial() {
@@ -160,7 +162,7 @@ public class GameView extends JFrame {
         oppField.setOpaque(false);
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/download.png"));
+            BufferedImage image = ImageIO.read(new File("Minions/Icehowl.png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 160, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
