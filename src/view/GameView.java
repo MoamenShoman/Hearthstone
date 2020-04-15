@@ -1,11 +1,14 @@
 package view;
 
 
+import engine.Game;
 import org.junit.internal.builders.JUnit3Builder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,8 +24,6 @@ public class GameView extends JFrame {
         int height = width * 9 / 16;
         setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        ImageIcon icon = new ImageIcon("Hearthstone_logo.png");
-        setIconImage(icon.getImage());
     }
 
     public void setInitial() {
@@ -30,6 +31,7 @@ public class GameView extends JFrame {
         getContentPane().removeAll();
         revalidate();
         repaint();
+        setVisible(true);
 
         this.setLayout(new GridLayout(3, 1));
 
@@ -89,7 +91,7 @@ public class GameView extends JFrame {
         setTitle("Hearthstone");
 
         Font font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
-        font = font.deriveFont(Font.PLAIN, 24);
+        font = font.deriveFont(Font.PLAIN, 20);
 
         setLayout(new GridLayout(2, 1));
         JPanel currentPanel = new JPanel();
@@ -102,11 +104,11 @@ public class GameView extends JFrame {
 
         JLabel oppDeck = new JLabel();
         Image oppDeckImage = ImageIO.read(new File("FlippedCard.png"));
-        ImageIcon oppDeckIcon = new ImageIcon(oppDeckImage.getScaledInstance((11 * getWidth() / 72), -160, Image.SCALE_DEFAULT));
+        ImageIcon oppDeckIcon = new ImageIcon(oppDeckImage.getScaledInstance((5 * getWidth() / 72), -160, Image.SCALE_DEFAULT));
         oppDeck.setIcon(oppDeckIcon);
         Dimension size = oppDeck.getPreferredSize();
         oppPanel.add(oppDeck);
-        oppDeck.setBounds(insets.left, insets.top + (25 * getHeight() / 412), size.width, size.height);
+        oppDeck.setBounds(insets.left, insets.top + (30 * getHeight() / 412), size.width, size.height);
 
         JTextArea oppDeckNum = new JTextArea("Remaining\ncards\nin the deck:");
         oppDeckNum.setEditable(false);
@@ -114,7 +116,7 @@ public class GameView extends JFrame {
         oppDeckNum.setFont(font);
         size = oppDeckNum.getPreferredSize();
         oppPanel.add(oppDeckNum);
-        oppDeckNum.setBounds(insets.left + (25 * getWidth() / 144), insets.top + (35 * getHeight() / 412), size.width, size.height);
+        oppDeckNum.setBounds(insets.left + (11 * getWidth() / 144), insets.top + (30 * getHeight() / 412), size.width, size.height);
 
         JLabel oppHero = new JLabel();
         Image oppImage = ImageIO.read(new File("Heroes/Anduin_Wrynn.png"));
@@ -142,20 +144,20 @@ public class GameView extends JFrame {
 
         JLabel oppManaCrystal = new JLabel();
         Image oppManaCrystalImage = ImageIO.read(new File("manaCrystal.png"));
-        ImageIcon oppManaCrystalsIcon = new ImageIcon(oppManaCrystalImage.getScaledInstance(-100, (25 * getHeight() / 206), Image.SCALE_DEFAULT));
+        ImageIcon oppManaCrystalsIcon = new ImageIcon(oppManaCrystalImage.getScaledInstance(-100, (15 * getHeight() / 206), Image.SCALE_DEFAULT));
         oppManaCrystal.setIcon(oppManaCrystalsIcon);
         size = oppManaCrystal.getPreferredSize();
         oppPanel.add(oppManaCrystal);
         oppManaCrystal.setBounds(insets.left + (getWidth() / 72), insets.top + (115 * getHeight() / 412), size.width, size.height);
 
 
-        JTextArea oppManaCrystalsNum = new JTextArea("Remaining\nmana crystals:");
+        JTextArea oppManaCrystalsNum = new JTextArea("Remaining\nMana Crystals:5");
         oppManaCrystalsNum.setEditable(false);
         oppManaCrystalsNum.setOpaque(false);
         oppManaCrystalsNum.setFont(font);
         oppPanel.add(oppManaCrystalsNum);
         size = oppManaCrystalsNum.getPreferredSize();
-        oppManaCrystalsNum.setBounds(insets.left + (13 * getWidth() / 144), insets.top + (255 * getHeight() / 824), size.width, size.height);
+        oppManaCrystalsNum.setBounds(insets.left + (9 * getWidth() / 144), insets.top + (235 * getHeight() / 824), size.width, size.height);
 
         JPanel oppField = new JPanel();
         oppField.setLayout(new GridLayout(1, 7));
@@ -163,7 +165,7 @@ public class GameView extends JFrame {
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Minions/Icehowl.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 160, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -171,14 +173,118 @@ public class GameView extends JFrame {
         }
         size = oppField.getPreferredSize();
         oppPanel.add(oppField);
-        oppField.setBounds(insets.left + (5 * getWidth() / 16), insets.top + (115 * getHeight() / 412), size.width,
-                size.height);
+        oppField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (115 * getHeight() / 412), size.width /*+ (5 * getWidth() / 48)*/,
+                size.height /*+ (12 * getHeight() / 90)*/);
 
 
+        currentPanel.setLayout(null);
+
+        JLabel currDeck = new JLabel();
+        currDeck.setIcon(oppDeckIcon);
+        currentPanel.add(currDeck);
+        size = oppDeck.getPreferredSize();
+        currDeck.setBounds(insets.left , insets.top + 100*getHeight()/864 , size.width , size.height);
+
+        JLabel currManaCrystal = new JLabel();
+        currManaCrystal.setIcon(oppManaCrystalsIcon);
+        currentPanel.add(currManaCrystal);
+        size = oppManaCrystal.getPreferredSize();
+        currManaCrystal.setBounds(insets.left  +(getWidth() / 72), insets.top , size.width , size.height);
+
+        JTextArea currDeckNum = new JTextArea("Remaining\ncards\nin Deck:");
+        currentPanel.add(currDeckNum);
+        currDeckNum.setFont(font);
+        size = currDeckNum.getPreferredSize();
+        currentPanel.add(currDeckNum);
+        currDeckNum.setEditable(false);
+        currDeckNum.setOpaque(false);
+        currDeckNum.setBounds(insets.left + (11 * getWidth() / 144), insets.top + (50 * getHeight() / 450), size.width, size.height);
+
+        JTextArea currManaCrystalsNum = new JTextArea("Remaining\nMana Crystals:");
+        currentPanel.add(currManaCrystalsNum);
+        currManaCrystalsNum.setFont(font);
+        currManaCrystalsNum.setOpaque(false);
+        currManaCrystalsNum.setEditable(false);
+        size = currManaCrystalsNum.getPreferredSize();
+        currManaCrystalsNum.setBounds(insets.left + (9 * getWidth() / 144),insets.top + (getHeight()/180) , size.width,size.height);
+
+        JPanel currHandLeft = new JPanel();
+        currentPanel.add(currHandLeft);
+        currHandLeft.setOpaque(false);
+        currHandLeft.setLayout(new GridLayout(1,5));
+        for(int i = 0 ; i < 5 ;i++){
+            JButton b = new JButton();
+            BufferedImage image = ImageIO.read(new File("Minions/Icehowl.png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
+            b.setIcon(imageIcon);
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
+            currHandLeft.add(b);
+        }
+        size = currHandLeft.getPreferredSize();
+        currHandLeft.setBounds(insets.left , insets.top+230*getHeight()/864 , size.width - 100*getWidth() /1536,size.height);
+
+        JLabel currHero = new JLabel();
+        Image currImage = ImageIO.read(new File("Heroes/Rexxar.png"));
+        ImageIcon currIcon = new ImageIcon(currImage.getScaledInstance(-200*getWidth()/1536, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        currHero.setIcon(currIcon);
+        size = currHero.getPreferredSize();
+        currentPanel.add(currHero);
+        currHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + 200*getHeight()/864, size.width, size.height);
+
+        JPanel currHandRight = new JPanel();
+        currentPanel.add(currHandRight);
+        currHandRight.setLayout(new GridLayout(1,5));
+        currHandRight.setOpaque(false);
+        for (int i = 0 ; i < 5 ;i++){
+            JButton b = new JButton();
+            BufferedImage image = ImageIO.read(new File("Minions/King_Krush.png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
+            b.setIcon(imageIcon);
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
+            currHandRight.add(b);
+        }
+        size = currHandRight.getPreferredSize();
+        currHandRight.setBounds(insets.left + 850 * getWidth()/1536 ,insets.top + 230*getHeight()/864 , size.width - 100*getWidth()/1536 , size.height );
 
 
+        JPanel currField = new JPanel();
+        currentPanel.add(currField);
+        currField.setLayout(new GridLayout(1,7));
+        currField.setOpaque(false);
+        for (int i = 0 ; i  < 7 ;i++){
+            JButton b = new JButton();
+            BufferedImage image = ImageIO.read(new File("Minions/King_Krush.png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1 , 85*getHeight()/432, Image.SCALE_SMOOTH));
+            b.setIcon(imageIcon);
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
+            currField.add(b);
+        }
+        size = currField.getPreferredSize();
+        currField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (5 * getHeight() / 216), size.width,
+                size.height );
         add(oppPanel);
         add(currentPanel);
+
+        JButton endTurnButton = new JButton("END TURN");
+        endTurnButton.setFont(font);
+        currentPanel.add(endTurnButton);
+        size = endTurnButton.getPreferredSize();
+        endTurnButton.setContentAreaFilled(false);
+        endTurnButton.setBounds(insets.left + (685 * getWidth() / 768)  , insets.top , size.width ,size.height);
+
+
+        JButton heroPowerButton = new JButton("HERO POWER");
+        heroPowerButton.setFont(font);
+        currentPanel.add(heroPowerButton);
+        heroPowerButton.setContentAreaFilled(false);
+        size = heroPowerButton.getPreferredSize();
+        heroPowerButton.setBounds(insets.left + (675 * getWidth() / 768) , insets.top +(35 * getHeight() / 432), size.width , size.height);
+
+
+
 
         revalidate();
         repaint();
@@ -188,7 +294,8 @@ public class GameView extends JFrame {
 
 
     public static void main(String[] args) throws IOException, FontFormatException {
-        new GameView().setGamePlay();
+        GameView g =  new GameView();
+        g.setInitial();
     }
 
 }
