@@ -16,14 +16,19 @@ import java.util.ArrayList;
 
 public class GameView extends JFrame {
 
+    private ArrayList<JTextArea> curFieldHPs, curFieldAttacks, curFieldManaCosts, oppFieldHPs, oppFieldAttacks, oppFieldManaCosts;
+    private ArrayList<JButton> curFieldMinions, oppFieldMinions;
+    private Font font;
 
-    public GameView() throws IOException {
+    public GameView() throws IOException, FontFormatException {
         super();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         int width = d.width;
         int height = width * 9 / 16;
         setSize(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
+        font = font.deriveFont(Font.PLAIN, 20);
     }
 
     public void setInitial() throws IOException, FontFormatException {
@@ -32,9 +37,6 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
         setVisible(true);
-
-        Font font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
-        font = font.deriveFont(Font.PLAIN, 20);
 
         this.setLayout(new GridLayout(3, 1));
 
@@ -111,9 +113,6 @@ public class GameView extends JFrame {
         setContentPane(new Background(backgroundImage));
         setTitle("Hearthstone");
 
-        Font font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
-        font = font.deriveFont(Font.PLAIN, 20);
-
         setLayout(new GridLayout(2, 1));
         JPanel currentPanel = new JPanel();
         JPanel oppPanel = new JPanel();
@@ -183,6 +182,7 @@ public class GameView extends JFrame {
         JPanel oppField = new JPanel();
         oppField.setLayout(new GridLayout(1, 7));
         oppField.setOpaque(false);
+        oppFieldMinions = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Minions/Wolfrider.png"));
@@ -191,12 +191,38 @@ public class GameView extends JFrame {
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
             oppField.add(b);
+            oppFieldMinions.add(b);
         }
+
+        oppFieldHPs = new ArrayList<>();
+        oppFieldAttacks = new ArrayList<>();
+        oppFieldManaCosts = new ArrayList<>();
+        for(int i = 1; i <= 7; i++){
+            oppFieldHPs.add(new JTextArea(6 + ""));
+            oppFieldHPs.get(i - 1).setFont(font);
+            oppFieldHPs.get(i - 1).setEditable(false);
+            oppFieldHPs.get(i - 1).setOpaque(false);
+            oppFieldHPs.get(i - 1).setForeground(Color.WHITE);
+
+            oppFieldAttacks.add(new JTextArea(7 + ""));
+            oppFieldAttacks.get(i - 1).setFont(font);
+            oppFieldAttacks.get(i - 1).setEditable(false);
+            oppFieldAttacks.get(i - 1).setOpaque(false);
+            oppFieldAttacks.get(i - 1).setForeground(Color.WHITE);
+
+            oppFieldManaCosts.add(new JTextArea(8 + ""));
+            oppFieldManaCosts.get(i - 1).setFont(font);
+            oppFieldManaCosts.get(i - 1).setEditable(false);
+            oppFieldManaCosts.get(i - 1).setOpaque(false);
+            oppFieldManaCosts.get(i - 1).setForeground(Color.WHITE);
+        }
+
         size = oppField.getPreferredSize();
         oppPanel.add(oppField);
-        oppField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (115 * getHeight() / 412), size.width /*+ (5 * getWidth() / 48)*/,
-                size.height /*+ (12 * getHeight() / 90)*/);
+        oppField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (115 * getHeight() / 412), size.width,
+                size.height);
 
+        setOppFieldAttributesLocations();
 
         currentPanel.setLayout(null);
 
@@ -270,10 +296,11 @@ public class GameView extends JFrame {
         currHandRight.setBounds(insets.left + 850 * getWidth()/1536 ,insets.top + 230*getHeight()/864 , size.width - 100*getWidth()/1536 , size.height );
 
 
-        JPanel currField = new JPanel();
-        currentPanel.add(currField);
-        currField.setLayout(new GridLayout(1,7));
-        currField.setOpaque(false);
+        JPanel curField = new JPanel();
+        currentPanel.add(curField);
+        curField.setLayout(new GridLayout(1,7));
+        curField.setOpaque(false);
+        curFieldMinions = new ArrayList<>();
         for (int i = 0 ; i  < 7 ;i++){
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Minions/Core_Hound.png"));
@@ -281,10 +308,11 @@ public class GameView extends JFrame {
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
-            currField.add(b);
+            curField.add(b);
+            curFieldMinions.add(b);
         }
-        size = currField.getPreferredSize();
-        currField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (5 * getHeight() / 216), size.width,
+        size = curField.getPreferredSize();
+        curField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (5 * getHeight() / 216), size.width,
                 size.height );
         add(oppPanel);
         add(currentPanel);
@@ -296,7 +324,6 @@ public class GameView extends JFrame {
         endTurnButton.setContentAreaFilled(false);
         endTurnButton.setBounds(insets.left + (685 * getWidth() / 768)  , insets.top , size.width ,size.height);
 
-
         JButton heroPowerButton = new JButton("HERO POWER");
         heroPowerButton.setFont(font);
         currentPanel.add(heroPowerButton);
@@ -304,8 +331,33 @@ public class GameView extends JFrame {
         size = heroPowerButton.getPreferredSize();
         heroPowerButton.setBounds(insets.left + (675 * getWidth() / 768) , insets.top +(35 * getHeight() / 432), size.width , size.height);
 
+        curFieldHPs = new ArrayList<>(7);
+        for(int i = 1; i <= 7; i++){
+            curFieldHPs.add(new JTextArea(1 + ""));
+            curFieldHPs.get(i - 1).setFont(font);
+            curFieldHPs.get(i - 1).setEditable(false);
+            curFieldHPs.get(i - 1).setOpaque(false);
+            curFieldHPs.get(i - 1).setForeground(Color.WHITE);
+        }
 
+        curFieldAttacks = new ArrayList<>();
+        for(int i = 0; i < 7; i++){
+            curFieldAttacks.add(new JTextArea("" + (1)));
+            curFieldAttacks.get(i).setFont(font);
+            curFieldAttacks.get(i).setEditable(false);
+            curFieldAttacks.get(i).setOpaque(false);
+            curFieldAttacks.get(i).setForeground(Color.WHITE);
+        }
 
+        curFieldManaCosts = new ArrayList<>();
+        for(int i = 0; i < 7; i++){
+            curFieldManaCosts.add(new JTextArea("" + (1)));
+            curFieldManaCosts.get(i).setFont(font);
+            curFieldManaCosts.get(i).setEditable(false);
+            curFieldManaCosts.get(i).setOpaque(false);
+            curFieldManaCosts.get(i).setForeground(Color.WHITE);
+        }
+        setCurFieldAttributesLocations();
 
         revalidate();
         repaint();
@@ -313,11 +365,55 @@ public class GameView extends JFrame {
         setVisible(true);
     }
 
+    private void setCurFieldAttributesLocations(){
+        for(int i = 0; i < 7; i++){
+            curFieldMinions.get(i).setLayout(null);
+            curFieldMinions.get(i).add(curFieldHPs.get(i));
+            curFieldMinions.get(i).add(curFieldAttacks.get(i));
+            curFieldMinions.get(i).add(curFieldManaCosts.get(i));
+            Insets insets = curFieldMinions.get(i).getInsets();
+
+            Dimension size = curFieldHPs.get(i).getPreferredSize();
+            curFieldHPs.get(i).setBounds(insets.left + (Integer.parseInt(curFieldHPs.get(i).getText()) > 9 ? 88 : 92) * getWidth() / 1440,
+                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+
+            size = curFieldAttacks.get(i).getPreferredSize();
+            curFieldAttacks.get(i).setBounds(insets.left + (Integer.parseInt(curFieldAttacks.get(i).getText()) > 9 ? 10 : 13) * getWidth() / 1440,
+                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+
+            size = curFieldManaCosts.get(i).getPreferredSize();
+            curFieldManaCosts.get(i).setBounds(insets.left + (Integer.parseInt(curFieldManaCosts.get(i).getText()) > 9 ? 8 : 13) * getWidth() / 1440,
+                    insets.top + (13 * getHeight() / 810), size.width, size.height);
+        }
+    }
+
+    private void setOppFieldAttributesLocations(){
+        for(int i = 0; i < oppFieldMinions.size(); i++){
+            oppFieldMinions.get(i).setLayout(null);
+            oppFieldMinions.get(i).add(oppFieldHPs.get(i));
+            oppFieldMinions.get(i).add(oppFieldAttacks.get(i));
+            oppFieldMinions.get(i).add(oppFieldManaCosts.get(i));
+            Insets insets = oppFieldMinions.get(i).getInsets();
+
+            Dimension size = oppFieldHPs.get(i).getPreferredSize();
+            oppFieldHPs.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldHPs.get(i).getText()) > 9 ? 88 : 92) * getWidth() / 1440,
+                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+
+            size = oppFieldAttacks.get(i).getPreferredSize();
+            oppFieldAttacks.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldAttacks.get(i).getText()) > 9 ? 10 : 13) * getWidth() / 1440,
+                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+
+            size = oppFieldManaCosts.get(i).getPreferredSize();
+            oppFieldManaCosts.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldManaCosts.get(i).getText()) > 9 ? 8 : 13) * getWidth() / 1440,
+                    insets.top + (13 * getHeight() / 810), size.width, size.height);
+        }
+    }
+
+
 
     public static void main(String[] args) throws IOException, FontFormatException {
         GameView g =  new GameView();
-        System.out.println(g.getHeight());
-        g.setInitial();
+        g.setGamePlay();
     }
 
 }
