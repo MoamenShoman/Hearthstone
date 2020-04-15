@@ -316,8 +316,9 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) throws IOException, FontFormatException {
         GameView g =  new GameView();
-        System.out.println(g.getHeight());
+       // System.out.println(g.getHeight());
         g.setInitial();
+        //g.setGamePlay();
     }
 
 }
