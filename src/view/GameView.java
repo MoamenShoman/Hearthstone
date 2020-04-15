@@ -2,6 +2,7 @@ package view;
 
 
 import engine.Game;
+import javafx.scene.layout.BorderStroke;
 import org.junit.internal.builders.JUnit3Builder;
 
 import javax.imageio.ImageIO;
@@ -305,8 +306,6 @@ public class GameView extends JFrame {
         heroPowerButton.setBounds(insets.left + (675 * getWidth() / 768) , insets.top +(35 * getHeight() / 432), size.width , size.height);
 
 
-
-
         revalidate();
         repaint();
         setResizable(false);
@@ -317,8 +316,8 @@ public class GameView extends JFrame {
     public static void main(String[] args) throws IOException, FontFormatException {
         GameView g =  new GameView();
        // System.out.println(g.getHeight());
-        g.setInitial();
-        //g.setGamePlay();
+       // g.setInitial();
+        g.setGamePlay();
     }
 
 }
