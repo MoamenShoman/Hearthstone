@@ -164,7 +164,7 @@ public class GameView extends JFrame {
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Minions/Icehowl.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -182,7 +182,7 @@ public class GameView extends JFrame {
         currDeck.setIcon(oppDeckIcon);
         currentPanel.add(currDeck);
         size = oppDeck.getPreferredSize();
-        currDeck.setBounds(insets.left , insets.top + 100 , size.width , size.height);
+        currDeck.setBounds(insets.left , insets.top + 100*getHeight()/864 , size.width , size.height);
 
         JLabel currManaCrystal = new JLabel();
         currManaCrystal.setIcon(oppManaCrystalsIcon);
@@ -213,23 +213,23 @@ public class GameView extends JFrame {
         currHandLeft.setLayout(new GridLayout(1,5));
         for(int i = 0 ; i < 5 ;i++){
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/download.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170, Image.SCALE_SMOOTH));
+            BufferedImage image = ImageIO.read(new File("Minions/Icehowl.png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
             currHandLeft.add(b);
         }
         size = currHandLeft.getPreferredSize();
-        currHandLeft.setBounds(insets.left , insets.top+230 , size.width - 100,size.height);
+        currHandLeft.setBounds(insets.left , insets.top+230*getHeight()/864 , size.width - 100*getWidth() /1536,size.height);
 
         JLabel currHero = new JLabel();
         Image currImage = ImageIO.read(new File("Heroes/Rexxar.png"));
-        ImageIcon currIcon = new ImageIcon(currImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        ImageIcon currIcon = new ImageIcon(currImage.getScaledInstance(-200*getWidth()/1536, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
         currHero.setIcon(currIcon);
         size = currHero.getPreferredSize();
         currentPanel.add(currHero);
-        currHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + 200, size.width, size.height);
+        currHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + 200*getHeight()/864, size.width, size.height);
 
         JPanel currHandRight = new JPanel();
         currentPanel.add(currHandRight);
@@ -238,14 +238,14 @@ public class GameView extends JFrame {
         for (int i = 0 ; i < 5 ;i++){
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Minions/King_Krush.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
             currHandRight.add(b);
         }
         size = currHandRight.getPreferredSize();
-        currHandRight.setBounds(insets.left + 850 ,insets.top + 230 , size.width - 100 , size.height );
+        currHandRight.setBounds(insets.left + 850 * getWidth()/1536 ,insets.top + 230*getHeight()/864 , size.width - 100*getWidth()/1536 , size.height );
 
 
         JPanel currField = new JPanel();
@@ -278,8 +278,9 @@ public class GameView extends JFrame {
         JButton heroPowerButton = new JButton("HERO POWER");
         heroPowerButton.setFont(font);
         currentPanel.add(heroPowerButton);
+        heroPowerButton.setContentAreaFilled(false);
         size = heroPowerButton.getPreferredSize();
-        heroPowerButton.setBounds(insets.left + (685 * getWidth() / 768) , insets.top +(35 * getHeight() / 432), size.width , size.height);
+        heroPowerButton.setBounds(insets.left + (675 * getWidth() / 768) , insets.top +(35 * getHeight() / 432), size.width , size.height);
 
 
 
