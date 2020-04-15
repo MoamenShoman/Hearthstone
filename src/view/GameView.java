@@ -4,7 +4,9 @@ package view;
 import engine.Game;
 import exceptions.FullHandException;
 import model.cards.minions.Minion;
+import model.cards.spells.ShadowWordDeath;
 import model.heroes.Paladin;
+import model.heroes.Priest;
 import model.heroes.Warlock;
 import org.junit.internal.builders.JUnit3Builder;
 
@@ -281,8 +283,9 @@ public class GameView extends JFrame {
         int j = 0;
         for (int i = 0; i < 5 && j < game.getCurrentHero().getHand().size(); i++, j++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File((game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
-                    + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
+            BufferedImage image = ImageIO.read(new File(game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath ? "Spells/Shadow Word Death.png" :
+                    (game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
+                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -318,8 +321,9 @@ public class GameView extends JFrame {
         curHandRightMinions = new ArrayList<>();
         for (int i = 0; i < 5 && j < game.getCurrentHero().getHand().size(); i++, j++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File((game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
-                    + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
+            BufferedImage image = ImageIO.read(new File(game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath ? "Spells/Shadow Word Death.png" :
+                    (game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
+                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -396,10 +400,10 @@ public class GameView extends JFrame {
 
         for (int i = 0; i < game.getCurrentHero().getField().size(); i++) {
             curFieldHPs.add(new JTextArea(game.getCurrentHero().getField().get(i).getCurrentHP() + ""));
-            curFieldHPs.get(i - 1).setFont(font);
-            curFieldHPs.get(i - 1).setEditable(false);
-            curFieldHPs.get(i - 1).setOpaque(false);
-            curFieldHPs.get(i - 1).setForeground(Color.WHITE);
+            curFieldHPs.get(i).setFont(font);
+            curFieldHPs.get(i).setEditable(false);
+            curFieldHPs.get(i).setOpaque(false);
+            curFieldHPs.get(i).setForeground(Color.WHITE);
 
             curFieldAttacks.add(new JTextArea(game.getCurrentHero().getField().get(i).getAttack() + ""));
             curFieldAttacks.get(i).setFont(font);
@@ -479,12 +483,16 @@ public class GameView extends JFrame {
             Insets insets = curHandLeftMinions.get(i).getInsets();
 
             Dimension size = curHandHPs.get(j).getPreferredSize();
-            curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
-                    insets.top + (133 * getHeight() / 810), size.width, size.height);
-
+            if(!curHandHPs.get(j).getText().equals("")) {
+                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
+                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+            }
             size = curHandAttacks.get(j).getPreferredSize();
-            curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
-                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+
+            if(!curHandAttacks.get(j).getText().equals("")) {
+                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
+                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+            }
 
             size = curHandManaCosts.get(j).getPreferredSize();
             curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 0 : 5) * getWidth() / 1440,
@@ -500,12 +508,17 @@ public class GameView extends JFrame {
                 Insets insets = curHandRightMinions.get(i).getInsets();
 
                 Dimension size = curHandHPs.get(j).getPreferredSize();
-                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
-                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+                if(!curHandHPs.get(j).getText().equals("")) {
+                    curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
+                            insets.top + (133 * getHeight() / 810), size.width, size.height);
+                }
 
                 size = curHandAttacks.get(j).getPreferredSize();
-                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
-                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+
+                if(!curHandAttacks.get(j).getText().equals("")) {
+                    curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
+                            insets.top + (133 * getHeight() / 810), size.width, size.height);
+                }
 
                 size = curHandManaCosts.get(j).getPreferredSize();
                 curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 0 : 5) * getWidth() / 1440,
@@ -517,7 +530,7 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) throws IOException, FontFormatException, CloneNotSupportedException, FullHandException {
         GameView g = new GameView();
-        g.setGamePlay(new Game(new Warlock(), new Paladin()));
+        g.setGamePlay(new Game(new Priest(), new Paladin()));
     }
 
 }
