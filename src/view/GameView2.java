@@ -101,7 +101,7 @@ public class GameView2 extends JFrame {
         oppField.setOpaque(false);
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton("" + i);
-            oppField.add(b);
+               oppField.add(b);
         }
         size = oppField.getPreferredSize();
         oppPanel.add(oppField);
