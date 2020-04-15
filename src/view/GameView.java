@@ -31,6 +31,7 @@ public class GameView extends JFrame {
         getContentPane().removeAll();
         revalidate();
         repaint();
+        setVisible(true);
 
         this.setLayout(new GridLayout(3, 1));
 
@@ -294,9 +295,7 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) throws IOException, FontFormatException {
         GameView g =  new GameView();
-        System.out.println(g.getWidth());
-        System.out.println(g.getHeight());
-        g.setGamePlay();
+        g.setInitial();
     }
 
 }
