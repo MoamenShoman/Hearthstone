@@ -161,7 +161,7 @@ public class GameView extends JFrame {
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Minions/download.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 160, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -169,8 +169,11 @@ public class GameView extends JFrame {
         }
         size = oppField.getPreferredSize();
         oppPanel.add(oppField);
-        oppField.setBounds(insets.left + (5 * getWidth() / 16), insets.top + (115 * getHeight() / 412), size.width /*+ (5 * getWidth() / 48)*/,
-                size.height /*+ (12 * getHeight() / 90)*/);
+        oppField.setBounds(insets.left + (5 * getWidth() / 16), insets.top + (115 * getHeight() / 412), size.width,
+                size.height);
+
+
+
 
         add(oppPanel);
         add(currentPanel);
