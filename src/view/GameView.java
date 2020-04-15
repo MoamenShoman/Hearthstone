@@ -6,18 +6,18 @@ import org.junit.internal.builders.JUnit3Builder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 
 public class GameView extends JFrame {
 
 
-    public GameView(){
+    public GameView() throws IOException {
         super();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         int width = d.width;
@@ -26,12 +26,15 @@ public class GameView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public void setInitial() {
+    public void setInitial() throws IOException, FontFormatException {
 
         getContentPane().removeAll();
         revalidate();
         repaint();
         setVisible(true);
+
+        Font font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
+        font = font.deriveFont(Font.PLAIN, 20);
 
         this.setLayout(new GridLayout(3, 1));
 
@@ -48,25 +51,43 @@ public class GameView extends JFrame {
 
         JLabel label1 = new JLabel("   Choose First Hero");
         JLabel label2 = new JLabel("   Choose Second Hero");
+        label1.setFont(font);
+        label2.setFont(font);
 
         player1.add(label1);
         player2.add(label2);
 
-        String[] arr = {"Mage", "Hunter", "Paladin", "Priest", "Warlock"};
+        String[] arr = {"Jaina-full.jpg", "Rexxar_hero_art.jpg", "Uther_-_full.jpg", "Anduin-full.jpg", "Gul'dan_full.jpg"};
+        String[] names = {"MAGE", "HUNTER", "PALADIN", "PRIEST", "WARLOCK"};
 
         for (int i = 0; i < 5; i++) {
-            JButton button = new JButton(arr[i]);
+            JButton button = new JButton();
+            Image image = ImageIO.read(new File("HeroesIntro/" + arr[i]));
+            Icon icon = new ImageIcon(image.getScaledInstance(-1, 230 * getHeight() / 810, Image.SCALE_SMOOTH));
+            button.setContentAreaFilled(false);
+            button.setIcon(icon);
+            button.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
+                    names[i], TitledBorder.CENTER,
+                    TitledBorder.TOP, font));
             player1.add(button);
         }
 
 
         for (int i = 0; i < 5; i++) {
-            JButton button = new JButton(arr[i]);
+            JButton button = new JButton();
+            Image image = ImageIO.read(new File("HeroesIntro/" + arr[i]));
+            Icon icon = new ImageIcon(image.getScaledInstance(-1, 230 * getHeight() / 810, Image.SCALE_SMOOTH));
+            button.setIcon(icon);
+            button.setContentAreaFilled(false);
+            button.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
+                    names[i], TitledBorder.CENTER,
+                    TitledBorder.BOTTOM, font));
             player2.add(button);
         }
 
-        this.add(player1);
+        this.add(player2);
         JButton startGame = new JButton("START GAME");
+        startGame.setFont(font);
         startGame.setSize(new Dimension(getWidth() / 4, getHeight() / 6));
         JPanel startPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -75,7 +96,7 @@ public class GameView extends JFrame {
         startPanel.add(startGame, gbc);
         startPanel.setSize(new Dimension(getWidth() / 4, startPanel.getHeight()));
         this.add(startPanel);
-        this.add(player2);
+        this.add(player1);
 
         revalidate();
         repaint();
@@ -295,6 +316,7 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) throws IOException, FontFormatException {
         GameView g =  new GameView();
+        System.out.println(g.getHeight());
         g.setInitial();
     }
 
