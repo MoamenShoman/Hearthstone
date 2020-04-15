@@ -2,6 +2,12 @@ package view;
 
 
 import engine.Game;
+import exceptions.FullHandException;
+import model.cards.minions.Minion;
+import model.cards.spells.ShadowWordDeath;
+import model.heroes.Paladin;
+import model.heroes.Priest;
+import model.heroes.Warlock;
 import org.junit.internal.builders.JUnit3Builder;
 
 import javax.imageio.ImageIO;
@@ -17,7 +23,7 @@ import java.util.ArrayList;
 public class GameView extends JFrame {
 
     private ArrayList<JTextArea> curFieldHPs, curFieldAttacks, curFieldManaCosts, oppFieldHPs, oppFieldAttacks, oppFieldManaCosts,
-    curHandHPs, curHandAttacks, curHandManaCosts;
+            curHandHPs, curHandAttacks, curHandManaCosts;
     private ArrayList<JButton> curFieldMinions, oppFieldMinions, curHandLeftMinions, curHandRightMinions;
     private JTextArea curHeroHP, oppHeroHP;
     private Font font;
@@ -106,7 +112,7 @@ public class GameView extends JFrame {
         repaint();
     }
 
-    public void setGamePlay() throws IOException, FontFormatException {
+    public void setGamePlay(Game game) throws IOException, FontFormatException {
         getContentPane().removeAll();
         revalidate();
         repaint();
@@ -132,7 +138,7 @@ public class GameView extends JFrame {
         oppPanel.add(oppDeck);
         oppDeck.setBounds(insets.left, insets.top + (60 * getHeight() / 412), size.width, size.height);
 
-        JTextArea oppDeckNum = new JTextArea("Remaining\ncards\nin the deck:");
+        JTextArea oppDeckNum = new JTextArea("Remaining\ncards\nin the deck: " + game.getOpponent().getDeck().size());
         oppDeckNum.setEditable(false);
         oppDeckNum.setOpaque(false);
         oppDeckNum.setFont(font);
@@ -141,20 +147,20 @@ public class GameView extends JFrame {
         oppDeckNum.setBounds(insets.left + (11 * getWidth() / 144), insets.top + (60 * getHeight() / 412), size.width, size.height);
 
         JLabel oppHero = new JLabel();
-        Image oppImage = ImageIO.read(new File("Heroes/Anduin_Wrynn.png"));
+        Image oppImage = ImageIO.read(new File("Heroes/" + game.getOpponent().getName() + ".png"));
         ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
         oppHero.setIcon(oppIcon);
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
         oppHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + (5 * getHeight() / 412), size.width, size.height);
-        oppHeroHP = new JTextArea("" + 30);
+        oppHeroHP = new JTextArea("" + game.getOpponent().getCurrentHP());
         oppHero.add(oppHeroHP);
         oppHeroHP.setEditable(false);
         oppHeroHP.setOpaque(false);
         oppHeroHP.setForeground(Color.WHITE);
         oppHeroHP.setFont(font);
         oppHero.setLayout(null);
-        Insets tmpInsets  = oppHero.getInsets();
+        Insets tmpInsets = oppHero.getInsets();
         Dimension tmpSize = oppHeroHP.getPreferredSize();
         oppHeroHP.setBounds(tmpInsets.left + (130 * getWidth() / 1440), tmpInsets.top + (140 * getHeight() / 810), tmpSize.width, tmpSize.height);
 
@@ -166,7 +172,7 @@ public class GameView extends JFrame {
         oppPanel.add(oppHand);
         oppHand.setBounds(insets.left + (95 * getWidth() / 144), insets.top, size.width, size.height);
 
-        JTextArea oppHandNum = new JTextArea("Remaining\ncards\nin the hand:");
+        JTextArea oppHandNum = new JTextArea("Remaining\ncards\nin the hand: " + game.getOpponent().getHand().size());
         oppHandNum.setEditable(false);
         oppHandNum.setOpaque(false);
         oppHandNum.setFont(font);
@@ -183,7 +189,8 @@ public class GameView extends JFrame {
         oppManaCrystal.setBounds(insets.left + (getWidth() / 72), insets.top + (115 * getHeight() / 412), size.width, size.height);
 
 
-        JTextArea oppManaCrystalsNum = new JTextArea("Remaining\nMana Crystals:");
+        JTextArea oppManaCrystalsNum = new JTextArea("Remaining\nMana Crystals: " + game.getOpponent().getCurrentManaCrystals() + "/" +
+                game.getOpponent().getTotalManaCrystals());
         oppManaCrystalsNum.setEditable(false);
         oppManaCrystalsNum.setOpaque(false);
         oppManaCrystalsNum.setFont(font);
@@ -195,10 +202,10 @@ public class GameView extends JFrame {
         oppField.setLayout(new GridLayout(1, 7));
         oppField.setOpaque(false);
         oppFieldMinions = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < game.getOpponent().getField().size(); i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/Wolfrider.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
+            BufferedImage image = ImageIO.read(new File("Minions/" + game.getOpponent().getField().get(i).getName() + ".png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -209,24 +216,24 @@ public class GameView extends JFrame {
         oppFieldHPs = new ArrayList<>();
         oppFieldAttacks = new ArrayList<>();
         oppFieldManaCosts = new ArrayList<>();
-        for(int i = 1; i <= 7; i++){
-            oppFieldHPs.add(new JTextArea(6 + ""));
-            oppFieldHPs.get(i - 1).setFont(font);
-            oppFieldHPs.get(i - 1).setEditable(false);
-            oppFieldHPs.get(i - 1).setOpaque(false);
-            oppFieldHPs.get(i - 1).setForeground(Color.WHITE);
+        for (int i = 0; i < game.getOpponent().getField().size(); i++) {
+            oppFieldHPs.add(new JTextArea(game.getOpponent().getField().get(i).getCurrentHP() + ""));
+            oppFieldHPs.get(i).setFont(font);
+            oppFieldHPs.get(i).setEditable(false);
+            oppFieldHPs.get(i).setOpaque(false);
+            oppFieldHPs.get(i).setForeground(Color.WHITE);
 
-            oppFieldAttacks.add(new JTextArea(7 + ""));
-            oppFieldAttacks.get(i - 1).setFont(font);
-            oppFieldAttacks.get(i - 1).setEditable(false);
-            oppFieldAttacks.get(i - 1).setOpaque(false);
-            oppFieldAttacks.get(i - 1).setForeground(Color.WHITE);
+            oppFieldAttacks.add(new JTextArea(game.getOpponent().getField().get(i).getAttack() + ""));
+            oppFieldAttacks.get(i).setFont(font);
+            oppFieldAttacks.get(i).setEditable(false);
+            oppFieldAttacks.get(i).setOpaque(false);
+            oppFieldAttacks.get(i).setForeground(Color.WHITE);
 
-            oppFieldManaCosts.add(new JTextArea(8 + ""));
-            oppFieldManaCosts.get(i - 1).setFont(font);
-            oppFieldManaCosts.get(i - 1).setEditable(false);
-            oppFieldManaCosts.get(i - 1).setOpaque(false);
-            oppFieldManaCosts.get(i - 1).setForeground(Color.WHITE);
+            oppFieldManaCosts.add(new JTextArea(game.getOpponent().getField().get(i).getManaCost() + ""));
+            oppFieldManaCosts.get(i).setFont(font);
+            oppFieldManaCosts.get(i).setEditable(false);
+            oppFieldManaCosts.get(i).setOpaque(false);
+            oppFieldManaCosts.get(i).setForeground(Color.WHITE);
         }
 
         size = oppField.getPreferredSize();
@@ -242,40 +249,44 @@ public class GameView extends JFrame {
         currDeck.setIcon(oppDeckIcon);
         currentPanel.add(currDeck);
         size = oppDeck.getPreferredSize();
-        currDeck.setBounds(insets.left , insets.top + 100*getHeight()/864 , size.width , size.height);
+        currDeck.setBounds(insets.left, insets.top + 100 * getHeight() / 864, size.width, size.height);
 
-        JLabel currManaCrystal = new JLabel();
-        currManaCrystal.setIcon(oppManaCrystalsIcon);
-        currentPanel.add(currManaCrystal);
+        JLabel curManaCrystal = new JLabel();
+        curManaCrystal.setIcon(oppManaCrystalsIcon);
+        currentPanel.add(curManaCrystal);
         size = oppManaCrystal.getPreferredSize();
-        currManaCrystal.setBounds(insets.left  +(getWidth() / 72), insets.top , size.width , size.height);
+        curManaCrystal.setBounds(insets.left + (getWidth() / 72), insets.top, size.width, size.height);
 
-        JTextArea currDeckNum = new JTextArea("Remaining\ncards\nin Deck:");
-        currentPanel.add(currDeckNum);
-        currDeckNum.setFont(font);
-        size = currDeckNum.getPreferredSize();
-        currentPanel.add(currDeckNum);
-        currDeckNum.setEditable(false);
-        currDeckNum.setOpaque(false);
-        currDeckNum.setBounds(insets.left + (11 * getWidth() / 144), insets.top + (50 * getHeight() / 450), size.width, size.height);
+        JTextArea curDeckNum = new JTextArea("Remaining\ncards\nin Deck: " + game.getCurrentHero().getDeck().size());
+        currentPanel.add(curDeckNum);
+        curDeckNum.setFont(font);
+        size = curDeckNum.getPreferredSize();
+        currentPanel.add(curDeckNum);
+        curDeckNum.setEditable(false);
+        curDeckNum.setOpaque(false);
+        curDeckNum.setBounds(insets.left + (11 * getWidth() / 144), insets.top + (50 * getHeight() / 450), size.width, size.height);
 
-        JTextArea currManaCrystalsNum = new JTextArea("Remaining\nMana Crystals:");
+        JTextArea currManaCrystalsNum = new JTextArea("Remaining\nMana Crystals: " + game.getCurrentHero().getCurrentManaCrystals() + "/" +
+                game.getCurrentHero().getTotalManaCrystals());
         currentPanel.add(currManaCrystalsNum);
         currManaCrystalsNum.setFont(font);
         currManaCrystalsNum.setOpaque(false);
         currManaCrystalsNum.setEditable(false);
         size = currManaCrystalsNum.getPreferredSize();
-        currManaCrystalsNum.setBounds(insets.left + (9 * getWidth() / 144),insets.top + (getHeight()/180) , size.width,size.height);
+        currManaCrystalsNum.setBounds(insets.left + (9 * getWidth() / 144), insets.top + (getHeight() / 180), size.width, size.height);
 
         JPanel currHandLeft = new JPanel();
         currentPanel.add(currHandLeft);
         currHandLeft.setOpaque(false);
-        currHandLeft.setLayout(new GridLayout(1,5));
+        currHandLeft.setLayout(new GridLayout(1, 5));
         curHandLeftMinions = new ArrayList<>();
-        for(int i = 0 ; i < 5 ;i++){
+        int j = 0;
+        for (int i = 0; i < 5 && j < game.getCurrentHero().getHand().size(); i++, j++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/Tirion_Fordring.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
+            BufferedImage image = ImageIO.read(new File(game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath ? "Spells/Shadow Word Death.png" :
+                    (game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
+                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -283,35 +294,37 @@ public class GameView extends JFrame {
             curHandLeftMinions.add(b);
         }
         size = currHandLeft.getPreferredSize();
-        currHandLeft.setBounds(insets.left , insets.top+230*getHeight()/864 , size.width - 100*getWidth() /1536,size.height);
+        currHandLeft.setBounds(insets.left, insets.top + 230 * getHeight() / 864, size.width - 100 * getWidth() / 1536, size.height);
 
         JLabel curHero = new JLabel();
-        Image currImage = ImageIO.read(new File("Heroes/Rexxar.png"));
-        ImageIcon currIcon = new ImageIcon(currImage.getScaledInstance(-200*getWidth()/1536, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        Image currImage = ImageIO.read(new File("Heroes/" + game.getCurrentHero().getName() + ".png"));
+        ImageIcon currIcon = new ImageIcon(currImage.getScaledInstance(-200 * getWidth() / 1536, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
         curHero.setIcon(currIcon);
         size = curHero.getPreferredSize();
         currentPanel.add(curHero);
-        curHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + 200*getHeight()/864, size.width, size.height);
-        curHeroHP = new JTextArea("" + 30);
+        curHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + 200 * getHeight() / 864, size.width, size.height);
+        curHeroHP = new JTextArea("" + game.getCurrentHero().getCurrentHP());
         curHero.add(curHeroHP);
         curHeroHP.setEditable(false);
         curHeroHP.setOpaque(false);
         curHeroHP.setForeground(Color.WHITE);
         curHeroHP.setFont(font);
         curHero.setLayout(null);
-        tmpInsets  = oppHero.getInsets();
+        tmpInsets = oppHero.getInsets();
         tmpSize = curHeroHP.getPreferredSize();
         curHeroHP.setBounds(tmpInsets.left + (130 * getWidth() / 1440), tmpInsets.top + (140 * getHeight() / 810), tmpSize.width, tmpSize.height);
 
         JPanel currHandRight = new JPanel();
         currentPanel.add(currHandRight);
-        currHandRight.setLayout(new GridLayout(1,5));
+        currHandRight.setLayout(new GridLayout(1, 5));
         currHandRight.setOpaque(false);
         curHandRightMinions = new ArrayList<>();
-        for (int i = 0 ; i < 5 ;i++){
+        for (int i = 0; i < 5 && j < game.getCurrentHero().getHand().size(); i++, j++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/King_Krush.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
+            BufferedImage image = ImageIO.read(new File(game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath ? "Spells/Shadow Word Death.png" :
+                    (game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
+                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -319,43 +332,44 @@ public class GameView extends JFrame {
             curHandRightMinions.add(b);
         }
         size = currHandRight.getPreferredSize();
-        currHandRight.setBounds(insets.left + 850 * getWidth()/1536 ,insets.top + 230*getHeight()/864 , size.width - 100*getWidth()/1536 , size.height );
+        currHandRight.setBounds(insets.left + 850 * getWidth() / 1536, insets.top + 230 * getHeight() / 864, size.width - 100 * getWidth() / 1536, size.height);
 
         curHandHPs = new ArrayList<>();
         curHandAttacks = new ArrayList<>();
         curHandManaCosts = new ArrayList<>();
-        for(int i = 1; i <= 10; i++){
-            curHandHPs.add(new JTextArea(10 + ""));
-            curHandHPs.get(i - 1).setFont(font);
-            curHandHPs.get(i - 1).setEditable(false);
-            curHandHPs.get(i - 1).setOpaque(false);
-            curHandHPs.get(i - 1).setForeground(Color.WHITE);
+        for (int i = 0; i < game.getCurrentHero().getHand().size(); i++) {
+            curHandHPs.add(new JTextArea(game.getCurrentHero().getHand().get(i) instanceof Minion ?
+                    ((Minion) game.getCurrentHero().getHand().get(i)).getCurrentHP() + "" : ""));
+            curHandHPs.get(i).setFont(font);
+            curHandHPs.get(i).setEditable(false);
+            curHandHPs.get(i).setOpaque(false);
+            curHandHPs.get(i).setForeground(Color.WHITE);
 
-            curHandAttacks.add(new JTextArea(10 + ""));
-            curHandAttacks.get(i - 1).setFont(font);
-            curHandAttacks.get(i - 1).setEditable(false);
-            curHandAttacks.get(i - 1).setOpaque(false);
-            curHandAttacks.get(i - 1).setForeground(Color.WHITE);
+            curHandAttacks.add(new JTextArea(game.getCurrentHero().getHand().get(i) instanceof Minion ?
+                    ((Minion) game.getCurrentHero().getHand().get(i)).getAttack() + "" : ""));
+            curHandAttacks.get(i).setFont(font);
+            curHandAttacks.get(i).setEditable(false);
+            curHandAttacks.get(i).setOpaque(false);
+            curHandAttacks.get(i).setForeground(Color.WHITE);
 
-            curHandManaCosts.add(new JTextArea(10 + ""));
-            curHandManaCosts.get(i - 1).setFont(font);
-            curHandManaCosts.get(i - 1).setEditable(false);
-            curHandManaCosts.get(i - 1).setOpaque(false);
-            curHandManaCosts.get(i - 1).setForeground(Color.WHITE);
+            curHandManaCosts.add(new JTextArea(game.getCurrentHero().getHand().get(i).getManaCost() + ""));
+            curHandManaCosts.get(i).setFont(font);
+            curHandManaCosts.get(i).setEditable(false);
+            curHandManaCosts.get(i).setOpaque(false);
+            curHandManaCosts.get(i).setForeground(Color.WHITE);
         }
 
         setCurHandAttributesLocations();
 
-
         JPanel curField = new JPanel();
         currentPanel.add(curField);
-        curField.setLayout(new GridLayout(1,7));
+        curField.setLayout(new GridLayout(1, 7));
         curField.setOpaque(false);
         curFieldMinions = new ArrayList<>();
-        for (int i = 0 ; i  < 7 ;i++){
+        for (int i = 0; i < game.getCurrentHero().getField().size(); i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/Core_Hound.png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1 , 85*getHeight()/432, Image.SCALE_SMOOTH));
+            BufferedImage image = ImageIO.read(new File("Minions/" + game.getCurrentHero().getField().get(i).getName() + ".png"));
+            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 85 * getHeight() / 432, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -364,51 +378,50 @@ public class GameView extends JFrame {
         }
         size = curField.getPreferredSize();
         curField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (5 * getHeight() / 216), size.width,
-                size.height );
-        add(oppPanel);
-        add(currentPanel);
+                size.height);
 
         JButton endTurnButton = new JButton("END TURN");
         endTurnButton.setFont(font);
         currentPanel.add(endTurnButton);
         size = endTurnButton.getPreferredSize();
         endTurnButton.setContentAreaFilled(false);
-        endTurnButton.setBounds(insets.left + (685 * getWidth() / 768)  , insets.top , size.width ,size.height);
+        endTurnButton.setBounds(insets.left + (685 * getWidth() / 768), insets.top, size.width, size.height);
 
         JButton heroPowerButton = new JButton("HERO POWER");
         heroPowerButton.setFont(font);
         currentPanel.add(heroPowerButton);
         heroPowerButton.setContentAreaFilled(false);
         size = heroPowerButton.getPreferredSize();
-        heroPowerButton.setBounds(insets.left + (675 * getWidth() / 768) , insets.top +(35 * getHeight() / 432), size.width , size.height);
+        heroPowerButton.setBounds(insets.left + (675 * getWidth() / 768), insets.top + (35 * getHeight() / 432), size.width, size.height);
 
         curFieldHPs = new ArrayList<>(7);
-        for(int i = 1; i <= 7; i++){
-            curFieldHPs.add(new JTextArea(1 + ""));
-            curFieldHPs.get(i - 1).setFont(font);
-            curFieldHPs.get(i - 1).setEditable(false);
-            curFieldHPs.get(i - 1).setOpaque(false);
-            curFieldHPs.get(i - 1).setForeground(Color.WHITE);
-        }
-
         curFieldAttacks = new ArrayList<>();
-        for(int i = 0; i < 7; i++){
-            curFieldAttacks.add(new JTextArea("" + (1)));
+        curFieldManaCosts = new ArrayList<>();
+
+        for (int i = 0; i < game.getCurrentHero().getField().size(); i++) {
+            curFieldHPs.add(new JTextArea(game.getCurrentHero().getField().get(i).getCurrentHP() + ""));
+            curFieldHPs.get(i).setFont(font);
+            curFieldHPs.get(i).setEditable(false);
+            curFieldHPs.get(i).setOpaque(false);
+            curFieldHPs.get(i).setForeground(Color.WHITE);
+
+            curFieldAttacks.add(new JTextArea(game.getCurrentHero().getField().get(i).getAttack() + ""));
             curFieldAttacks.get(i).setFont(font);
             curFieldAttacks.get(i).setEditable(false);
             curFieldAttacks.get(i).setOpaque(false);
             curFieldAttacks.get(i).setForeground(Color.WHITE);
-        }
 
-        curFieldManaCosts = new ArrayList<>();
-        for(int i = 0; i < 7; i++){
-            curFieldManaCosts.add(new JTextArea("" + (1)));
+            curFieldManaCosts.add(new JTextArea(game.getCurrentHero().getField().get(i).getManaCost() + ""));
             curFieldManaCosts.get(i).setFont(font);
             curFieldManaCosts.get(i).setEditable(false);
             curFieldManaCosts.get(i).setOpaque(false);
             curFieldManaCosts.get(i).setForeground(Color.WHITE);
         }
+
         setCurFieldAttributesLocations();
+
+        add(oppPanel);
+        add(currentPanel);
 
         revalidate();
         repaint();
@@ -416,8 +429,8 @@ public class GameView extends JFrame {
         setVisible(true);
     }
 
-    private void setCurFieldAttributesLocations(){
-        for(int i = 0; i < curFieldMinions.size(); i++){
+    private void setCurFieldAttributesLocations() {
+        for (int i = 0; i < curFieldMinions.size(); i++) {
             curFieldMinions.get(i).setLayout(null);
             curFieldMinions.get(i).add(curFieldHPs.get(i));
             curFieldMinions.get(i).add(curFieldAttacks.get(i));
@@ -438,8 +451,8 @@ public class GameView extends JFrame {
         }
     }
 
-    private void setOppFieldAttributesLocations(){
-        for(int i = 0; i < oppFieldMinions.size(); i++){
+    private void setOppFieldAttributesLocations() {
+        for (int i = 0; i < oppFieldMinions.size(); i++) {
             oppFieldMinions.get(i).setLayout(null);
             oppFieldMinions.get(i).add(oppFieldHPs.get(i));
             oppFieldMinions.get(i).add(oppFieldAttacks.get(i));
@@ -460,9 +473,9 @@ public class GameView extends JFrame {
         }
     }
 
-    private void setCurHandAttributesLocations(){
+    private void setCurHandAttributesLocations() {
         int j = 0;
-        for(int i = 0; i < curHandLeftMinions.size(); j++, i++){
+        for (int i = 0; i < curHandLeftMinions.size(); j++, i++) {
             curHandLeftMinions.get(i).setLayout(null);
             curHandLeftMinions.get(i).add(curHandHPs.get(j));
             curHandLeftMinions.get(i).add(curHandAttacks.get(j));
@@ -470,20 +483,24 @@ public class GameView extends JFrame {
             Insets insets = curHandLeftMinions.get(i).getInsets();
 
             Dimension size = curHandHPs.get(j).getPreferredSize();
-            curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
-                    insets.top + (133 * getHeight() / 810), size.width, size.height);
-
+            if(!curHandHPs.get(j).getText().equals("")) {
+                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
+                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+            }
             size = curHandAttacks.get(j).getPreferredSize();
-            curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 :4) * getWidth() / 1440,
-                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+
+            if(!curHandAttacks.get(j).getText().equals("")) {
+                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
+                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+            }
 
             size = curHandManaCosts.get(j).getPreferredSize();
             curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 0 : 5) * getWidth() / 1440,
                     insets.top + (13 * getHeight() / 810), size.width, size.height);
         }
 
-        if(curHandRightMinions.size() > 0){
-            for(int i = 0; i < curHandRightMinions.size(); i++, j++){
+        if (curHandRightMinions.size() > 0) {
+            for (int i = 0; i < curHandRightMinions.size(); i++, j++) {
                 curHandRightMinions.get(i).setLayout(null);
                 curHandRightMinions.get(i).add(curHandHPs.get(j));
                 curHandRightMinions.get(i).add(curHandAttacks.get(j));
@@ -491,12 +508,17 @@ public class GameView extends JFrame {
                 Insets insets = curHandRightMinions.get(i).getInsets();
 
                 Dimension size = curHandHPs.get(j).getPreferredSize();
-                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
-                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+                if(!curHandHPs.get(j).getText().equals("")) {
+                    curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
+                            insets.top + (133 * getHeight() / 810), size.width, size.height);
+                }
 
                 size = curHandAttacks.get(j).getPreferredSize();
-                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
-                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+
+                if(!curHandAttacks.get(j).getText().equals("")) {
+                    curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
+                            insets.top + (133 * getHeight() / 810), size.width, size.height);
+                }
 
                 size = curHandManaCosts.get(j).getPreferredSize();
                 curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 0 : 5) * getWidth() / 1440,
@@ -506,10 +528,9 @@ public class GameView extends JFrame {
     }
 
 
-
-    public static void main(String[] args) throws IOException, FontFormatException {
-        GameView g =  new GameView();
-        g.setGamePlay();
+    public static void main(String[] args) throws IOException, FontFormatException, CloneNotSupportedException, FullHandException {
+        GameView g = new GameView();
+        g.setGamePlay(new Game(new Priest(), new Paladin()));
     }
 
 }
