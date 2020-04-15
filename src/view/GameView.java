@@ -185,7 +185,7 @@ public class GameView extends JFrame {
         oppField.setOpaque(false);
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/Icehowl.png"));
+            BufferedImage image = ImageIO.read(new File("Minions/Wolfrider.png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -235,7 +235,7 @@ public class GameView extends JFrame {
         currHandLeft.setLayout(new GridLayout(1,5));
         for(int i = 0 ; i < 5 ;i++){
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/Icehowl.png"));
+            BufferedImage image = ImageIO.read(new File("Minions/Tirion_Fordring.png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170*getHeight()/864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -276,7 +276,7 @@ public class GameView extends JFrame {
         currField.setOpaque(false);
         for (int i = 0 ; i  < 7 ;i++){
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/King_Krush.png"));
+            BufferedImage image = ImageIO.read(new File("Minions/Core_Hound.png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1 , 85*getHeight()/432, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
