@@ -98,8 +98,8 @@ public class GameView extends JFrame {
 
         this.add(player2);
         JButton startGame = new JButton();
-        Image startImage =ImageIO.read(new File("Play.png"));
-        ImageIcon startImageIcon =new ImageIcon(startImage.getScaledInstance(300,-1,Image.SCALE_SMOOTH));
+        Image startImage = ImageIO.read(new File("Play.png"));
+        ImageIcon startImageIcon = new ImageIcon(startImage.getScaledInstance(300, -1, Image.SCALE_SMOOTH));
         startGame.setIcon(startImageIcon);
         startGame.setContentAreaFilled(false);
         startGame.setBorderPainted(false);
@@ -487,13 +487,13 @@ public class GameView extends JFrame {
             Insets insets = curHandLeftMinions.get(i).getInsets();
 
             Dimension size = curHandHPs.get(j).getPreferredSize();
-            if(!curHandHPs.get(j).getText().equals("")) {
+            if (!curHandHPs.get(j).getText().equals("")) {
                 curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
                         insets.top + (133 * getHeight() / 810), size.width, size.height);
             }
             size = curHandAttacks.get(j).getPreferredSize();
 
-            if(!curHandAttacks.get(j).getText().equals("")) {
+            if (!curHandAttacks.get(j).getText().equals("")) {
                 curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
                         insets.top + (133 * getHeight() / 810), size.width, size.height);
             }
@@ -512,14 +512,14 @@ public class GameView extends JFrame {
                 Insets insets = curHandRightMinions.get(i).getInsets();
 
                 Dimension size = curHandHPs.get(j).getPreferredSize();
-                if(!curHandHPs.get(j).getText().equals("")) {
+                if (!curHandHPs.get(j).getText().equals("")) {
                     curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
                             insets.top + (133 * getHeight() / 810), size.width, size.height);
                 }
 
                 size = curHandAttacks.get(j).getPreferredSize();
 
-                if(!curHandAttacks.get(j).getText().equals("")) {
+                if (!curHandAttacks.get(j).getText().equals("")) {
                     curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
                             insets.top + (133 * getHeight() / 810), size.width, size.height);
                 }
@@ -534,8 +534,8 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) throws IOException, FontFormatException, CloneNotSupportedException, FullHandException {
         GameView g = new GameView();
-        g.setGamePlay(new Game(new Hunter(), new Paladin()));
-//        g.setInitial();
+      //  g.setGamePlay(new Game(new Hunter(), new Paladin()));
+        g.setInitial();
         JButton button = new JButton();
     }
 
