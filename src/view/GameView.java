@@ -7,9 +7,6 @@ import model.cards.minions.Minion;
 import model.cards.spells.ShadowWordDeath;
 import model.heroes.Hunter;
 import model.heroes.Paladin;
-import model.heroes.Priest;
-import model.heroes.Warlock;
-import org.junit.internal.builders.JUnit3Builder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,26 +15,51 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class GameView extends JFrame {
 
     private ArrayList<JTextArea> curFieldHPs, curFieldAttacks, curFieldManaCosts, oppFieldHPs, oppFieldAttacks, oppFieldManaCosts,
             curHandHPs, curHandAttacks, curHandManaCosts;
-    private ArrayList<JButton> curFieldMinions, oppFieldMinions, curHandLeftMinions, curHandRightMinions;
+    private ArrayList<JButton> curFieldMinions;
+    private ArrayList<JButton> oppFieldMinions;
+    private ArrayList<JButton> curHandLeftMinions;
+    private ArrayList<JButton> curHandRightMinions;
+    private ArrayList<JRadioButton> chooseFirstHero;
+    private ArrayList<JRadioButton> chooseSecondHero;
     private JTextArea curHeroHP, oppHeroHP;
     private Font font;
+    private JButton startGame;
+    private String[] names;
 
     public GameView() throws IOException, FontFormatException {
         super();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = d.width;
-        int height = width * 9 / 16;
-        setSize(width, height);
+        setSize(1280, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
         font = font.deriveFont(Font.PLAIN, 20);
+    }
+
+    @Override
+    public Font getFont() {
+        return font;
+    }
+
+    public JButton getStartGame() {
+        return startGame;
+    }
+
+    public String[] getNames() {
+        return names;
+    }
+
+    public ArrayList<JRadioButton> getChooseFirstHero() {
+        return chooseFirstHero;
+    }
+
+    public ArrayList<JRadioButton> getChooseSecondHero() {
+        return chooseSecondHero;
     }
 
     public void setInitial() throws IOException, FontFormatException {
@@ -68,36 +90,50 @@ public class GameView extends JFrame {
         player1.add(label1);
         player2.add(label2);
 
-        String[] arr = {"Jaina-full.jpg", "Rexxar_hero_art.jpg", "Uther_-_full.jpg", "Anduin-full.jpg", "Gul'dan_full.jpg"};
-        String[] names = {"MAGE", "HUNTER", "PALADIN", "PRIEST", "WARLOCK"};
+        chooseFirstHero = new ArrayList<JRadioButton>();
+        chooseSecondHero = new ArrayList<JRadioButton>();
 
+        String[] arr = {"Jaina-full.jpg", "Rexxar_hero_art.jpg", "Uther_-_full.jpg", "Anduin-full.jpg", "Gul'dan_full.jpg"};
+        names = new String[]{"MAGE", "HUNTER", "PALADIN", "PRIEST", "WARLOCK"};
+
+        ButtonGroup group1 = new ButtonGroup();
         for (int i = 0; i < 5; i++) {
-            JButton button = new JButton();
+            //JButton button = new JButton();
+            JRadioButton button = new JRadioButton();
             Image image = ImageIO.read(new File("HeroesIntro/" + arr[i]));
             Icon icon = new ImageIcon(image.getScaledInstance(-1, 230 * getHeight() / 810, Image.SCALE_SMOOTH));
             button.setContentAreaFilled(false);
             button.setIcon(icon);
+            button.setBorderPainted(true);
+            button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                     names[i], TitledBorder.CENTER,
                     TitledBorder.TOP, font));
             player1.add(button);
+            chooseFirstHero.add(button);
+            group1.add(button);
         }
 
-
+        ButtonGroup group2 = new ButtonGroup();
         for (int i = 0; i < 5; i++) {
-            JButton button = new JButton();
+            //JButton button = new JButton();
+            JRadioButton button = new JRadioButton();
             Image image = ImageIO.read(new File("HeroesIntro/" + arr[i]));
             Icon icon = new ImageIcon(image.getScaledInstance(-1, 230 * getHeight() / 810, Image.SCALE_SMOOTH));
             button.setIcon(icon);
+            button.setBorderPainted(true);
+            button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setContentAreaFilled(false);
             button.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                     names[i], TitledBorder.CENTER,
                     TitledBorder.BOTTOM, font));
             player2.add(button);
+            chooseSecondHero.add(button);
+            group2.add(button);
         }
 
         this.add(player2);
-        JButton startGame = new JButton();
+        startGame = new JButton();
         Image startImage = ImageIO.read(new File("Play.png"));
         ImageIcon startImageIcon = new ImageIcon(startImage.getScaledInstance(300, -1, Image.SCALE_SMOOTH));
         startGame.setIcon(startImageIcon);
@@ -287,9 +323,17 @@ public class GameView extends JFrame {
         int j = 0;
         for (int i = 0; i < 5 && j < game.getCurrentHero().getHand().size(); i++, j++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File(game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath ? "Spells/Shadow Word Death.png" :
-                    (game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
-                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
+            String p;
+            if (game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath) {
+                p = "Spells/Shadow Word Death.png";
+            } else {
+                if (game.getCurrentHero().getHand().get(j) instanceof Minion) {
+                    p = "Minions/" + game.getCurrentHero().getHand().get(j).getName() + ".png";
+                } else {
+                    p = "Spells/" + game.getCurrentHero().getHand().get(j).getName() + ".png";
+                }
+            }
+            BufferedImage image = ImageIO.read(new File(p));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -325,9 +369,20 @@ public class GameView extends JFrame {
         curHandRightMinions = new ArrayList<>();
         for (int i = 0; i < 5 && j < game.getCurrentHero().getHand().size(); i++, j++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File(game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath ? "Spells/Shadow Word Death.png" :
-                    (game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
-                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
+
+            String p;
+            if (game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath) {
+                p = "Spells/Shadow Word Death.png";
+            } else {
+                if (game.getCurrentHero().getHand().get(j) instanceof Minion) {
+                    p = "Minions/" + game.getCurrentHero().getHand().get(j).getName() + ".png";
+                } else {
+                    p = "Spells/" + game.getCurrentHero().getHand().get(j).getName() + ".png";
+                }
+            }
+
+
+            BufferedImage image = ImageIO.read(new File(p));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -534,9 +589,8 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) throws IOException, FontFormatException, CloneNotSupportedException, FullHandException {
         GameView g = new GameView();
-      //  g.setGamePlay(new Game(new Hunter(), new Paladin()));
+        // g.setGamePlay(new Game(new Hunter(), new Paladin()));
         g.setInitial();
-        JButton button = new JButton();
     }
 
 }
