@@ -534,8 +534,9 @@ public class GameView extends JFrame {
 
     public static void main(String[] args) throws IOException, FontFormatException, CloneNotSupportedException, FullHandException {
         GameView g = new GameView();
-       // g.setGamePlay(new Game(new Hunter(), new Paladin()));
-        g.setInitial();
+        g.setGamePlay(new Game(new Hunter(), new Paladin()));
+//        g.setInitial();
+        JButton button = new JButton();
     }
 
 }
