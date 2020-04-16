@@ -152,7 +152,7 @@ public class GameView extends JFrame {
 
         JLabel oppHero = new JLabel();
         Image oppImage = ImageIO.read(new File("Heroes/" + game.getOpponent().getName() + ".png"));
-        ImageIcon oppIcon = new ImageIcon(oppImage/*.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT)*/);
+        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
         oppHero.setIcon(oppIcon);
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
@@ -288,8 +288,8 @@ public class GameView extends JFrame {
         for (int i = 0; i < 5 && j < game.getCurrentHero().getHand().size(); i++, j++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File(game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath ? "Spells/Shadow Word Death.png" :
-                    ((game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
-                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png")));
+                    (game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
+                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -326,8 +326,8 @@ public class GameView extends JFrame {
         for (int i = 0; i < 5 && j < game.getCurrentHero().getHand().size(); i++, j++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File(game.getCurrentHero().getHand().get(j) instanceof ShadowWordDeath ? "Spells/Shadow Word Death.png" :
-                    ((game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
-                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png")));
+                    (game.getCurrentHero().getHand().get(j) instanceof Minion ? "Minions" : "Spells")
+                            + "/" + game.getCurrentHero().getHand().get(j).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -535,7 +535,8 @@ public class GameView extends JFrame {
     public static void main(String[] args) throws IOException, FontFormatException, CloneNotSupportedException, FullHandException {
         GameView g = new GameView();
         g.setGamePlay(new Game(new Hunter(), new Paladin()));
-        //g.setInitial();
+//        g.setInitial();
+        JButton button = new JButton();
     }
 
 }
