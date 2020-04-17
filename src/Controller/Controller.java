@@ -6,6 +6,7 @@ import exceptions.FullHandException;
 import model.heroes.*;
 import view.GameView;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
@@ -14,6 +15,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,9 +25,10 @@ public class Controller implements GameListener, MouseListener, ItemListener {
     private Hero firstHero;
     private Hero secondHero;
 
-    public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException {
+    public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException, LineUnavailableException, UnsupportedAudioFileException {
         gameView = new GameView();
         gameView.setInitial();
+        playMusic("Sound/Hearthstone_Music.wav");
         for (JRadioButton b : gameView.getChooseFirstHero()) {
             b.addMouseListener(this);
             b.addItemListener(this);
@@ -40,7 +43,18 @@ public class Controller implements GameListener, MouseListener, ItemListener {
     public void onGameOver() {
 
     }
-
+    private void playMusic(String path) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        try {
+            AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            Clip c = AudioSystem.getClip();
+            c.open(a);
+            c.start();
+            c.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+        catch (IOException | UnsupportedAudioFileException | LineUnavailableException e){
+            e.getStackTrace();
+        }
+    }
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getComponent() instanceof JRadioButton){
@@ -147,7 +161,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
         }
     }
 
-    public static void main(String[] args) throws FullHandException, FontFormatException, CloneNotSupportedException, IOException {
+    public static void main(String[] args) throws FullHandException, FontFormatException, CloneNotSupportedException, IOException, LineUnavailableException, UnsupportedAudioFileException {
         Controller c= new Controller();
     }
 }
