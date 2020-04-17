@@ -42,6 +42,7 @@ public class Paladin extends Hero {
         super.useHeroPower();
         Minion m = new Minion("Silver Hand Recruit" , 1 , Rarity.BASIC , 1,
                 1 ,false , false , false);
+        m.setListener(this);
         if(getField().size() == 7){
             throw new FullFieldException();
         }else{
