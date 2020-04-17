@@ -222,9 +222,7 @@ public class GameView extends JFrame {
         oppDeckNum.setBounds(insets.left + (11 * getWidth() / 144), insets.top + (60 * getHeight() / 412), size.width, size.height);
 
         oppHero = new JLabel();
-        Image oppImage = ImageIO.read(new File("Heroes/" + game.getOpponent().getName() + ".png"));
-        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
-        oppHero.setIcon(oppIcon);
+        updateOppHeroIcon(game.getOpponent().getName());
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
         oppHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + (5 * getHeight() / 412), size.width, size.height);
@@ -276,15 +274,6 @@ public class GameView extends JFrame {
         size = oppManaCrystalsNum.getPreferredSize();
         oppManaCrystalsNum.setBounds(insets.left + (9 * getWidth() / 144), insets.top + (235 * getHeight() / 824), size.width, size.height);
 
-        oppField = new JPanel();
-        oppField.setLayout(new GridLayout(1, 7));
-        oppField.setOpaque(false);
-        oppFieldMinions = new ArrayList<>();
-
-
-        oppFieldHPs = new ArrayList<>();
-        oppFieldAttacks = new ArrayList<>();
-        oppFieldManaCosts = new ArrayList<>();
         updateOppField(game.getOpponent().getField());
 
         curentPanel.setLayout(null);
@@ -321,21 +310,14 @@ public class GameView extends JFrame {
         curManaCrystalsNum.setBounds(insets.left + (9 * getWidth() / 144), insets.top + (getHeight() / 180), size.width, size.height);
 
 
-        curHandLeft = new JPanel();
-        curHandRight = new JPanel();
-
-        curHandHPs = new ArrayList<>();
-        curHandAttacks = new ArrayList<>();
-        curHandManaCosts = new ArrayList<>();
         updateHand(game.getCurrentHero().getHand());
 
         curHero = new JLabel();
-        Image currImage = ImageIO.read(new File("Heroes/" + game.getCurrentHero().getName() + ".png"));
-        ImageIcon curIcon = new ImageIcon(currImage.getScaledInstance(-200 * getWidth() / 1536, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
-        curHero.setIcon(curIcon);
+        updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
         curHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + 200 * getHeight() / 864, size.width, size.height);
+
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
         curHero.add(curHeroHP);
@@ -349,14 +331,6 @@ public class GameView extends JFrame {
         curHeroHP.setBounds(tmpInsets.left + (130 * getWidth() / 1440), tmpInsets.top + (140 * getHeight() / 810), tmpSize.width, tmpSize.height);
 
 
-        curField = new JPanel();
-        curentPanel.add(curField);
-        curField.setLayout(new GridLayout(1, 7));
-        curField.setOpaque(false);
-        curFieldMinions = new ArrayList<>();
-        curFieldHPs = new ArrayList<>();
-        curFieldAttacks = new ArrayList<>();
-        curFieldManaCosts = new ArrayList<>();
         updateCurField(game.getCurrentHero().getField());
 
 
@@ -374,9 +348,6 @@ public class GameView extends JFrame {
         size = heroPowerButton.getPreferredSize();
         heroPowerButton.setBounds(insets.left + (675 * getWidth() / 768), insets.top + (35 * getHeight() / 432), size.width, size.height);
 
-
-
-
         add(oppPanel);
         add(curentPanel);
 
@@ -384,6 +355,18 @@ public class GameView extends JFrame {
         repaint();
         setResizable(false);
         setVisible(true);
+    }
+
+    public void updateCurHeroIcon(String name) throws IOException {
+        Image currImage = ImageIO.read(new File("Heroes/" + name + ".png"));
+        ImageIcon curIcon = new ImageIcon(currImage.getScaledInstance(-200 * getWidth() / 1536, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        curHero.setIcon(curIcon);
+    }
+
+    public void updateOppHeroIcon(String name) throws IOException {
+        Image oppImage = ImageIO.read(new File("Heroes/" + name + ".png"));
+        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        oppHero.setIcon(oppIcon);
     }
 
     public ArrayList<JButton> getCurFieldMinions() {
@@ -452,6 +435,21 @@ public class GameView extends JFrame {
     }
 
     public void updateOppField(ArrayList<Minion> field) throws IOException {
+        if(oppField != null){
+            oppPanel.remove(oppField);
+            oppPanel.revalidate();
+            oppPanel.repaint();
+        }
+
+        oppField = new JPanel();
+        oppField.setLayout(new GridLayout(1, 7));
+        oppField.setOpaque(false);
+
+        oppFieldMinions = new ArrayList<>();
+        oppFieldHPs = new ArrayList<>();
+        oppFieldAttacks = new ArrayList<>();
+        oppFieldManaCosts = new ArrayList<>();
+
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Minions/" + field.get(i).getName() + ".png"));
@@ -517,6 +515,21 @@ public class GameView extends JFrame {
     }
 
     public void updateCurField(ArrayList<Minion> field) throws IOException {
+        if(curField != null){
+            curentPanel.remove(curField);
+            curentPanel.revalidate();
+            curentPanel.repaint();
+        }
+
+        curField = new JPanel();
+        curentPanel.add(curField);
+        curField.setLayout(new GridLayout(1, 7));
+        curField.setOpaque(false);
+        curFieldMinions = new ArrayList<>();
+        curFieldHPs = new ArrayList<>();
+        curFieldAttacks = new ArrayList<>();
+        curFieldManaCosts = new ArrayList<>();
+
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Minions/" + field.get(i).getName() + ".png"));
@@ -563,6 +576,20 @@ public class GameView extends JFrame {
 
 
     public void updateHand(ArrayList<Card> cards) throws IOException {
+        if(curHandRight != null && curHandLeft != null){
+            curentPanel.remove(curHandLeft);
+            curentPanel.remove(curHandRight);
+            curentPanel.revalidate();
+            curentPanel.repaint();
+        }
+
+        curHandLeft = new JPanel();
+        curHandRight = new JPanel();
+
+        curHandHPs = new ArrayList<>();
+        curHandAttacks = new ArrayList<>();
+        curHandManaCosts = new ArrayList<>();
+
         curentPanel.add(curHandLeft);
         curHandLeft.setOpaque(false);
         curHandLeft.setLayout(new GridLayout(1, 5));
