@@ -29,6 +29,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
         gameView = new GameView();
         gameView.setInitial();
         playMusic("Sound/Hearthstone_Music.wav");
+
+
         for (JRadioButton b : gameView.getChooseFirstHero()) {
             b.addMouseListener(this);
             b.addItemListener(this);
@@ -37,68 +39,84 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             b.addMouseListener(this);
             b.addItemListener(this);
         }
-        gameView.getStartGame().addMouseListener(this);
-    }
 
+        gameView.getStartGame().addMouseListener(this);
+
+    }
     public void onGameOver() {
 
     }
+
     private void playMusic(String path) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+
         try {
             AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
             Clip c = AudioSystem.getClip();
             c.open(a);
             c.start();
             c.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-        catch (IOException | UnsupportedAudioFileException | LineUnavailableException e){
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
             e.getStackTrace();
         }
+
     }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getComponent() instanceof JRadioButton){
             JRadioButton clickedButton = (JRadioButton) mouseEvent.getComponent();
-        int choosen = gameView.getChooseFirstHero().indexOf(clickedButton);
-        if (gameView.getChooseFirstHero().contains(clickedButton)) {
-            clickedButton.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN),
-                    gameView.getNames()[choosen], TitledBorder.CENTER,
-                    TitledBorder.BOTTOM, gameView.getFont()));
-            try {
-                firstHero = choosen == 0 ? new Mage() :
-                        choosen == 1 ? new Hunter() :
-                                choosen == 2 ? new Paladin() :
-                                        choosen == 3 ? new Priest() :
-                                                new Warlock();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+            int choosen = gameView.getChooseFirstHero().indexOf(clickedButton);
+            if (gameView.getChooseFirstHero().contains(clickedButton)) {
+                clickedButton.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN),
+                        gameView.getNames()[choosen], TitledBorder.CENTER,
+                        TitledBorder.BOTTOM, gameView.getFont()));
+                try {
+                    firstHero = choosen == 0 ? new Mage() :
+                            choosen == 1 ? new Hunter() :
+                                    choosen == 2 ? new Paladin() :
+                                            choosen == 3 ? new Priest() :
+                                                    new Warlock();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            } else if (gameView.getChooseSecondHero().contains(clickedButton)) {
+                choosen = gameView.getChooseSecondHero().indexOf(clickedButton);
+                clickedButton.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN),
+                        gameView.getNames()[choosen], TitledBorder.CENTER,
+                        TitledBorder.TOP, gameView.getFont()));
+                try {
+                    secondHero = choosen == 0 ? new Mage() :
+                            choosen == 1 ? new Hunter() :
+                                    choosen == 2 ? new Paladin() :
+                                            choosen == 3 ? new Priest() :
+                                                    new Warlock();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
             }
-
-        } else if (gameView.getChooseSecondHero().contains(clickedButton)) {
-            choosen = gameView.getChooseSecondHero().indexOf(clickedButton);
-            clickedButton.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN),
-                    gameView.getNames()[choosen], TitledBorder.CENTER,
-                    TitledBorder.TOP, gameView.getFont()));
-            try {
-                secondHero = choosen == 0 ? new Mage() :
-                        choosen == 1 ? new Hunter() :
-                                choosen == 2 ? new Paladin() :
-                                        choosen == 3 ? new Priest() :
-                                                new Warlock();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-        }
         } else {
-             JButton clickedButton =(JButton) mouseEvent.getComponent();
+            JButton clickedButton =(JButton) mouseEvent.getComponent();
             if (clickedButton.equals(gameView.getStartGame())) {
                 try {
                     game = new Game(firstHero, secondHero);
                     gameView.setGamePlay(game);
+                    for (JButton b : gameView.getOppFieldMinions()) {
+                        b.addMouseListener(this);
+                    }
+                    for (JButton b : gameView.getCurFieldMinions()) {
+                        b.addMouseListener(this);
+                    }
+                    for (JButton b : gameView.getCurHand()) {
+                        b.addMouseListener(this);
+                    }
+                    gameView.getEndTurnButton().addMouseListener(this);
+                    gameView.getHeroPowerButton().addMouseListener(this);
+                    gameView.getCurHero().addMouseListener(this);
+                    gameView.getOppHero().addMouseListener(this);
                 } catch (FullHandException e) {
                     e.printStackTrace();
                 } catch (CloneNotSupportedException e) {
@@ -113,11 +131,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         }
-
-
     }
 
     @Override
@@ -162,6 +177,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
     }
 
     public static void main(String[] args) throws FullHandException, FontFormatException, CloneNotSupportedException, IOException, LineUnavailableException, UnsupportedAudioFileException {
-        Controller c= new Controller();
+        Controller c = new Controller();
     }
 }
