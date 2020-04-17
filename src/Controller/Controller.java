@@ -36,7 +36,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
     public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException, LineUnavailableException, UnsupportedAudioFileException {
         gameView = new GameView();
         gameView.setInitial();
-        //playMusic("Sound/Hearthstone_Music.wav");
+        playMusic("Sound/Hearthstone_Music.wav");
 
 
         for (JRadioButton b : gameView.getChooseFirstHero()) {
