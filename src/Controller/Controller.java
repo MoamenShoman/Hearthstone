@@ -130,6 +130,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     gameView.getHeroPowerButton().addMouseListener(this);
 
                 } catch (FullHandException e) {
+
                     e.printStackTrace();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
@@ -430,6 +431,13 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     targetHero=null;
                     targetMinion=null;
                     heroPowerUser=null;
+                    updateUI();
+                    try {
+                        gameView.updateCurHeroIcon(game.getCurrentHero().getName());
+                        gameView.updateOppHeroIcon(game.getOpponent().getName());
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
