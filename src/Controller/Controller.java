@@ -121,6 +121,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             if (clickedButton.equals(gameView.getStartGame())) {
                 try {
                     game = new Game(firstHero, secondHero);
+                    game.setListener(this);
                     gameView.setGamePlay(game);
                     setCurHandListeners();
                     setCurFieldListeners();
@@ -129,6 +130,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     gameView.getHeroPowerButton().addMouseListener(this);
 
                 } catch (FullHandException e) {
+
                     e.printStackTrace();
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
@@ -171,6 +173,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 try {
                     game.getCurrentHero().castSpell((AOESpell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)),
                             game.getOpponent().getField());
+                    updateUI();
                 } catch (NotYourTurnException | NotEnoughManaException e) {
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
@@ -181,6 +184,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof FieldSpell)) {
                 try {
                     game.getCurrentHero().castSpell((FieldSpell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)));
+                    updateUI();
                 } catch (NotYourTurnException | NotEnoughManaException e) {
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
@@ -427,6 +431,13 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     targetHero=null;
                     targetMinion=null;
                     heroPowerUser=null;
+                    updateUI();
+                    try {
+                        gameView.updateCurHeroIcon(game.getCurrentHero().getName());
+                        gameView.updateOppHeroIcon(game.getOpponent().getName());
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",

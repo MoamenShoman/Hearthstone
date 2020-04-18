@@ -3,7 +3,7 @@ package exceptions;
 public class InvalidTargetException extends HearthstoneException {
 
     public InvalidTargetException(){
-        super("You can not attack the target.");
+        super("This target is invalid to attack");
     }
 
     public InvalidTargetException(String s){
