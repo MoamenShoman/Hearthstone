@@ -222,8 +222,10 @@ abstract public class Hero implements MinionListener {
     }
 
     public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
+        System.out.println(this.getCurrentManaCrystals());
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
+        System.out.println(this.getCurrentManaCrystals());
         validator.validateManaCost((Spell) s);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
         hand.remove(s);

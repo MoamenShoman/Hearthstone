@@ -30,7 +30,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
     private Minion targetMinion;
     private Spell attackerSpell;
     private Hero targetHero;
-
     private Hero heroPowerUser;
 
     public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException, LineUnavailableException, UnsupportedAudioFileException {
@@ -54,9 +53,9 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
     public void onGameOver() {
         Hero winner;
-        if(game.getCurrentHero().getCurrentHP() <= 0) {
+        if (game.getCurrentHero().getCurrentHP() <= 0) {
             winner = game.getOpponent();
-        }else{
+        } else {
             winner = game.getCurrentHero();
         }
         JOptionPane.showMessageDialog(gameView,
@@ -143,16 +142,14 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                /////// setInitial state ends here
+
             } else if (gameView.getCurHand().contains(clickedButton) &&
                     game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof Minion) {
                 try {
                     game.getCurrentHero().playMinion((Minion) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)));
-                    gameView.updateCurField(game.getCurrentHero().getField());
-                    gameView.updateHand(game.getCurrentHero().getHand());
-                    gameView.updateCurManaCrystalsNum(game.getCurrentHero().getCurrentManaCrystals(),
-                            game.getCurrentHero().getTotalManaCrystals());
-                    setCurHandListeners();
-                    setCurFieldListeners();
+                    updateUI();
                 } catch (FullFieldException e) {
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
@@ -168,8 +165,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             } else if (gameView.getCurHand().contains(clickedButton) &&
                     (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof AOESpell)) {
@@ -192,6 +187,130 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 }
+            } else if (gameView.getCurHand().contains(clickedButton) &&
+                    (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof MinionTargetSpell)) {
+                JOptionPane.showMessageDialog(gameView,
+                        "Choose your target",
+                        "Hearthstone",
+                        JOptionPane.WARNING_MESSAGE);
+                attackerSpell = (Spell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton));
+
+            } else if (gameView.getCurHand().contains(clickedButton) &&
+                    (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof HeroTargetSpell)) {
+                JOptionPane.showMessageDialog(gameView,
+                        "Choose your target",
+                        "Hearthstone",
+                        JOptionPane.WARNING_MESSAGE);
+                attackerSpell = (Spell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton));
+
+            } else if (gameView.getCurHand().contains(clickedButton) &&
+                    (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof LeechingSpell)) {
+                JOptionPane.showMessageDialog(gameView,
+                        "Choose your target",
+                        "Hearthstone",
+                        JOptionPane.WARNING_MESSAGE);
+                attackerSpell = (Spell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton));
+
+            } else if (gameView.getCurFieldMinions().contains(clickedButton)) {
+                if (attackerSpell != null && attackerSpell instanceof MinionTargetSpell) {
+                    targetMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton));
+                    try {
+                        game.getCurrentHero().castSpell((MinionTargetSpell) attackerSpell, targetMinion);
+                        attackerSpell = null;
+                        targetMinion = null;
+                        updateUI();
+                    } catch (NotYourTurnException | NotEnoughManaException | InvalidTargetException e) {
+                        attackerSpell = null;
+                        targetMinion = null;
+                        JOptionPane.showMessageDialog(gameView,
+                                e.getMessage(),
+                                "Hearthstone",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                } else if (attackerSpell != null && attackerSpell instanceof LeechingSpell) {
+                    targetMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton));
+                    try {
+                        game.getCurrentHero().castSpell((LeechingSpell) attackerSpell, targetMinion);
+                        attackerSpell = null;
+                        targetMinion = null;
+                        updateUI();
+                    } catch (NotYourTurnException | NotEnoughManaException e) {
+                        attackerSpell = null;
+                        targetMinion = null;
+                        JOptionPane.showMessageDialog(gameView,
+                                e.getMessage(),
+                                "Hearthstone",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                } else if (attackerMinion != null) {
+                    targetMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton));
+                    try {
+                        game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
+                        attackerMinion = null;
+                        targetMinion = null;
+                        updateUI();
+                    } catch (CannotAttackException | NotYourTurnException | TauntBypassException | InvalidTargetException | NotSummonedException e) {
+                        attackerMinion = null;
+                        targetMinion = null;
+                        JOptionPane.showMessageDialog(gameView,
+                                e.getMessage(),
+                                "Hearthstone",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                } else if (heroPowerUser == null) {
+                    attackerMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton));
+                    JOptionPane.showMessageDialog(gameView,
+                            "Choose your target",
+                            "Hearthstone",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else if (gameView.getOppFieldMinions().contains(clickedButton)) {
+                if (attackerMinion != null) {
+                    targetMinion = game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton));
+                    try {
+                        game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
+                        attackerMinion = null;
+                        targetMinion = null;
+                        updateUI();
+                    } catch (CannotAttackException | NotYourTurnException | TauntBypassException | InvalidTargetException | NotSummonedException e) {
+                        attackerMinion = null;
+                        targetMinion = null;
+                        JOptionPane.showMessageDialog(gameView,
+                                e.getMessage(),
+                                "Hearthstone",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                } else if (attackerSpell != null && attackerSpell instanceof MinionTargetSpell) {
+                    targetMinion = game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton));
+                    try {
+                        game.getCurrentHero().castSpell((MinionTargetSpell) attackerSpell, targetMinion);
+                        attackerSpell = null;
+                        targetMinion = null;
+                        updateUI();
+                    } catch (NotYourTurnException | NotEnoughManaException | InvalidTargetException e) {
+                        attackerSpell = null;
+                        targetMinion = null;
+                        JOptionPane.showMessageDialog(gameView,
+                                e.getMessage(),
+                                "Hearthstone",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                } else if (attackerSpell != null && attackerSpell instanceof LeechingSpell) {
+                    targetMinion = game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton));
+                    try {
+                        game.getCurrentHero().castSpell((LeechingSpell) attackerSpell, targetMinion);
+                        attackerSpell = null;
+                        targetMinion = null;
+                        updateUI();
+                    } catch (NotYourTurnException | NotEnoughManaException e) {
+                        attackerSpell = null;
+                        targetMinion = null;
+                        JOptionPane.showMessageDialog(gameView,
+                                e.getMessage(),
+                                "Hearthstone",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                }
             } else if (gameView.getCurFieldMinions().contains(clickedButton) && heroPowerUser != null && heroPowerUser instanceof Mage) {
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton)));
@@ -199,6 +318,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     updateUI();
                 } catch (NotEnoughManaException | CloneNotSupportedException | FullFieldException |
                         FullHandException | NotYourTurnException | HeroPowerAlreadyUsedException e) {
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
@@ -211,6 +331,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     updateUI();
                 } catch (NotEnoughManaException | CloneNotSupportedException | FullFieldException | FullHandException |
                         NotYourTurnException | HeroPowerAlreadyUsedException e) {
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
@@ -223,6 +344,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     updateUI();
                 } catch (NotEnoughManaException | CloneNotSupportedException | FullFieldException |
                         FullHandException | NotYourTurnException | HeroPowerAlreadyUsedException e) {
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
@@ -235,6 +357,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     updateUI();
                 } catch (NotEnoughManaException | CloneNotSupportedException | FullFieldException | FullHandException |
                         NotYourTurnException | HeroPowerAlreadyUsedException e) {
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
@@ -275,7 +398,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                     heroPowerUser = game.getCurrentHero();
-                }else if(game.getCurrentHero() instanceof Warlock){
+                } else if (game.getCurrentHero() instanceof Warlock) {
                     try {
                         game.getCurrentHero().useHeroPower();
                         updateUI();
@@ -287,21 +410,33 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                                 JOptionPane.WARNING_MESSAGE);
                     }
                 }
-            }else if(gameView.getEndTurnButton() == clickedButton){
+            } else if (gameView.getEndTurnButton() == clickedButton) {
                 try {
                     game.endTurn();
+                    attackerMinion=null;
+                    attackerSpell=null;
+                    targetHero=null;
+                    targetMinion=null;
+                    heroPowerUser=null;
                     updateUI();
                     gameView.updateCurHeroIcon(game.getCurrentHero().getName());
                     gameView.updateOppHeroIcon(game.getOpponent().getName());
                 } catch (FullHandException | CloneNotSupportedException e) {
+                    attackerMinion=null;
+                    attackerSpell=null;
+                    targetHero=null;
+                    targetMinion=null;
+                    heroPowerUser=null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
-                } catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+
+
         } else if (mouseEvent.getComponent() instanceof JLabel) {
             JLabel clicked = (JLabel) mouseEvent.getComponent();
             if (gameView.getCurHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Mage) {
@@ -311,11 +446,11 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     updateUI();
                 } catch (NotEnoughManaException | HeroPowerAlreadyUsedException | NotYourTurnException |
                         FullHandException | FullFieldException | CloneNotSupportedException e) {
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
-                            "Choose a target!",
+                            e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
-                    heroPowerUser = game.getCurrentHero();
                 }
             } else if (gameView.getOppHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Mage) {
                 try {
@@ -324,37 +459,97 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     updateUI();
                 } catch (NotEnoughManaException | HeroPowerAlreadyUsedException | NotYourTurnException |
                         FullHandException | FullFieldException | CloneNotSupportedException e) {
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
-                            "Choose a target!",
+                            e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
-                    heroPowerUser = game.getCurrentHero();
                 }
-            }else if (gameView.getCurHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Priest) {
+            } else if (gameView.getCurHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Priest) {
                 try {
-                    ((Mage) heroPowerUser).useHeroPower(game.getCurrentHero());
+                    ((Priest) heroPowerUser).useHeroPower(game.getCurrentHero());
                     heroPowerUser = null;
                     updateUI();
                 } catch (NotEnoughManaException | HeroPowerAlreadyUsedException | NotYourTurnException |
                         FullHandException | FullFieldException | CloneNotSupportedException e) {
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
-                            "Choose a target!",
+                            e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
-                    heroPowerUser = game.getCurrentHero();
                 }
             } else if (gameView.getOppHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Priest) {
                 try {
-                    ((Mage) heroPowerUser).useHeroPower(game.getOpponent());
+                    ((Priest) heroPowerUser).useHeroPower(game.getOpponent());
                     heroPowerUser = null;
                     updateUI();
                 } catch (NotEnoughManaException | HeroPowerAlreadyUsedException | NotYourTurnException |
                         FullHandException | FullFieldException | CloneNotSupportedException e) {
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
-                            "Choose a target!",
+                            e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
-                    heroPowerUser = game.getCurrentHero();
+                }
+            } else if (gameView.getOppHero() == clicked && attackerMinion != null) {
+                targetHero = game.getOpponent();
+                try {
+                    game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
+                    attackerMinion = null;
+                    targetHero = null;
+                    updateUI();
+                } catch (CannotAttackException | NotYourTurnException | TauntBypassException | NotSummonedException | InvalidTargetException e) {
+                    attackerMinion = null;
+                    targetHero = null;
+                    JOptionPane.showMessageDialog(gameView,
+                            e.getMessage(),
+                            "Hearthstone",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else if (gameView.getCurHero() == clicked && attackerMinion != null) {
+                targetHero = game.getCurrentHero();
+                try {
+                    game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
+                    attackerMinion = null;
+                    targetHero = null;
+                    updateUI();
+                } catch (CannotAttackException | NotYourTurnException | TauntBypassException | NotSummonedException | InvalidTargetException e) {
+                    attackerMinion = null;
+                    targetHero = null;
+                    JOptionPane.showMessageDialog(gameView,
+                            e.getMessage(),
+                            "Hearthstone",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else if (gameView.getCurHero() == clicked && attackerSpell != null && attackerSpell instanceof HeroTargetSpell) {
+                targetHero = game.getCurrentHero();
+                try {
+                    game.getCurrentHero().castSpell((HeroTargetSpell) attackerSpell, targetHero);
+                    attackerSpell = null;
+                    targetHero = null;
+                    updateUI();
+                } catch (NotYourTurnException | NotEnoughManaException e) {
+                    attackerSpell = null;
+                    targetHero = null;
+                    JOptionPane.showMessageDialog(gameView,
+                            e.getMessage(),
+                            "Hearthstone",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else if (gameView.getOppHero() == clicked && attackerSpell != null && attackerSpell instanceof HeroTargetSpell) {
+                targetHero = game.getOpponent();
+                try {
+                    game.getCurrentHero().castSpell((HeroTargetSpell) attackerSpell, targetHero);
+                    attackerSpell = null;
+                    targetHero = null;
+                    updateUI();
+                } catch (NotYourTurnException | NotEnoughManaException e) {
+                    attackerSpell = null;
+                    targetHero = null;
+                    JOptionPane.showMessageDialog(gameView,
+                            e.getMessage(),
+                            "Hearthstone",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
@@ -380,99 +575,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        if (mouseEvent.getComponent() instanceof JButton) {
-            JButton pressed = (JButton) mouseEvent.getComponent();
-            if (gameView.getCurFieldMinions() != null && gameView.getCurFieldMinions().contains(pressed)) {
-                attackerMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(pressed));
-            }
-            if (gameView.getCurHand() != null && gameView.getCurHand().contains(pressed)) {
-                if (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(pressed)) instanceof MinionTargetSpell ||
-                        game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(pressed)) instanceof HeroTargetSpell ||
-                        game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(pressed)) instanceof LeechingSpell) {
-                    attackerSpell = (Spell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(pressed));
-                    System.out.println(attackerSpell.getName());
-                }
-            }
-        }
+
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        JComponent component = (JComponent) mouseEvent.getComponent();
-        if ((gameView.getCurFieldMinions() != null && gameView.getCurFieldMinions().contains(component)) ||
-                (gameView.getOppFieldMinions() != null && gameView.getOppFieldMinions().contains(component)) ||
-                (gameView.getOppHero() != null && gameView.getOppHero() == component) ||
-                (gameView.getCurHero() != null && gameView.getCurHero() == component)) {
-            if (attackerMinion != null && targetMinion != null) {
-                try {
-                    game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
-                    updateUI();
-                    attackerMinion = null;
-                    targetMinion = null;
-                } catch (NotYourTurnException | TauntBypassException | CannotAttackException |
-                        NotSummonedException | InvalidTargetException e) {
-                    JOptionPane.showMessageDialog(gameView,
-                            e.getMessage(),
-                            "Hearthstone",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            } else if (attackerMinion != null && targetHero != null) {
-                try {
-                    game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
-                    System.out.println(attackerMinion.getName() + " " + targetHero.getName());
-                    updateUI();
-                    attackerMinion = null;
-                    targetHero = null;
-                } catch (NotYourTurnException | TauntBypassException | CannotAttackException |
-                        NotSummonedException | InvalidTargetException e) {
-                    JOptionPane.showMessageDialog(gameView,
-                            e.getMessage(),
-                            "Hearthstone",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            } else if (attackerSpell != null && targetMinion != null && attackerSpell instanceof MinionTargetSpell) {
-                try {
-                    game.getCurrentHero().castSpell((MinionTargetSpell) attackerSpell, targetMinion);
-                    updateUI();
-                    attackerSpell = null;
-                    targetMinion = null;
-                } catch (InvalidTargetException | NotEnoughManaException | NotYourTurnException e) {
-                    JOptionPane.showMessageDialog(gameView,
-                            e.getMessage(),
-                            "Hearthstone",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            } else if (attackerSpell != null && targetHero != null && attackerSpell instanceof HeroTargetSpell) {
-                try {
-                    game.getCurrentHero().castSpell((HeroTargetSpell) attackerSpell, targetHero);
-                    updateUI();
-                    attackerSpell = null;
-                    targetHero = null;
-                } catch (NotYourTurnException | NotEnoughManaException e) {
-                    JOptionPane.showMessageDialog(gameView,
-                            e.getMessage(),
-                            "Hearthstone",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            } else if (attackerSpell != null && targetMinion != null && attackerSpell instanceof LeechingSpell) {
-                try {
-                    game.getCurrentHero().castSpell((LeechingSpell) attackerSpell, targetMinion);
-                    updateUI();
-                    attackerSpell = null;
-                    targetMinion = null;
-                } catch (NotYourTurnException | NotEnoughManaException e) {
-                    JOptionPane.showMessageDialog(gameView,
-                            e.getMessage(),
-                            "Hearthstone",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        } else {
-            attackerMinion = null;
-            attackerSpell = null;
-            targetMinion = null;
-            targetHero = null;
-        }
+
     }
 
     private void updateUI() {
@@ -501,16 +609,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
-        JComponent component = (JComponent) mouseEvent.getComponent();
-        if (gameView.getCurFieldMinions() != null && gameView.getCurFieldMinions().contains(component)) {
-            targetMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(component));
-        } else if (gameView.getOppFieldMinions() != null && gameView.getOppFieldMinions().contains(component)) {
-            targetMinion = game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(component));
-        } else if (gameView.getCurHero() != null && gameView.getCurHero() == component) {
-            targetHero = game.getCurrentHero();
-        } else if (gameView.getOppHero() != null && gameView.getOppHero() == component) {
-            targetHero = game.getOpponent();
-        }
+
     }
 
     @Override
