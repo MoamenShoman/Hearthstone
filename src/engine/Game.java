@@ -62,13 +62,19 @@ public class Game implements HeroListener, ActionValidator {
             throw new NotSummonedException();
         }
         if (getCurrentHero().getField().contains(target)) {
-            throw new InvalidTargetException();
+            throw new InvalidTargetException("You can't attack a friendly minion");
         }
         if (!getOpponent().getField().contains(target)){
             throw new NotSummonedException();
         }
-        if (attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0) {
-            throw new CannotAttackException();
+        if (attacker.isSleeping()) {
+            throw new CannotAttackException("You can't attack with a sleeping minion");
+        }else{
+            if (attacker.isAttacked()){
+                throw new CannotAttackException("Your minion has already attacked");
+            }else if ( attacker.getAttack() == 0){
+                throw new  CannotAttackException("Your minion's attack is zero");
+            }
         }
         if (!target.isTaunt()) {
             boolean flag = false;
@@ -86,8 +92,14 @@ public class Game implements HeroListener, ActionValidator {
         if (!getCurrentHero().getField().contains(attacker)) {
             throw new NotSummonedException();
         }
-        if (attacker.isSleeping() || attacker.isAttacked() || attacker.getAttack() == 0) {
-            throw new CannotAttackException();
+        if (attacker.isSleeping()) {
+            throw new CannotAttackException("You can't attack with a sleeping minion");
+        }else{
+            if (attacker.isAttacked()){
+                throw new CannotAttackException("Your minion has already attacked");
+            }else if ( attacker.getAttack() == 0){
+                throw new  CannotAttackException("Your minion's attack is zero");
+            }
         }
         boolean flag = false;
         for (Minion m : getOpponent().getField()) {
@@ -97,7 +109,7 @@ public class Game implements HeroListener, ActionValidator {
         if (flag)
             throw new TauntBypassException();
         if (getCurrentHero() == target)
-            throw new InvalidTargetException();
+            throw new InvalidTargetException("You can't attack your hero");
 
     }
 
