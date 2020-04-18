@@ -128,7 +128,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     setOppFieldListeners();
                     gameView.getEndTurnButton().addMouseListener(this);
                     gameView.getHeroPowerButton().addMouseListener(this);
-
+                    gameView.getCurHero().addMouseListener(this);
+                    gameView.getOppHero().addMouseListener(this);
                 } catch (FullHandException e) {
                     e.printStackTrace();
                 } catch (CloneNotSupportedException e) {
@@ -384,13 +385,13 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             JButton pressed = (JButton) mouseEvent.getComponent();
             if (gameView.getCurFieldMinions() != null && gameView.getCurFieldMinions().contains(pressed)) {
                 attackerMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(pressed));
-            }
-            if (gameView.getCurHand() != null && gameView.getCurHand().contains(pressed)) {
+            } else if (gameView.getCurHand() != null && gameView.getCurHand().contains(pressed)) {
                 if (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(pressed)) instanceof MinionTargetSpell ||
                         game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(pressed)) instanceof HeroTargetSpell ||
                         game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(pressed)) instanceof LeechingSpell) {
                     attackerSpell = (Spell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(pressed));
-                    System.out.println(attackerSpell.getName());
+                    System.out.println(attackerSpell.getName() + " " + (attackerSpell instanceof MinionTargetSpell) + " " + (attackerSpell instanceof HeroTargetSpell)
+                     + " " + (attackerSpell instanceof LeechingSpell));
                 }
             }
         }
@@ -405,6 +406,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 (gameView.getCurHero() != null && gameView.getCurHero() == component)) {
             if (attackerMinion != null && targetMinion != null) {
                 try {
+                    System.out.println(attackerMinion.getName() + " " + targetMinion.getName());
                     game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
                     updateUI();
                     attackerMinion = null;
@@ -418,8 +420,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 }
             } else if (attackerMinion != null && targetHero != null) {
                 try {
-                    game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
                     System.out.println(attackerMinion.getName() + " " + targetHero.getName());
+                    game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
                     updateUI();
                     attackerMinion = null;
                     targetHero = null;
@@ -432,6 +434,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 }
             } else if (attackerSpell != null && targetMinion != null && attackerSpell instanceof MinionTargetSpell) {
                 try {
+                    System.out.println(attackerSpell.getName() + " " + targetMinion.getName());
                     game.getCurrentHero().castSpell((MinionTargetSpell) attackerSpell, targetMinion);
                     updateUI();
                     attackerSpell = null;
@@ -444,6 +447,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 }
             } else if (attackerSpell != null && targetHero != null && attackerSpell instanceof HeroTargetSpell) {
                 try {
+                    System.out.println(attackerSpell.getName() + " " + targetHero.getName());
                     game.getCurrentHero().castSpell((HeroTargetSpell) attackerSpell, targetHero);
                     updateUI();
                     attackerSpell = null;
@@ -456,6 +460,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 }
             } else if (attackerSpell != null && targetMinion != null && attackerSpell instanceof LeechingSpell) {
                 try {
+                    System.out.println(attackerSpell.getName() + " " + targetMinion.getName());
                     game.getCurrentHero().castSpell((LeechingSpell) attackerSpell, targetMinion);
                     updateUI();
                     attackerSpell = null;
@@ -502,13 +507,19 @@ public class Controller implements GameListener, MouseListener, ItemListener {
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
         JComponent component = (JComponent) mouseEvent.getComponent();
-        if (gameView.getCurFieldMinions() != null && gameView.getCurFieldMinions().contains(component)) {
+        if (gameView.getCurFieldMinions() != null && gameView.getCurFieldMinions().contains(component)
+                && (attackerMinion != null || attackerSpell != null)) {
             targetMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(component));
-        } else if (gameView.getOppFieldMinions() != null && gameView.getOppFieldMinions().contains(component)) {
+            System.out.println(targetMinion.getName());
+        } else if (gameView.getOppFieldMinions() != null && gameView.getOppFieldMinions().contains(component)
+                && (attackerMinion != null || attackerSpell != null)) {
             targetMinion = game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(component));
-        } else if (gameView.getCurHero() != null && gameView.getCurHero() == component) {
+            System.out.println(targetMinion.getName());
+        } else if (gameView.getCurHero() != null && gameView.getCurHero() == component &&
+                (attackerMinion != null || attackerSpell != null)) {
             targetHero = game.getCurrentHero();
-        } else if (gameView.getOppHero() != null && gameView.getOppHero() == component) {
+        } else if (gameView.getOppHero() != null && gameView.getOppHero() == component
+                && (attackerMinion != null || attackerSpell != null)) {
             targetHero = game.getOpponent();
         }
     }

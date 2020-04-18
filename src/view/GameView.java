@@ -359,13 +359,13 @@ public class GameView extends JFrame {
 
     public void updateCurHeroIcon(String name) throws IOException {
         Image currImage = ImageIO.read(new File("Heroes/" + name + ".png"));
-        ImageIcon curIcon = new ImageIcon(currImage.getScaledInstance(-200 * getWidth() / 1536, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        ImageIcon curIcon = new ImageIcon(currImage.getScaledInstance(-200 * getWidth() / 1536, (115 * getHeight() / 412), Image.SCALE_SMOOTH));
         curHero.setIcon(curIcon);
     }
 
     public void updateOppHeroIcon(String name) throws IOException {
         Image oppImage = ImageIO.read(new File("Heroes/" + name + ".png"));
-        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_SMOOTH));
         oppHero.setIcon(oppIcon);
     }
 
