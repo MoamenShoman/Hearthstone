@@ -96,7 +96,7 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
 
-        BufferedImage bufferedImage = ImageIO.read(new File("Backgrounds/initial1.jpg"));
+        BufferedImage bufferedImage = ImageIO.read(new File("initialBackground.png"));
         setContentPane(new Background(bufferedImage));
         setTitle("Hearthstone");
 
@@ -121,7 +121,7 @@ public class GameView extends JFrame {
 
 
 
-        exitButton0 = new JButton("Exit");
+        exitButton0 = new JButton();
         Image exitImage = ImageIO.read(new File("EXIT.png"));
         ImageIcon exitIcon = new ImageIcon(exitImage);
         exitButton0.setIcon(exitIcon);
