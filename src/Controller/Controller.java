@@ -594,7 +594,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
@@ -604,8 +603,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (FullHandException e) {
                     heroPowerUser = null;
+                } catch (FullHandException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
@@ -615,12 +614,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
@@ -630,8 +629,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (HeroPowerAlreadyUsedException e) {
                     heroPowerUser = null;
+                } catch (HeroPowerAlreadyUsedException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
@@ -641,6 +640,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                 } catch (InterruptedException e) {
 
                 }
@@ -666,7 +666,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
@@ -676,8 +675,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (FullHandException e) {
                     heroPowerUser = null;
+                } catch (FullHandException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
@@ -687,12 +686,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
@@ -702,8 +701,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (HeroPowerAlreadyUsedException e) {
                     heroPowerUser = null;
+                } catch (HeroPowerAlreadyUsedException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
@@ -713,6 +712,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                 } catch (InterruptedException e) {
 
                 }
@@ -737,7 +737,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
@@ -747,8 +746,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (FullHandException e) {
                     heroPowerUser = null;
+                } catch (FullHandException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
@@ -758,12 +757,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
@@ -773,8 +772,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (HeroPowerAlreadyUsedException e) {
                     heroPowerUser = null;
+                } catch (HeroPowerAlreadyUsedException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
@@ -784,6 +783,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                 } catch (InterruptedException e) {
 
                 }
@@ -807,7 +807,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
@@ -817,8 +816,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (FullHandException e) {
                     heroPowerUser = null;
+                } catch (FullHandException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
@@ -828,12 +827,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
@@ -843,8 +842,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (HeroPowerAlreadyUsedException e) {
                     heroPowerUser = null;
+                } catch (HeroPowerAlreadyUsedException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
@@ -854,6 +853,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                 } catch (InterruptedException e) {
                 }
             } else if (gameView.getHeroPowerButton() == clickedButton) {
@@ -1148,7 +1148,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
@@ -1158,8 +1157,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (FullHandException e) {
                     heroPowerUser = null;
+                } catch (FullHandException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
@@ -1169,12 +1168,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
@@ -1184,8 +1183,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (HeroPowerAlreadyUsedException e) {
                     heroPowerUser = null;
+                } catch (HeroPowerAlreadyUsedException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
@@ -1195,6 +1194,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                 } catch (InterruptedException e) {
 
                 }
@@ -1219,7 +1219,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
@@ -1229,8 +1228,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (FullHandException e) {
                     heroPowerUser = null;
+                } catch (FullHandException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
@@ -1240,12 +1239,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
@@ -1255,8 +1254,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (HeroPowerAlreadyUsedException e) {
                     heroPowerUser = null;
+                } catch (HeroPowerAlreadyUsedException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
@@ -1266,6 +1265,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                 } catch (InterruptedException e) {
 
                 }
@@ -1290,7 +1290,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
@@ -1300,8 +1299,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (FullHandException e) {
                     heroPowerUser = null;
+                } catch (FullHandException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
@@ -1311,12 +1310,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
@@ -1326,8 +1325,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (HeroPowerAlreadyUsedException e) {
                     heroPowerUser = null;
+                } catch (HeroPowerAlreadyUsedException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
@@ -1337,6 +1336,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                 } catch (InterruptedException e) {
 
                 }
@@ -1361,7 +1361,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
@@ -1371,8 +1370,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (FullHandException e) {
                     heroPowerUser = null;
+                } catch (FullHandException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
@@ -1382,12 +1381,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
-                    heroPowerUser = null;
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
@@ -1397,8 +1396,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
-                } catch (HeroPowerAlreadyUsedException e) {
                     heroPowerUser = null;
+                } catch (HeroPowerAlreadyUsedException e) {
                     try {
                         playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
@@ -1408,6 +1407,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                    heroPowerUser = null;
                 } catch (InterruptedException e) {
 
                 }
