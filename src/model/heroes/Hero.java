@@ -234,9 +234,9 @@ abstract public class Hero implements MinionListener {
         validator.validateTurn(this);
         ((Spell) s).setManaCost(((Spell) s).getManaCost() - reduceManaCost());
         validator.validateManaCost((Spell) s);
+        s.performAction(m);
         setCurrentManaCrystals(getCurrentManaCrystals() - ((Spell) s).getManaCost());
         hand.remove(s);
-        s.performAction(m);
     }
 
     public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
