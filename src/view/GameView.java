@@ -52,7 +52,8 @@ public class GameView extends JFrame {
     public GameView() throws IOException, FontFormatException {
         super();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(1280, 720);
+        setSize(1440, 817);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
         font = font.deriveFont(Font.PLAIN, 20);
@@ -84,17 +85,20 @@ public class GameView extends JFrame {
         getContentPane().removeAll();
         revalidate();
         repaint();
-        setVisible(true);
+
+        BufferedImage bufferedImage = ImageIO.read(new File("Backgrounds/initial1.jpg"));
+        setContentPane(new Background(bufferedImage));
+        setTitle("Hearthstone");
 
         this.setLayout(new GridLayout(3, 1));
 
         JPanel player1 = new JPanel();
         JPanel player2 = new JPanel();
-        JPanel start = new JPanel();
+        player1.setOpaque(false);
+        player2.setOpaque(false);
 
         player1.setLayout(new GridLayout(1, 6, 10, 0));
         player2.setLayout(new GridLayout(1, 6, 10, 0));
-        start.setLayout(new BorderLayout());
 
         player1.setSize(new Dimension(getWidth(), (int) (2 * getHeight() / 5)));
         player2.setSize(new Dimension(getWidth(), (int) (2 * getHeight() / 5)));
@@ -103,6 +107,8 @@ public class GameView extends JFrame {
         JLabel label2 = new JLabel("   Choose Second Hero");
         label1.setFont(font);
         label2.setFont(font);
+        label1.setForeground(Color.WHITE);
+        label2.setForeground(Color.WHITE);
 
         player1.add(label1);
         player2.add(label2);
@@ -123,9 +129,11 @@ public class GameView extends JFrame {
             button.setIcon(icon);
             button.setBorderPainted(true);
             button.setHorizontalAlignment(SwingConstants.CENTER);
-            button.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
+            TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                     names[i], TitledBorder.CENTER,
-                    TitledBorder.TOP, font));
+                    TitledBorder.BOTTOM, font);
+            border.setTitleColor(Color.WHITE);
+            button.setBorder(border);
             player1.add(button);
             chooseFirstHero.add(button);
             group1.add(button);
@@ -141,9 +149,11 @@ public class GameView extends JFrame {
             button.setBorderPainted(true);
             button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setContentAreaFilled(false);
-            button.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
+            TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                     names[i], TitledBorder.CENTER,
-                    TitledBorder.BOTTOM, font));
+                    TitledBorder.BOTTOM, font);
+            border.setTitleColor(Color.WHITE);
+            button.setBorder(border);
             player2.add(button);
             chooseSecondHero.add(button);
             group2.add(button);
@@ -159,6 +169,7 @@ public class GameView extends JFrame {
 
 
         JPanel startPanel = new JPanel(new GridBagLayout());
+        startPanel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
         startPanel.add(startGame, gbc);
         startPanel.setSize(new Dimension(getWidth() / 4, startPanel.getHeight()));
@@ -167,6 +178,7 @@ public class GameView extends JFrame {
 
         revalidate();
         repaint();
+        setVisible(true);
     }
 
 
@@ -191,7 +203,7 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
 
-        BufferedImage backgroundImage = ImageIO.read(new File("background.jpg"));
+        BufferedImage backgroundImage = ImageIO.read(new File("Backgrounds/background.jpg"));
         setContentPane(new Background(backgroundImage));
         setTitle("Hearthstone");
 
@@ -225,7 +237,7 @@ public class GameView extends JFrame {
         updateOppHeroIcon(game.getOpponent().getName());
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
-        oppHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + (5 * getHeight() / 412), size.width, size.height);
+        oppHero.setBounds(insets.left +620, insets.top-90 , size.width, size.height);
 
         oppHeroHP = new JTextArea("" );
         updateOppHeroHP(game.getOpponent().getCurrentHP());
@@ -237,7 +249,7 @@ public class GameView extends JFrame {
         oppHero.setLayout(null);
         Insets tmpInsets = oppHero.getInsets();
         Dimension tmpSize = oppHeroHP.getPreferredSize();
-        oppHeroHP.setBounds(tmpInsets.left + (130 * getWidth() / 1440), tmpInsets.top + (140 * getHeight() / 810), tmpSize.width, tmpSize.height);
+        oppHeroHP.setBounds(tmpInsets.left + 189, tmpInsets.top +234, tmpSize.width, tmpSize.height);
 
         JLabel oppHand = new JLabel();
         Image oppHandImage = ImageIO.read(new File("handBack.png"));
@@ -316,7 +328,7 @@ public class GameView extends JFrame {
         updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
-        curHero.setBounds(insets.left + (4 * getWidth() / 9), insets.top + 200 * getHeight() / 864, size.width, size.height);
+        curHero.setBounds(insets.left + 620, insets.top+110, size.width, size.height);
 
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
@@ -328,7 +340,7 @@ public class GameView extends JFrame {
         curHero.setLayout(null);
         tmpInsets = oppHero.getInsets();
         tmpSize = curHeroHP.getPreferredSize();
-        curHeroHP.setBounds(tmpInsets.left + (130 * getWidth() / 1440), tmpInsets.top + (140 * getHeight() / 810), tmpSize.width, tmpSize.height);
+        curHeroHP.setBounds(tmpInsets.left +189, tmpInsets.top + 234, tmpSize.width, tmpSize.height);
 
 
         updateCurField(game.getCurrentHero().getField());
@@ -359,13 +371,13 @@ public class GameView extends JFrame {
 
     public void updateCurHeroIcon(String name) throws IOException {
         Image currImage = ImageIO.read(new File("Heroes/" + name + ".png"));
-        ImageIcon curIcon = new ImageIcon(currImage.getScaledInstance(-200 * getWidth() / 1536, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        ImageIcon curIcon = new ImageIcon(currImage);
         curHero.setIcon(curIcon);
     }
 
     public void updateOppHeroIcon(String name) throws IOException {
         Image oppImage = ImageIO.read(new File("Heroes/" + name + ".png"));
-        ImageIcon oppIcon = new ImageIcon(oppImage.getScaledInstance(-200, (115 * getHeight() / 412), Image.SCALE_DEFAULT));
+        ImageIcon oppIcon = new ImageIcon(oppImage);
         oppHero.setIcon(oppIcon);
     }
 

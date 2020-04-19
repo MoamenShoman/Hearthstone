@@ -18,6 +18,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Controller implements GameListener, MouseListener, ItemListener {
@@ -65,7 +66,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
         System.exit(0);
     }
 
-    private void playMusic(String path) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    private void playMusic(String path){
 
         try {
             AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
@@ -73,10 +74,25 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             c.open(a);
             c.start();
             c.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
-            e.getStackTrace();
-        }
+        } catch (UnsupportedAudioFileException | LineUnavailableException e) {
+            e.printStackTrace();
+        }catch (IOException e){
 
+        }
+    }
+
+    private long playSound(String path){
+
+        try {
+            AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            Clip c = AudioSystem.getClip();
+            c.open(a);
+            c.start();
+            return c.getMicrosecondLength();
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
@@ -85,9 +101,11 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             JRadioButton clickedButton = (JRadioButton) mouseEvent.getComponent();
             int choosen = gameView.getChooseFirstHero().indexOf(clickedButton);
             if (gameView.getChooseFirstHero().contains(clickedButton)) {
-                clickedButton.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN),
+                TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN),
                         gameView.getNames()[choosen], TitledBorder.CENTER,
-                        TitledBorder.BOTTOM, gameView.getFont()));
+                        TitledBorder.BOTTOM, gameView.getFont());
+                border.setTitleColor(Color.WHITE);
+                clickedButton.setBorder(border);
                 try {
                     firstHero = choosen == 0 ? new Mage() :
                             choosen == 1 ? new Hunter() :
@@ -101,9 +119,11 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 }
             } else if (gameView.getChooseSecondHero().contains(clickedButton)) {
                 choosen = gameView.getChooseSecondHero().indexOf(clickedButton);
-                clickedButton.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN),
+                TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN),
                         gameView.getNames()[choosen], TitledBorder.CENTER,
-                        TitledBorder.TOP, gameView.getFont()));
+                        TitledBorder.TOP, gameView.getFont());
+                border.setTitleColor(Color.white);
+                clickedButton.setBorder(border);
                 try {
                     secondHero = choosen == 0 ? new Mage() :
                             choosen == 1 ? new Hunter() :
@@ -150,8 +170,10 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             } else if (gameView.getCurHand().contains(clickedButton) &&
                     game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof Minion) {
                 try {
-                    game.getCurrentHero().playMinion((Minion) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)));
+                    Minion played = (Minion) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton));
+                    game.getCurrentHero().playMinion(played);
                     updateUI();
+                    playSound("Sound/" + played.getName() + "/play.wav");
                 } catch (FullFieldException e) {
                     JOptionPane.showMessageDialog(gameView,
                             e.getMessage(),
@@ -250,9 +272,9 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     targetMinion = game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton));
                     try {
                         game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
+                        updateUI();
                         attackerMinion = null;
                         targetMinion = null;
-                        updateUI();
                     } catch (CannotAttackException | NotYourTurnException | TauntBypassException | InvalidTargetException | NotSummonedException e) {
                         attackerMinion = null;
                         targetMinion = null;
@@ -273,6 +295,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     targetMinion = game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton));
                     try {
                         game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
+                        Thread.sleep(playSound("Sound/" + attackerMinion.getName() + "/attack.wav") / 1000);
+                        if(targetMinion.getCurrentHP() <= 0){
+                            playSound("Sound/" + targetMinion.getName() + "/death.wav");
+                        }if(attackerMinion.getCurrentHP() <= 0){
+                            playSound("Sound/" + attackerMinion.getName() + "/death.wav");
+                        }
                         attackerMinion = null;
                         targetMinion = null;
                         updateUI();
@@ -283,6 +311,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                                 e.getMessage(),
                                 "Hearthstone",
                                 JOptionPane.WARNING_MESSAGE);
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
                     }
                 } else if (attackerSpell != null && attackerSpell instanceof MinionTargetSpell) {
                     targetMinion = game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton));
@@ -506,6 +536,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 targetHero = game.getOpponent();
                 try {
                     game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
+                    playSound("Sound/" + attackerMinion.getName() + "/attack.wav");
                     attackerMinion = null;
                     targetHero = null;
                     updateUI();
@@ -635,15 +666,19 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             int deselected;
             if (gameView.getChooseFirstHero().contains(b)) {
                 deselected = gameView.getChooseFirstHero().indexOf(b);
-                b.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
+                TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                         gameView.getNames()[deselected], TitledBorder.CENTER,
-                        TitledBorder.TOP, gameView.getFont()));
+                        TitledBorder.TOP, gameView.getFont());
+                border.setTitleColor(Color.white);
+                b.setBorder(border);
             } else {
                 if (gameView.getChooseSecondHero().contains(b)) {
                     deselected = gameView.getChooseSecondHero().indexOf(b);
-                    b.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
+                    TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                             gameView.getNames()[deselected], TitledBorder.CENTER,
-                            TitledBorder.BOTTOM, gameView.getFont()));
+                            TitledBorder.BOTTOM, gameView.getFont());
+                    border.setTitleColor(Color.white);
+                    b.setBorder(border);
                 }
             }
         }
