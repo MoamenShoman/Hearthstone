@@ -18,7 +18,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Controller implements GameListener, MouseListener, ItemListener {
@@ -66,7 +65,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
         System.exit(0);
     }
 
-    private void playMusic(String path){
+    private void playMusic(String path) {
 
         try {
             AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
@@ -76,12 +75,12 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             c.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException | LineUnavailableException e) {
             e.printStackTrace();
-        }catch (IOException e){
+        } catch (IOException e) {
 
         }
     }
 
-    private long playSound(String path){
+    private long playSound(String path) {
 
         try {
             AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
@@ -148,7 +147,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     setOppFieldListeners();
                     gameView.getEndTurnButton().addMouseListener(this);
                     gameView.getHeroPowerButton().addMouseListener(this);
-
                 } catch (FullHandException e) {
 
                     e.printStackTrace();
@@ -192,6 +190,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 }
             } else if (gameView.getCurHand().contains(clickedButton) &&
                     (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof AOESpell)) {
+
                 try {
                     game.getCurrentHero().castSpell((AOESpell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)),
                             game.getOpponent().getField());
@@ -231,6 +230,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
             } else if (gameView.getCurHand().contains(clickedButton) &&
                     (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof LeechingSpell)) {
+                System.out.println("LeechingSpell");
                 JOptionPane.showMessageDialog(gameView,
                         "Choose your target",
                         "Hearthstone",
@@ -296,9 +296,10 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     try {
                         game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
                         Thread.sleep(playSound("Sound/" + attackerMinion.getName() + "/attack.wav") / 1000);
-                        if(targetMinion.getCurrentHP() <= 0){
+                        if (targetMinion.getCurrentHP() <= 0) {
                             playSound("Sound/" + targetMinion.getName() + "/death.wav");
-                        }if(attackerMinion.getCurrentHP() <= 0){
+                        }
+                        if (attackerMinion.getCurrentHP() <= 0) {
                             playSound("Sound/" + attackerMinion.getName() + "/death.wav");
                         }
                         attackerMinion = null;
@@ -311,7 +312,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                                 e.getMessage(),
                                 "Hearthstone",
                                 JOptionPane.WARNING_MESSAGE);
-                    }catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else if (attackerSpell != null && attackerSpell instanceof MinionTargetSpell) {
@@ -346,6 +347,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     }
                 }
             } else if (gameView.getCurFieldMinions().contains(clickedButton) && heroPowerUser != null && heroPowerUser instanceof Mage) {
+
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton)));
                     heroPowerUser = null;
@@ -372,6 +374,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             JOptionPane.WARNING_MESSAGE);
                 }
             } else if (gameView.getCurFieldMinions().contains(clickedButton) && heroPowerUser != null && heroPowerUser instanceof Priest) {
+
+
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton)));
                     heroPowerUser = null;
@@ -398,7 +402,10 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             JOptionPane.WARNING_MESSAGE);
                 }
             } else if (gameView.getHeroPowerButton() == clickedButton) {
+
                 if (game.getCurrentHero() instanceof Hunter) {
+
+
                     try {
                         game.getCurrentHero().useHeroPower();
                         updateUI();
@@ -447,20 +454,20 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             } else if (gameView.getEndTurnButton() == clickedButton) {
                 try {
                     game.endTurn();
-                    attackerMinion=null;
-                    attackerSpell=null;
-                    targetHero=null;
-                    targetMinion=null;
-                    heroPowerUser=null;
+                    attackerMinion = null;
+                    attackerSpell = null;
+                    targetHero = null;
+                    targetMinion = null;
+                    heroPowerUser = null;
                     updateUI();
                     gameView.updateCurHeroIcon(game.getCurrentHero().getName());
                     gameView.updateOppHeroIcon(game.getOpponent().getName());
                 } catch (FullHandException | CloneNotSupportedException e) {
-                    attackerMinion=null;
-                    attackerSpell=null;
-                    targetHero=null;
-                    targetMinion=null;
-                    heroPowerUser=null;
+                    attackerMinion = null;
+                    attackerSpell = null;
+                    targetHero = null;
+                    targetMinion = null;
+                    heroPowerUser = null;
                     updateUI();
                     try {
                         gameView.updateCurHeroIcon(game.getCurrentHero().getName());
@@ -651,7 +658,46 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
+        if (mouseEvent.getComponent() instanceof JButton) {
 
+            JButton button = (JButton) mouseEvent.getComponent();
+            if (gameView.getStartGame() != button) {
+                final Point point = button.getLocation();
+                final int delay = 35;
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 2; i++) {
+                            try {
+                                moveButton(new Point(point.x + 2, point.y), button);
+                                Thread.sleep(delay);
+                                moveButton(point, button);
+                                Thread.sleep(delay);
+                                moveButton(new Point(point.x - 2, point.y), button);
+                                Thread.sleep(delay);
+                                moveButton(point, button);
+                                Thread.sleep(delay);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+
+                    }
+                };
+                Thread t = new Thread(r);
+                t.start();
+
+            }
+        }
+    }
+
+    private void moveButton(final Point p, JButton button) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                button.setLocation(p);
+            }
+        });
     }
 
     @Override
