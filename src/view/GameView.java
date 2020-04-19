@@ -96,7 +96,7 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
 
-        BufferedImage bufferedImage = ImageIO.read(new File("Backgrounds/initial1.jpg"));
+        BufferedImage bufferedImage = ImageIO.read(new File("initialBackground.png"));
         setContentPane(new Background(bufferedImage));
         setTitle("Hearthstone");
 
