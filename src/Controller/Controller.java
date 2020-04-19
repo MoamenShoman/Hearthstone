@@ -13,10 +13,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,21 +32,15 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
     public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException, LineUnavailableException, UnsupportedAudioFileException {
         gameView = new GameView();
-        gameView.setInitial();
+        gameView.setInitial0();
         playMusic("Sound/Hearthstone_Music.wav");
-
-
-        for (JRadioButton b : gameView.getChooseFirstHero()) {
-            b.addMouseListener(this);
-            b.addItemListener(this);
-        }
-        for (JRadioButton b : gameView.getChooseSecondHero()) {
-            b.addMouseListener(this);
-            b.addItemListener(this);
-        }
-
-        gameView.getStartGame().addMouseListener(this);
-
+        gameView.getExitButton0().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        gameView.getStartButton0().addMouseListener(this);
     }
 
     public void onGameOver() {
@@ -66,7 +57,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
         System.exit(0);
     }
 
-    private void playMusic(String path) {
+    private void playMusic(String path){
 
         try {
             AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
@@ -76,7 +67,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             c.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException | LineUnavailableException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }catch (IOException e){
 
         }
     }
@@ -138,7 +129,25 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             }
         } else if (mouseEvent.getComponent() instanceof JButton) {
             JButton clickedButton = (JButton) mouseEvent.getComponent();
-            if (clickedButton.equals(gameView.getStartGame())) {
+            if (gameView.getStartButton0() == clickedButton) {
+                try {
+                    gameView.setInitial();
+                    for (JRadioButton b : gameView.getChooseFirstHero()) {
+                        b.addMouseListener(this);
+                        b.addItemListener(this);
+                    }
+                    for (JRadioButton b : gameView.getChooseSecondHero()) {
+                        b.addMouseListener(this);
+                        b.addItemListener(this);
+                    }
+
+                    gameView.getStartGame().addMouseListener(this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
+            } else if (clickedButton.equals(gameView.getStartGame())) {
                 try {
                     game = new Game(firstHero, secondHero);
                     game.setListener(this);
@@ -373,14 +382,14 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                         attackerMinion = null;
                         targetMinion = null;
                         updateUI();
-                    } catch (CannotAttackException | NotYourTurnException | InvalidTargetException | NotSummonedException e) {
+                    } catch (CannotAttackException | NotYourTurnException | TauntBypassException | InvalidTargetException | NotSummonedException e) {
                         attackerMinion = null;
                         targetMinion = null;
                         JOptionPane.showMessageDialog(gameView,
                                 e.getMessage(),
                                 "Hearthstone",
                                 JOptionPane.WARNING_MESSAGE);
-                    } catch (InterruptedException e) {
+                    }catch (InterruptedException e){
                         e.printStackTrace();
                     }catch (IOException e){
                         attackerMinion = null;
@@ -1231,7 +1240,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     attackerSpell = null;
                     targetHero = null;
                     updateUI();
-                } catch (NotYourTurnException e) {
+                } catch (NotYourTurnException | NotEnoughManaException e) {
                     attackerSpell = null;
                     targetHero = null;
                     JOptionPane.showMessageDialog(gameView,
@@ -1334,6 +1343,11 @@ public class Controller implements GameListener, MouseListener, ItemListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
     }
 
     @Override

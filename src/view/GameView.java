@@ -48,6 +48,8 @@ public class GameView extends JFrame {
     private JButton endTurnButton;
     private JLabel oppHero;
     private JLabel curHero;
+    private JButton exitButton0;
+    private JButton startButton0;
 
     public GameView() throws IOException, FontFormatException {
         super();
@@ -57,6 +59,14 @@ public class GameView extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
         font = font.deriveFont(Font.PLAIN, 20);
+    }
+
+    public JButton getExitButton0() {
+        return exitButton0;
+    }
+
+    public JButton getStartButton0() {
+        return startButton0;
     }
 
     @Override
@@ -80,13 +90,74 @@ public class GameView extends JFrame {
         return chooseSecondHero;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    public void setInitial0() throws IOException {
+        getContentPane().removeAll();
+        revalidate();
+        repaint();
+
+        BufferedImage bufferedImage = ImageIO.read(new File("Backgrounds/initial1.jpg"));
+        setContentPane(new Background(bufferedImage));
+        setTitle("Hearthstone");
+
+        JPanel start = new JPanel();
+        JPanel exit = new JPanel();
+
+        start.setOpaque(false);
+        exit.setOpaque(false);
+
+        setLayout(null);
+
+        startButton0 = new JButton();
+
+        Image startImage = ImageIO.read(new File("startGame.png"));
+        ImageIcon startImageIcon = new ImageIcon(startImage);
+        startButton0.setIcon(startImageIcon);
+        startButton0.setContentAreaFilled(false);
+        startButton0.setBorderPainted(false);
+        Insets insets =startButton0.getInsets();
+        Dimension size=startButton0.getPreferredSize();
+        startButton0.setBounds(insets.left+180, insets.top-0, size.width, size.height);
+
+
+
+        exitButton0 = new JButton("Exit");
+        Image exitImage = ImageIO.read(new File("EXIT.png"));
+        ImageIcon exitIcon = new ImageIcon(exitImage);
+        exitButton0.setIcon(exitIcon);
+        exitButton0.setContentAreaFilled(false);
+        exitButton0.setBorderPainted(false);
+        insets =exitButton0.getInsets();
+        size=exitButton0.getPreferredSize();
+        exitButton0.setBounds(insets.left+180, insets.top+400 ,size.width, size.height);
+
+
+        add(startButton0);
+        add(exitButton0);
+
+        //start.add(startButton0);
+        //exit.add(exitButton0);
+
+
+
+        revalidate();
+        repaint();
+        setVisible(true);
+
+
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////
+
+
     public void setInitial() throws IOException, FontFormatException {
 
         getContentPane().removeAll();
         revalidate();
         repaint();
 
-        BufferedImage bufferedImage = ImageIO.read(new File("Backgrounds/initial1.jpg"));
+        BufferedImage bufferedImage = ImageIO.read(new File("Backgrounds/initial2.jpg"));
         setContentPane(new Background(bufferedImage));
         setTitle("Hearthstone");
 
@@ -237,9 +308,9 @@ public class GameView extends JFrame {
         updateOppHeroIcon(game.getOpponent().getName());
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
-        oppHero.setBounds(insets.left +620, insets.top-90 , size.width, size.height);
+        oppHero.setBounds(insets.left + 620, insets.top - 90, size.width, size.height);
 
-        oppHeroHP = new JTextArea("" );
+        oppHeroHP = new JTextArea("");
         updateOppHeroHP(game.getOpponent().getCurrentHP());
         oppHero.add(oppHeroHP);
         oppHeroHP.setEditable(false);
@@ -249,7 +320,7 @@ public class GameView extends JFrame {
         oppHero.setLayout(null);
         Insets tmpInsets = oppHero.getInsets();
         Dimension tmpSize = oppHeroHP.getPreferredSize();
-        oppHeroHP.setBounds(tmpInsets.left + 189, tmpInsets.top +234, tmpSize.width, tmpSize.height);
+        oppHeroHP.setBounds(tmpInsets.left + 189, tmpInsets.top + 234, tmpSize.width, tmpSize.height);
 
         JLabel oppHand = new JLabel();
         Image oppHandImage = ImageIO.read(new File("handBack.png"));
@@ -259,7 +330,7 @@ public class GameView extends JFrame {
         oppPanel.add(oppHand);
         oppHand.setBounds(insets.left + (95 * getWidth() / 144), insets.top, size.width, size.height);
 
-        oppHandNum = new JTextArea( );
+        oppHandNum = new JTextArea();
         updateOppHandNum(game.getOpponent().getHand().size());
         oppHandNum.setEditable(false);
         oppHandNum.setOpaque(false);
@@ -278,7 +349,7 @@ public class GameView extends JFrame {
 
 
         oppManaCrystalsNum = new JTextArea();
-        updateOppManaCrystalsNum(game.getOpponent().getCurrentManaCrystals() , game.getOpponent().getTotalManaCrystals());
+        updateOppManaCrystalsNum(game.getOpponent().getCurrentManaCrystals(), game.getOpponent().getTotalManaCrystals());
         oppManaCrystalsNum.setEditable(false);
         oppManaCrystalsNum.setOpaque(false);
         oppManaCrystalsNum.setFont(font);
@@ -313,7 +384,7 @@ public class GameView extends JFrame {
         curDeckNum.setBounds(insets.left + (11 * getWidth() / 144), insets.top + (50 * getHeight() / 450), size.width, size.height);
 
         curManaCrystalsNum = new JTextArea();
-        updateCurManaCrystalsNum(game.getCurrentHero().getCurrentManaCrystals(),game.getCurrentHero().getTotalManaCrystals());
+        updateCurManaCrystalsNum(game.getCurrentHero().getCurrentManaCrystals(), game.getCurrentHero().getTotalManaCrystals());
         curentPanel.add(curManaCrystalsNum);
         curManaCrystalsNum.setFont(font);
         curManaCrystalsNum.setOpaque(false);
@@ -328,7 +399,7 @@ public class GameView extends JFrame {
         updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
-        curHero.setBounds(insets.left + 620, insets.top+110, size.width, size.height);
+        curHero.setBounds(insets.left + 620, insets.top + 110, size.width, size.height);
 
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
@@ -340,7 +411,7 @@ public class GameView extends JFrame {
         curHero.setLayout(null);
         tmpInsets = oppHero.getInsets();
         tmpSize = curHeroHP.getPreferredSize();
-        curHeroHP.setBounds(tmpInsets.left +189, tmpInsets.top + 234, tmpSize.width, tmpSize.height);
+        curHeroHP.setBounds(tmpInsets.left + 189, tmpInsets.top + 234, tmpSize.width, tmpSize.height);
 
 
         updateCurField(game.getCurrentHero().getField());
@@ -394,15 +465,15 @@ public class GameView extends JFrame {
     }
 
     public void updateCurHeroHP(int currentHP) {
-        curHeroHP.setText(""+currentHP);
+        curHeroHP.setText("" + currentHP);
     }
 
     public void updateOppHeroHP(int currentHP) {
-        oppHeroHP.setText(""+currentHP);
+        oppHeroHP.setText("" + currentHP);
     }
 
     public void updateOppDeckNum(int size) {
-        oppDeckNum.setText("Remaining\ncards\nin the deck: " +size);
+        oppDeckNum.setText("Remaining\ncards\nin the deck: " + size);
     }
 
     public void updateOppHandNum(int size) {
@@ -410,18 +481,17 @@ public class GameView extends JFrame {
     }
 
     public void updateOppManaCrystalsNum(int currentManaCrystals, int totalManaCrystals) {
-        oppManaCrystalsNum.setText("Remaining\nMana Crystals: " +currentManaCrystals+ "/" +
+        oppManaCrystalsNum.setText("Remaining\nMana Crystals: " + currentManaCrystals + "/" +
                 totalManaCrystals);
     }
 
-    public void updateCurManaCrystalsNum(int currentManaCrystals , int total) {
-        curManaCrystalsNum.setText("Remaining\nMana Crystals: "+currentManaCrystals+"/"+total );
+    public void updateCurManaCrystalsNum(int currentManaCrystals, int total) {
+        curManaCrystalsNum.setText("Remaining\nMana Crystals: " + currentManaCrystals + "/" + total);
     }
 
     public void updateCurDeckNum(int size) {
         curDeckNum.setText("Remaining\ncards\nin deck: " + size);
     }
-
 
 
     private void setOppFieldAttributesLocations() {
@@ -447,7 +517,7 @@ public class GameView extends JFrame {
     }
 
     public void updateOppField(ArrayList<Minion> field) throws IOException {
-        if(oppField != null){
+        if (oppField != null) {
             oppPanel.remove(oppField);
             oppPanel.revalidate();
             oppPanel.repaint();
@@ -481,7 +551,8 @@ public class GameView extends JFrame {
         setOppFieldAttributes(field);
         setOppFieldAttributesLocations();
     }
-    public void setOppFieldAttributes(ArrayList<Minion> field){
+
+    public void setOppFieldAttributes(ArrayList<Minion> field) {
         for (int i = 0; i < field.size(); i++) {
             oppFieldHPs.add(new JTextArea(field.get(i).getCurrentHP() + ""));
             oppFieldHPs.get(i).setFont(font);
@@ -527,7 +598,7 @@ public class GameView extends JFrame {
     }
 
     public void updateCurField(ArrayList<Minion> field) throws IOException {
-        if(curField != null){
+        if (curField != null) {
             curentPanel.remove(curField);
             curentPanel.revalidate();
             curentPanel.repaint();
@@ -561,8 +632,8 @@ public class GameView extends JFrame {
         setCurFieldAttributesLocations();
     }
 
-    public  void setCurHandAttributes(ArrayList<Card> hand) {
-        for (int i = 0; i <hand.size(); i++) {
+    public void setCurHandAttributes(ArrayList<Card> hand) {
+        for (int i = 0; i < hand.size(); i++) {
 
             curHandHPs.add(new JTextArea(hand.get(i) instanceof Minion ? ((Minion) hand.get(i)).getCurrentHP() + "" : ""));
             curHandHPs.get(i).setFont(font);
@@ -588,7 +659,7 @@ public class GameView extends JFrame {
 
 
     public void updateHand(ArrayList<Card> cards) throws IOException {
-        if(curHandRight != null && curHandLeft != null){
+        if (curHandRight != null && curHandLeft != null) {
             curentPanel.remove(curHandLeft);
             curentPanel.remove(curHandRight);
             curentPanel.revalidate();
