@@ -13,10 +13,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -34,21 +31,15 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
     public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException, LineUnavailableException, UnsupportedAudioFileException {
         gameView = new GameView();
-        gameView.setInitial();
+        gameView.setInitial0();
         playMusic("Sound/Hearthstone_Music.wav");
-
-
-        for (JRadioButton b : gameView.getChooseFirstHero()) {
-            b.addMouseListener(this);
-            b.addItemListener(this);
-        }
-        for (JRadioButton b : gameView.getChooseSecondHero()) {
-            b.addMouseListener(this);
-            b.addItemListener(this);
-        }
-
-        gameView.getStartGame().addMouseListener(this);
-
+        gameView.getExitButton0().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        gameView.getStartButton0().addMouseListener(this);
     }
 
     public void onGameOver() {
@@ -89,7 +80,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             c.start();
             return c.getMicrosecondLength();
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
-            e.printStackTrace();
+
         }
         return 0;
     }
@@ -135,9 +126,30 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     e.printStackTrace();
                 }
             }
+
+
+
         } else if (mouseEvent.getComponent() instanceof JButton) {
             JButton clickedButton = (JButton) mouseEvent.getComponent();
-            if (clickedButton.equals(gameView.getStartGame())) {
+            if (gameView.getStartButton0() == clickedButton) {
+                try {
+                    gameView.setInitial();
+                    for (JRadioButton b : gameView.getChooseFirstHero()) {
+                        b.addMouseListener(this);
+                        b.addItemListener(this);
+                    }
+                    for (JRadioButton b : gameView.getChooseSecondHero()) {
+                        b.addMouseListener(this);
+                        b.addItemListener(this);
+                    }
+
+                    gameView.getStartGame().addMouseListener(this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
+            } else if (clickedButton.equals(gameView.getStartGame())) {
                 try {
                     game = new Game(firstHero, secondHero);
                     game.setListener(this);
