@@ -121,7 +121,7 @@ public class GameView extends JFrame {
 
 
 
-        exitButton0 = new JButton("Exit");
+        exitButton0 = new JButton();
         Image exitImage = ImageIO.read(new File("EXIT.png"));
         ImageIcon exitIcon = new ImageIcon(exitImage);
         exitButton0.setIcon(exitIcon);
