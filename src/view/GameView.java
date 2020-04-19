@@ -90,7 +90,6 @@ public class GameView extends JFrame {
         return chooseSecondHero;
     }
 
-    ///////////////////////////////////////////////////////////////////////////
     public void setInitial0() throws IOException {
         getContentPane().removeAll();
         revalidate();
@@ -146,10 +145,6 @@ public class GameView extends JFrame {
 
 
     }
-
-
-    //////////////////////////////////////////////////////////////////////////
-
 
     public void setInitial() throws IOException, FontFormatException {
 
