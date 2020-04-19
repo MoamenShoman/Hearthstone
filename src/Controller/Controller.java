@@ -44,11 +44,24 @@ public class Controller implements GameListener, MouseListener, ItemListener {
     }
 
     public void onGameOver() {
-        Hero winner;
+        Hero winner, loser;
         if (game.getCurrentHero().getCurrentHP() <= 0) {
             winner = game.getOpponent();
+            loser = game.getCurrentHero();
         } else {
             winner = game.getCurrentHero();
+            loser = game.getOpponent();
+        }
+        try {
+            Thread.sleep(playSound("Sound/Heroes/" + loser.getName() +"/death.wav") / 1000);
+        } catch (InterruptedException e) {
+
+        } catch (IOException e) {
+            try {
+                Thread.sleep(playSound("Sound/Heroes/Rexxar/death.wav") / 1000);
+            } catch (IOException | InterruptedException e1){
+
+            }
         }
         JOptionPane.showMessageDialog(gameView,
                 "Winner is: " + winner.getName(),
@@ -157,7 +170,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     setOppFieldListeners();
                     gameView.getEndTurnButton().addMouseListener(this);
                     gameView.getHeroPowerButton().addMouseListener(this);
-
+                    Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/start.wav") / 1000);
+                    Thread.sleep(playSound("Sound/Heroes/" + game.getOpponent().getName() + "/start.wav") / 1000);
                 } catch (FullHandException e) {
 
                     e.printStackTrace();
@@ -172,6 +186,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                }catch (InterruptedException e){
+
                 }
 
                 /////// setInitial state ends here
@@ -209,7 +225,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 }catch (IOException e){
-
+                    updateUI();
                 }
             } else if (gameView.getCurHand().contains(clickedButton) &&
                     (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof AOESpell)) {
@@ -286,7 +302,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                         attackerSpell = null;
                         targetMinion = null;
                         updateUI();
-                    } catch (NotYourTurnException | InvalidTargetException e) {
+                    } catch (NotYourTurnException e) {
                         attackerSpell = null;
                         targetMinion = null;
                         JOptionPane.showMessageDialog(gameView,
@@ -301,6 +317,18 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                         } catch (IOException ex) {
                             try {
                                 playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            } catch (IOException exc) {
+
+                            }
+                        }
+                    } catch (InvalidTargetException e){
+                        attackerSpell = null;
+                        targetMinion = null;
+                        try {
+                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                        } catch (IOException ex) {
+                            try {
+                                playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
                             } catch (IOException exc) {
 
                             }
@@ -340,7 +368,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                         updateUI();
                         attackerMinion = null;
                         targetMinion = null;
-                    } catch (CannotAttackException | NotYourTurnException | InvalidTargetException | NotSummonedException e) {
+                    } catch (NotYourTurnException | NotSummonedException e) {
                         attackerMinion = null;
                         targetMinion = null;
                         JOptionPane.showMessageDialog(gameView,
@@ -355,6 +383,47 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                         } catch (IOException ex) {
                             try {
                                 playSound("Sound/Heroes/Rexxar/taunt.wav");
+                            } catch (IOException exc) {
+
+                            }
+                        }
+                    } catch (CannotAttackException e){
+                        attackerMinion = null;
+                        targetMinion = null;
+                        if(e.getMessage().equals("You can't attack with a sleeping minion")){
+                            try {
+                                playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
+                            } catch (IOException ex) {
+                                try {
+                                    playSound("Sound/Heroes/Uther Lightbringer/sleeping.wav");
+                                } catch (IOException exc) {
+
+                                }
+                            }
+                        }else if(e.getMessage().equals("Your minion has already attacked")){
+                            try {
+                                playSound("Sound/Heroes/" + game.getCurrentHero() +"/already_attacked.wav");
+                            } catch (IOException ex) {
+                                try {
+                                    playSound("Sound/Heroes/Rexxar/already_attacked.wav");
+                                } catch (IOException exc) {
+
+                                }
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(gameView,
+                                    e.getMessage(),
+                                    "Hearthstone",
+                                    JOptionPane.WARNING_MESSAGE);
+                        }
+                    } catch (InvalidTargetException e){
+                        attackerMinion = null;
+                        targetMinion = null;
+                        try {
+                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                        } catch (IOException ex) {
+                            try {
+                                playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
                             } catch (IOException exc) {
 
                             }
@@ -382,7 +451,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                         attackerMinion = null;
                         targetMinion = null;
                         updateUI();
-                    } catch (CannotAttackException | NotYourTurnException | TauntBypassException | InvalidTargetException | NotSummonedException e) {
+                    } catch (NotYourTurnException | NotSummonedException e) {
                         attackerMinion = null;
                         targetMinion = null;
                         JOptionPane.showMessageDialog(gameView,
@@ -403,6 +472,47 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                         } catch (IOException ex) {
                             try {
                                 playSound("Sound/Heroes/Rexxar/taunt.wav");
+                            } catch (IOException exc) {
+
+                            }
+                        }
+                    }catch (CannotAttackException e){
+                        attackerMinion = null;
+                        targetMinion = null;
+                        if(e.getMessage().equals("You can't attack with a sleeping minion")){
+                            try {
+                                playSound("Sound/Heroes/" + game.getCurrentHero().getName() +"/sleeping.wav");
+                            } catch (IOException ex) {
+                                try {
+                                    playSound("Sound/Heroes/Uther Lightbringer/sleeping.wav");
+                                } catch (IOException exc) {
+
+                                }
+                            }
+                        }else if(e.getMessage().equals("Your minion has already attacked")){
+                            try {
+                                playSound("Sound/Heroes/" + game.getCurrentHero().getName() +"/already_attacked.wav");
+                            } catch (IOException ex) {
+                                try {
+                                    playSound("Sound/Heroes/Rexxar/already_attacked.wav");
+                                } catch (IOException exc) {
+                                    exc.printStackTrace();
+                                }
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(gameView,
+                                    e.getMessage(),
+                                    "Hearthstone",
+                                    JOptionPane.WARNING_MESSAGE);
+                        }
+                    } catch (InvalidTargetException e){
+                        attackerMinion = null;
+                        targetMinion = null;
+                        try {
+                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                        } catch (IOException ex) {
+                            try {
+                                playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
                             } catch (IOException exc) {
 
                             }
@@ -467,6 +577,15 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton)));
                     heroPowerUser = null;
+                    try {
+                        Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
+                    }catch (IOException e){
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                        }catch (IOException | InterruptedException ex){
+
+                        }
+                    }
                     updateUI();
                 } catch ( CloneNotSupportedException | NotYourTurnException e) {
                     heroPowerUser = null;
@@ -522,10 +641,21 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                }catch (InterruptedException e){
+
                 }
             } else if (gameView.getOppFieldMinions().contains(clickedButton) && heroPowerUser != null && heroPowerUser instanceof Mage) {
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton)));
+                    try {
+                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() +"/attack.wav") / 1000);
+                    }catch (IOException e){
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                        }catch (IOException | InterruptedException ex){
+
+                        }
+                    }
                     heroPowerUser = null;
                     updateUI();
                 } catch (CloneNotSupportedException |
@@ -583,10 +713,21 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                }catch (InterruptedException e){
+
                 }
             } else if (gameView.getCurFieldMinions().contains(clickedButton) && heroPowerUser != null && heroPowerUser instanceof Priest) {
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton)));
+                    try {
+                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() +"/attack.wav") / 1000);
+                    }catch (IOException e){
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                        }catch (IOException | InterruptedException ex){
+
+                        }
+                    }
                     heroPowerUser = null;
                     updateUI();
                 } catch (CloneNotSupportedException | NotYourTurnException e) {
@@ -643,10 +784,21 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                } catch (InterruptedException e){
+
                 }
             } else if (gameView.getOppFieldMinions().contains(clickedButton) && heroPowerUser != null && heroPowerUser instanceof Priest) {
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton)));
+                    try {
+                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
+                    }catch (IOException e){
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                        }catch (IOException | InterruptedException e1){
+
+                        }
+                    }
                     heroPowerUser = null;
                     updateUI();
                 } catch (CloneNotSupportedException | NotYourTurnException e) {
@@ -703,11 +855,22 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                } catch (InterruptedException e){
+
                 }
             } else if (gameView.getHeroPowerButton() == clickedButton) {
                 if (game.getCurrentHero() instanceof Hunter) {
                     try {
                         game.getCurrentHero().useHeroPower();
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() +"/attack.wav") / 1000);
+                        }catch (IOException e){
+                            try {
+                                Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            }catch (IOException | InterruptedException e1){
+
+                            }
+                        }
                         updateUI();
                     } catch (NotYourTurnException | CloneNotSupportedException e) {
                         JOptionPane.showMessageDialog(gameView,
@@ -758,6 +921,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                             }
                         }
+                    } catch (InterruptedException e){
+
                     }
                 } else if (game.getCurrentHero() instanceof Mage) {
                     JOptionPane.showMessageDialog(gameView,
@@ -768,6 +933,15 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 } else if (game.getCurrentHero() instanceof Paladin) {
                     try {
                         ((Paladin) game.getCurrentHero()).useHeroPower();
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() +"/attack.wav") / 1000);
+                        }catch (IOException e){
+                            try {
+                                Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            }catch (IOException | InterruptedException e1){
+
+                            }
+                        }
                         updateUI();
                     } catch (NotYourTurnException | CloneNotSupportedException e) {
                         JOptionPane.showMessageDialog(gameView,
@@ -818,6 +992,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                             }
                         }
+                    } catch (InterruptedException e){
+
                     }
                 } else if (game.getCurrentHero() instanceof Priest) {
                     JOptionPane.showMessageDialog(gameView,
@@ -828,6 +1004,15 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 } else if (game.getCurrentHero() instanceof Warlock) {
                     try {
                         game.getCurrentHero().useHeroPower();
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() +"/attack.wav") / 1000);
+                        }catch (IOException e){
+                            try {
+                                Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            }catch (IOException | InterruptedException e1){
+
+                            }
+                        }
                         updateUI();
                     } catch (NotYourTurnException | CloneNotSupportedException e) {
                         JOptionPane.showMessageDialog(gameView,
@@ -878,6 +1063,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                             }
                         }
+                    } catch (InterruptedException e){
+
                     }
                 }
             } else if (gameView.getEndTurnButton() == clickedButton) {
@@ -939,6 +1126,15 @@ public class Controller implements GameListener, MouseListener, ItemListener {
             if (gameView.getCurHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Mage) {
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getCurrentHero());
+                    try {
+                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() +"/attack.wav") / 1000);
+                    }catch (IOException e){
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                        }catch (IOException | InterruptedException e1){
+
+                        }
+                    }
                     heroPowerUser = null;
                     updateUI();
                 } catch (NotYourTurnException | CloneNotSupportedException e) {
@@ -995,10 +1191,21 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                } catch (InterruptedException e){
+
                 }
             } else if (gameView.getOppHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Mage) {
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getOpponent());
+                    try {
+                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() +"/attack.wav") / 1000);
+                    }catch (IOException e){
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                        }catch (IOException | InterruptedException e1){
+
+                        }
+                    }
                     heroPowerUser = null;
                     updateUI();
                 } catch (NotYourTurnException | CloneNotSupportedException e) {
@@ -1055,10 +1262,21 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                } catch (InterruptedException e){
+
                 }
             } else if (gameView.getCurHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Priest) {
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getCurrentHero());
+                    try {
+                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() +"/attack.wav") / 1000);
+                    }catch (IOException e){
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                        }catch (IOException | InterruptedException e1){
+
+                        }
+                    }
                     heroPowerUser = null;
                     updateUI();
                 } catch (NotYourTurnException | CloneNotSupportedException e) {
@@ -1115,10 +1333,21 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                } catch (InterruptedException e){
+
                 }
             } else if (gameView.getOppHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Priest) {
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getOpponent());
+                    try {
+                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() +"/attack.wav") / 1000);
+                    }catch (IOException e){
+                        try {
+                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                        }catch (IOException | InterruptedException e1){
+
+                        }
+                    }
                     heroPowerUser = null;
                     updateUI();
                 } catch (NotYourTurnException | CloneNotSupportedException e) {
@@ -1175,6 +1404,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                } catch (InterruptedException e){
+
                 }
             } else if (gameView.getOppHero() == clicked && attackerMinion != null) {
                 targetHero = game.getOpponent();
@@ -1184,7 +1415,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     attackerMinion = null;
                     targetHero = null;
                     updateUI();
-                } catch (CannotAttackException | NotYourTurnException | NotSummonedException | InvalidTargetException e) {
+                } catch (NotYourTurnException | NotSummonedException e) {
                     attackerMinion = null;
                     targetHero = null;
                     JOptionPane.showMessageDialog(gameView,
@@ -1192,7 +1423,9 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (IOException e){
-
+                    attackerMinion = null;
+                    targetHero = null;
+                    updateUI();
                 } catch (TauntBypassException e){
                     attackerMinion = null;
                     targetHero = null;
@@ -1205,6 +1438,47 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                } catch (CannotAttackException e){
+                    attackerMinion = null;
+                    targetHero = null;
+                    if(e.getMessage().equals("You can't attack with a sleeping minion")){
+                        try {
+                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() +"/sleeping.wav");
+                        } catch (IOException ex) {
+                            try {
+                                playSound("Sound/Heroes/Uther Lightbringer/sleeping.wav");
+                            } catch (IOException exc) {
+
+                            }
+                        }
+                    }else if(e.getMessage().equals("Your minion has already attacked")){
+                        try {
+                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/already_attacked.wav");
+                        } catch (IOException ex) {
+                            try {
+                                playSound("Sound/Heroes/Rexxar/already_attacked.wav");
+                            } catch (IOException exc) {
+
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(gameView,
+                                e.getMessage(),
+                                "Hearthstone",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (InvalidTargetException e){
+                    attackerMinion = null;
+                    targetHero = null;
+                    try {
+                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                    } catch (IOException ex) {
+                        try {
+                            playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
+                        } catch (IOException exc) {
+
+                        }
+                    }
                 }
             } else if (gameView.getCurHero() == clicked && attackerMinion != null) {
                 targetHero = game.getCurrentHero();
@@ -1213,7 +1487,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     attackerMinion = null;
                     targetHero = null;
                     updateUI();
-                } catch (CannotAttackException | NotYourTurnException | NotSummonedException | InvalidTargetException e) {
+                } catch (NotYourTurnException | NotSummonedException e) {
                     attackerMinion = null;
                     targetHero = null;
                     JOptionPane.showMessageDialog(gameView,
@@ -1232,6 +1506,47 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
                         }
                     }
+                } catch (CannotAttackException e){
+                    attackerMinion = null;
+                    targetHero = null;
+                    if(e.getMessage().equals("You can't attack with a sleeping minion")){
+                        try {
+                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() +"/sleeping.wav");
+                        } catch (IOException ex) {
+                            try {
+                                playSound("Sound/Heroes/Uther Lightbringer/sleeping.wav");
+                            } catch (IOException exc) {
+
+                            }
+                        }
+                    }else if(e.getMessage().equals("Your minion has already attacked")){
+                        try {
+                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/already_attacked.wav");
+                        } catch (IOException ex) {
+                            try {
+                                playSound("Sound/Heroes/Rexxar/already_attacked.wav");
+                            } catch (IOException exc) {
+
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(gameView,
+                                e.getMessage(),
+                                "Hearthstone",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                }catch (InvalidTargetException e){
+                    attackerMinion = null;
+                    targetHero = null;
+                    try {
+                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                    } catch (IOException ex) {
+                        try {
+                            playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
+                        } catch (IOException exc) {
+
+                        }
+                    }
                 }
             } else if (gameView.getCurHero() == clicked && attackerSpell != null && attackerSpell instanceof HeroTargetSpell) {
                 targetHero = game.getCurrentHero();
@@ -1240,7 +1555,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                     attackerSpell = null;
                     targetHero = null;
                     updateUI();
-                } catch (NotYourTurnException | NotEnoughManaException e) {
+                } catch (NotYourTurnException e) {
                     attackerSpell = null;
                     targetHero = null;
                     JOptionPane.showMessageDialog(gameView,
@@ -1343,11 +1658,6 @@ public class Controller implements GameListener, MouseListener, ItemListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
     }
 
     @Override
