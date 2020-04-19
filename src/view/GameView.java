@@ -52,7 +52,7 @@ public class GameView extends JFrame {
     public GameView() throws IOException, FontFormatException {
         super();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(1920, 1080);
+        setSize(1440, 817);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
@@ -85,17 +85,20 @@ public class GameView extends JFrame {
         getContentPane().removeAll();
         revalidate();
         repaint();
-        setVisible(true);
+
+        BufferedImage bufferedImage = ImageIO.read(new File("Backgrounds/initial1.jpg"));
+        setContentPane(new Background(bufferedImage));
+        setTitle("Hearthstone");
 
         this.setLayout(new GridLayout(3, 1));
 
         JPanel player1 = new JPanel();
         JPanel player2 = new JPanel();
-        JPanel start = new JPanel();
+        player1.setOpaque(false);
+        player2.setOpaque(false);
 
         player1.setLayout(new GridLayout(1, 6, 10, 0));
         player2.setLayout(new GridLayout(1, 6, 10, 0));
-        start.setLayout(new BorderLayout());
 
         player1.setSize(new Dimension(getWidth(), (int) (2 * getHeight() / 5)));
         player2.setSize(new Dimension(getWidth(), (int) (2 * getHeight() / 5)));
@@ -104,6 +107,8 @@ public class GameView extends JFrame {
         JLabel label2 = new JLabel("   Choose Second Hero");
         label1.setFont(font);
         label2.setFont(font);
+        label1.setForeground(Color.WHITE);
+        label2.setForeground(Color.WHITE);
 
         player1.add(label1);
         player2.add(label2);
@@ -124,9 +129,11 @@ public class GameView extends JFrame {
             button.setIcon(icon);
             button.setBorderPainted(true);
             button.setHorizontalAlignment(SwingConstants.CENTER);
-            button.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
+            TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                     names[i], TitledBorder.CENTER,
-                    TitledBorder.TOP, font));
+                    TitledBorder.BOTTOM, font);
+            border.setTitleColor(Color.WHITE);
+            button.setBorder(border);
             player1.add(button);
             chooseFirstHero.add(button);
             group1.add(button);
@@ -142,9 +149,11 @@ public class GameView extends JFrame {
             button.setBorderPainted(true);
             button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setContentAreaFilled(false);
-            button.setBorder(BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
+            TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                     names[i], TitledBorder.CENTER,
-                    TitledBorder.BOTTOM, font));
+                    TitledBorder.BOTTOM, font);
+            border.setTitleColor(Color.WHITE);
+            button.setBorder(border);
             player2.add(button);
             chooseSecondHero.add(button);
             group2.add(button);
@@ -160,6 +169,7 @@ public class GameView extends JFrame {
 
 
         JPanel startPanel = new JPanel(new GridBagLayout());
+        startPanel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
         startPanel.add(startGame, gbc);
         startPanel.setSize(new Dimension(getWidth() / 4, startPanel.getHeight()));
@@ -168,6 +178,7 @@ public class GameView extends JFrame {
 
         revalidate();
         repaint();
+        setVisible(true);
     }
 
 
@@ -192,7 +203,7 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
 
-        BufferedImage backgroundImage = ImageIO.read(new File("background.jpg"));
+        BufferedImage backgroundImage = ImageIO.read(new File("Backgrounds/background.jpg"));
         setContentPane(new Background(backgroundImage));
         setTitle("Hearthstone");
 
