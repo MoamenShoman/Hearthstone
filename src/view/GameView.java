@@ -535,7 +535,8 @@ public class GameView extends JFrame {
 
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/" + field.get(i).getName() + ".png"));
+            System.out.println(field.get(i).getName());
+            BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -616,7 +617,7 @@ public class GameView extends JFrame {
 
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Minions/" + field.get(i).getName() + ".png"));
+            BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 85 * getHeight() / 432, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
