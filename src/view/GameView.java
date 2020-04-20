@@ -116,7 +116,7 @@ public class GameView extends JFrame {
         startButton0.setBorderPainted(false);
         Insets insets =startButton0.getInsets();
         Dimension size=startButton0.getPreferredSize();
-        startButton0.setBounds(insets.left+180, insets.top-0, size.width, size.height);
+        startButton0.setBounds(insets.left+445, insets.top+150, size.width-500, size.height-390);
 
 
 
@@ -128,7 +128,7 @@ public class GameView extends JFrame {
         exitButton0.setBorderPainted(false);
         insets =exitButton0.getInsets();
         size=exitButton0.getPreferredSize();
-        exitButton0.setBounds(insets.left+180, insets.top+400 ,size.width, size.height);
+        exitButton0.setBounds(insets.left+600, insets.top+450 ,size.width-810, size.height-390);
 
 
         add(startButton0);
@@ -419,12 +419,18 @@ public class GameView extends JFrame {
         endTurnButton.setContentAreaFilled(false);
         endTurnButton.setBounds(insets.left + (685 * getWidth() / 768), insets.top, size.width, size.height);
 
-        heroPowerButton = new JButton("HERO POWER");
-        heroPowerButton.setFont(font);
+        heroPowerButton = new JButton();
+        Image heroPowerImage = ImageIO.read(new File("HeroPower.png"));
+        ImageIcon heroPowerImageIcon = new ImageIcon(heroPowerImage.getScaledInstance(300, -1, Image.SCALE_SMOOTH));
+        heroPowerButton.setIcon(heroPowerImageIcon);
+        heroPowerButton.setContentAreaFilled(false);
+        heroPowerButton.setBorderPainted(false);
+        //heroPowerButton.setFont(font);
         curentPanel.add(heroPowerButton);
         heroPowerButton.setContentAreaFilled(false);
         size = heroPowerButton.getPreferredSize();
-        heroPowerButton.setBounds(insets.left + (675 * getWidth() / 768), insets.top + (35 * getHeight() / 432), size.width, size.height);
+        insets = heroPowerButton.getInsets();
+        heroPowerButton.setBounds(insets.left+1250 , insets.top+30 , size.width-185, size.height-100);
 
         add(oppPanel);
         add(curentPanel);
@@ -674,9 +680,14 @@ public class GameView extends JFrame {
         curHandLeftMinions = new ArrayList<>();
         int j = 0;
         curHand = new ArrayList<>();
+        Dimension size;
+        Insets insets = curentPanel.getInsets();
+        size = curHandLeft.getPreferredSize();
+        curHandLeft.setBounds(insets.left, insets.top + 190, size.width + 142*5, size.height +196);
         for (int i = 0; i < 5 && j < cards.size(); i++, j++) {
             JButton b = new JButton();
             String p;
+
             if (cards.get(j) instanceof ShadowWordDeath) {
                 p = "Spells/Shadow Word Death.png";
             } else {
@@ -686,8 +697,9 @@ public class GameView extends JFrame {
                     p = "Spells/" + cards.get(j).getName() + ".png";
                 }
             }
+
             BufferedImage image = ImageIO.read(new File(p));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -695,10 +707,6 @@ public class GameView extends JFrame {
             curHandLeftMinions.add(b);
             curHand.add(b);
         }
-        Dimension size;
-        Insets insets = curentPanel.getInsets();
-        size = curHandLeft.getPreferredSize();
-        curHandLeft.setBounds(insets.left, insets.top + 230 * getHeight() / 864, size.width - 100 * getWidth() / 1536, size.height);
 
         curentPanel.add(curHandRight);
         curHandRight.setLayout(new GridLayout(1, 5));
