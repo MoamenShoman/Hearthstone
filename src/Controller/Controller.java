@@ -17,9 +17,10 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Controller implements GameListener, MouseListener, ItemListener {
-    public Game game;
+public class Controller implements GameListener, MouseListener, ItemListener, ActionListener{
+    private Game game;
     private GameView gameView;
     private Hero firstHero;
     private Hero secondHero;
@@ -29,6 +30,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
     private Spell attackerSpell;
     private Hero targetHero;
     private Hero heroPowerUser;
+
+    private Clip c;
 
     public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException, LineUnavailableException, UnsupportedAudioFileException {
         gameView = new GameView();
@@ -54,29 +57,28 @@ public class Controller implements GameListener, MouseListener, ItemListener {
         }
         try {
             Thread.sleep(playSound("Sound/Heroes/" + loser.getName() + "/death.wav") / 1000);
+            gameView.setFinal(winner);
+            gameView.getPlayAgain().addActionListener(this);
+            gameView.getExitFinal().addActionListener(this);
         } catch (InterruptedException e) {
 
         } catch (IOException e) {
             try {
                 Thread.sleep(playSound("Sound/Heroes/Rexxar/death.wav") / 1000);
+                gameView.setFinal(winner);
+                gameView.getPlayAgain().addActionListener(this);
+                gameView.getExitFinal().addActionListener(this);
             } catch (IOException | InterruptedException e1) {
 
             }
         }
-        JOptionPane.showMessageDialog(gameView,
-                "Winner is: " + winner.getName(),
-                "Hearthstone",
-                JOptionPane.WARNING_MESSAGE);
-        System.exit(0);
     }
-
-
 
     private void playMusic(String path) {
 
         try {
             AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
-            Clip c = AudioSystem.getClip();
+            c = AudioSystem.getClip();
             c.open(a);
             c.start();
             c.loop(Clip.LOOP_CONTINUOUSLY);
@@ -1707,7 +1709,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < 1; i++) {
+                        for (int i = 0; i < 2; i++) {
                             try {
                                 moveButton(new Point(point.x + 2, point.y), button);
                                 Thread.sleep(delay);
@@ -1742,5 +1744,33 @@ public class Controller implements GameListener, MouseListener, ItemListener {
 
     public static void main(String[] args) throws FullHandException, FontFormatException, CloneNotSupportedException, IOException, LineUnavailableException, UnsupportedAudioFileException {
         Controller c = new Controller();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == gameView.getPlayAgain()){
+            gameView.setVisible(false);
+            c.stop();
+            gameView = null;
+            game = null;
+            System.gc();
+            try {
+                main(new String[]{});
+            } catch (FullHandException ex) {
+                ex.printStackTrace();
+            } catch (CloneNotSupportedException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (FontFormatException ex) {
+                ex.printStackTrace();
+            } catch (LineUnavailableException ex) {
+                ex.printStackTrace();
+            } catch (UnsupportedAudioFileException ex) {
+                ex.printStackTrace();
+            }
+        }else{
+            System.exit(0);
+        }
     }
 }
