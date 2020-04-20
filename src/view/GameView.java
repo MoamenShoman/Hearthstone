@@ -412,12 +412,15 @@ public class GameView extends JFrame {
         updateCurField(game.getCurrentHero().getField());
 
 
-        endTurnButton = new JButton("END TURN");
-        endTurnButton.setFont(font);
+        endTurnButton = new JButton();
+        Image endTurnImage = ImageIO.read(new File("endTurn.png"));
+        ImageIcon endTurnImageIcon = new ImageIcon(endTurnImage);
+        endTurnButton.setIcon(endTurnImageIcon);
+        //endTurnButton.setFont(font);
         curentPanel.add(endTurnButton);
         size = endTurnButton.getPreferredSize();
         endTurnButton.setContentAreaFilled(false);
-        endTurnButton.setBounds(insets.left + (685 * getWidth() / 768), insets.top, size.width, size.height);
+        endTurnButton.setBounds(insets.left + 1291, insets.top, size.width-248, size.height-148);
 
         heroPowerButton = new JButton();
         Image heroPowerImage = ImageIO.read(new File("HeroPower.png"));
@@ -430,7 +433,7 @@ public class GameView extends JFrame {
         heroPowerButton.setContentAreaFilled(false);
         size = heroPowerButton.getPreferredSize();
         insets = heroPowerButton.getInsets();
-        heroPowerButton.setBounds(insets.left+1250 , insets.top+30 , size.width-185, size.height-100);
+        heroPowerButton.setBounds(insets.left+1255 , insets.top+45 , size.width-185, size.height-100);
 
         add(oppPanel);
         add(curentPanel);
