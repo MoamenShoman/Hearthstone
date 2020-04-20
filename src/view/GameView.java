@@ -755,7 +755,10 @@ public class GameView extends JFrame{
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
-            b.setBorderPainted(false);
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.BLACK), cards.get(j).getRarity().toString(),
+                    TitledBorder.LEFT, TitledBorder.BOTTOM,
+                    font);
+            b.setBorder(border);
             curHandRight.add(b);
             curHandRightMinions.add(b);
             curHand.add(b);
