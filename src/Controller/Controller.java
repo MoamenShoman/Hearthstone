@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Controller implements GameListener, MouseListener, ItemListener {
-    private Game game;
+    public Game game;
     private GameView gameView;
     private Hero firstHero;
     private Hero secondHero;
@@ -69,6 +69,8 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 JOptionPane.WARNING_MESSAGE);
         System.exit(0);
     }
+
+
 
     private void playMusic(String path) {
 
@@ -1705,7 +1707,7 @@ public class Controller implements GameListener, MouseListener, ItemListener {
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < 2; i++) {
+                        for (int i = 0; i < 1; i++) {
                             try {
                                 moveButton(new Point(point.x + 2, point.y), button);
                                 Thread.sleep(delay);
