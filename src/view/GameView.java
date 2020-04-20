@@ -6,19 +6,21 @@ import exceptions.FullHandException;
 import model.cards.Card;
 import model.cards.minions.Minion;
 import model.cards.spells.ShadowWordDeath;
-import model.heroes.Hunter;
-import model.heroes.Paladin;
+import model.heroes.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameView extends JFrame {
+public class GameView extends JFrame{
 
     private ArrayList<JTextArea> curFieldHPs, curFieldAttacks, curFieldManaCosts, oppFieldHPs, oppFieldAttacks, oppFieldManaCosts,
             curHandHPs, curHandAttacks, curHandManaCosts;
@@ -50,6 +52,17 @@ public class GameView extends JFrame {
     private JLabel curHero;
     private JButton exitButton0;
     private JButton startButton0;
+
+    public JButton getPlayAgain() {
+        return playAgain;
+    }
+
+    public JButton getExitFinal() {
+        return exitFinal;
+    }
+
+    private JButton playAgain;
+    private JButton exitFinal;
 
     public GameView() throws IOException, FontFormatException {
         super();
@@ -710,6 +723,15 @@ public class GameView extends JFrame {
             curHandLeftMinions.add(b);
             curHand.add(b);
         }
+        int rem = 5 - curHand.size();
+        while(rem > 0){
+            JButton b = new JButton();
+            b.setPreferredSize(new Dimension(140, 193));
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
+            curHandLeft.add(b);
+            rem--;
+        }
 
         curentPanel.add(curHandRight);
         curHandRight.setLayout(new GridLayout(1, 5));
@@ -736,6 +758,15 @@ public class GameView extends JFrame {
             curHandRight.add(b);
             curHandRightMinions.add(b);
             curHand.add(b);
+        }
+        rem = 10 - curHand.size();
+        while(rem > 0){
+            JButton b = new JButton();
+            b.setPreferredSize(new Dimension(140, 193));
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
+            curHandRight.add(b);
+            rem--;
         }
         size = curHandRight.getPreferredSize();
         curHandRight.setBounds(insets.left + 850 * getWidth() / 1536, insets.top + 230 * getHeight() / 864, size.width - 100 * getWidth() / 1536, size.height);
@@ -819,11 +850,51 @@ public class GameView extends JFrame {
         }
     }
 
+    public void setFinal(Hero h) throws IOException {
+        getContentPane().removeAll();
+        revalidate();
+        repaint();
+
+        setLayout(null);
+        setPreferredSize(new Dimension(1440, 817));
+        BufferedImage bufferedImage = ImageIO.read(new File("HeroesIntro/" + (h instanceof Hunter ? "Rexxar_hero_art.jpg" : h instanceof Mage ?
+                "Jaina-full.jpg" : h instanceof Paladin ? "Uther_-_full.jpg" : h instanceof Priest ? "Anduin-full.jpg" : "Gul'dan_full.jpg")));
+        setContentPane(new Background(bufferedImage.getScaledInstance(-1, 817, Image.SCALE_SMOOTH)));
+
+        JTextArea winner = new JTextArea();
+        winner.setText("The winner is:\n" + h.getName());
+        font = font.deriveFont(Font.PLAIN, 45);
+        winner.setFont(font);
+        winner.setEditable(false);
+        winner.setOpaque(false);
+        add(winner);
+        Dimension size = winner.getPreferredSize();
+        Insets insets = getInsets();
+        winner.setBounds(insets.left + 870, insets.top + 150, size.width, size.height);
+
+        playAgain = new JButton();
+        playAgain.setFont(font);
+        playAgain.setText("Play Again");
+        add(playAgain);
+        size = playAgain.getPreferredSize();
+        playAgain.setBounds(insets.left + 870, insets.top + 340, size.width, size.height);
+
+        exitFinal = new JButton();
+        exitFinal.setFont(font);
+        exitFinal.setText("Exit");
+        add(exitFinal);
+        size = exitFinal.getPreferredSize();
+        exitFinal.setBounds(insets.left + 870, insets.top + 450, size.width, size.height);
+
+        setVisible(true);
+        revalidate();
+        repaint();
+    }
+
 
     public static void main(String[] args) throws IOException, FontFormatException, CloneNotSupportedException, FullHandException {
         GameView g = new GameView();
-        g.setGamePlay(new Game(new Hunter(), new Paladin()));
+        g.setFinal(new Hunter());
 
     }
-
 }
