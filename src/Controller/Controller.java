@@ -17,6 +17,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 
 public class Controller implements GameListener, MouseListener, ItemListener {
     private Game game;
