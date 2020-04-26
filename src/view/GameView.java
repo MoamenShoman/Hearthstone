@@ -547,6 +547,17 @@ public class GameView extends JFrame {
         oppFieldAttacks = new ArrayList<>();
         oppFieldManaCosts = new ArrayList<>();
 
+        int space = (7 - field.size())/2;
+
+        if(!field.isEmpty())
+            for (int i = 0 ; i < space ; i++)
+            {
+                JPanel j = new JPanel();
+                j.setVisible(false);
+                j.setBounds(new Rectangle(140,145));
+                oppField.add(j);
+            }
+
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
@@ -643,6 +654,16 @@ public class GameView extends JFrame {
         curFieldHPs = new ArrayList<>();
         curFieldAttacks = new ArrayList<>();
         curFieldManaCosts = new ArrayList<>();
+
+        int space = (7 - field.size())/2;
+        if(!field.isEmpty())
+            for (int i = 0 ; i < space ; i++)
+            {
+                JPanel j = new JPanel();
+                j.setVisible(false);
+                j.setBounds(new Rectangle(140,145));
+                curField.add(j);
+            }
 
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
