@@ -407,7 +407,7 @@ public class GameView extends JFrame{
         updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
-        curHero.setBounds(insets.left + 620, insets.top + 110, size.width, size.height);
+        curHero.setBounds(insets.left + 600, insets.top + 110, size.width-77, size.height);
 
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
