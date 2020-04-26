@@ -650,6 +650,7 @@ public class GameView extends JFrame{
 
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
+            System.out.println(field.get(i).getName());
             BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
