@@ -556,7 +556,24 @@ public class GameView extends JFrame{
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
-            b.setBorderPainted(false);
+            font = font.deriveFont(Font.PLAIN, 13);
+            String borderTitle = field.get(i).getRarity().toString();
+            if(field.get(i) instanceof Minion){
+                if(((Minion) field.get(i)).isTaunt()){
+                    borderTitle += "/T";
+                }
+                if(((Minion) field.get(i)).isDivine()){
+                    borderTitle += "/D";
+                }
+                if(((Minion) field.get(i)).isCharge()){
+                    borderTitle += "/C";
+                }
+            }
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
+                    borderTitle,
+                    TitledBorder.CENTER, TitledBorder.BOTTOM, font);
+            border.setTitleColor(Color.WHITE);
+            b.setBorder(border);
             oppField.add(b);
             oppFieldMinions.add(b);
         }
@@ -637,7 +654,24 @@ public class GameView extends JFrame{
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 85 * getHeight() / 432, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
-            b.setBorderPainted(false);
+            font = font.deriveFont(Font.PLAIN, 13);
+            String borderTitle = field.get(i).getRarity().toString();
+            if(field.get(i) instanceof Minion){
+                if(((Minion) field.get(i)).isTaunt()){
+                    borderTitle += "/T";
+                }
+                if(((Minion) field.get(i)).isDivine()){
+                    borderTitle += "/D";
+                }
+                if(((Minion) field.get(i)).isCharge()){
+                    borderTitle += "/C";
+                }
+            }
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
+                    borderTitle,
+                    TitledBorder.CENTER, TitledBorder.BOTTOM, font);
+            border.setTitleColor(Color.WHITE);
+            b.setBorder(border);
             curField.add(b);
             curFieldMinions.add(b);
         }
@@ -700,7 +734,7 @@ public class GameView extends JFrame{
         Dimension size;
         Insets insets = curentPanel.getInsets();
         size = curHandLeft.getPreferredSize();
-        curHandLeft.setBounds(insets.left, insets.top + 190, size.width + 142*5, size.height +196);
+        curHandLeft.setBounds(insets.left, insets.top + 190, size.width + 680, size.height +196);
         for (int i = 0; i < 5 && j < cards.size(); i++, j++) {
             JButton b = new JButton();
             String p;
@@ -719,7 +753,24 @@ public class GameView extends JFrame{
             ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
-            b.setBorderPainted(false);
+            font = font.deriveFont(Font.PLAIN, 13);
+            String borderTitle = cards.get(j).getRarity().toString();
+            if(cards.get(j) instanceof Minion){
+                if(((Minion) cards.get(j)).isTaunt()){
+                    borderTitle += "/T";
+                }
+                if(((Minion) cards.get(j)).isDivine()){
+                    borderTitle += "/D";
+                }
+                if(((Minion) cards.get(j)).isCharge()){
+                    borderTitle += "/C";
+                }
+            }
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
+                    borderTitle,
+                    TitledBorder.CENTER, TitledBorder.BOTTOM, font);
+            border.setTitleColor(Color.WHITE);
+            b.setBorder(border);
             curHandLeft.add(b);
             curHandLeftMinions.add(b);
             curHand.add(b);
@@ -755,9 +806,23 @@ public class GameView extends JFrame{
             ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
-            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.BLACK), cards.get(j).getRarity().toString(),
-                    TitledBorder.LEFT, TitledBorder.BOTTOM,
-                    font);
+            font = font.deriveFont(Font.PLAIN, 13);
+            String borderTitle = cards.get(j).getRarity().toString();
+            if(cards.get(j) instanceof Minion){
+                if(((Minion) cards.get(j)).isTaunt()){
+                    borderTitle += "/T";
+                }
+                if(((Minion) cards.get(j)).isDivine()){
+                    borderTitle += "/D";
+                }
+                if(((Minion) cards.get(j)).isCharge()){
+                    borderTitle += "/C";
+                }
+            }
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
+                    borderTitle,
+                    TitledBorder.LEFT, TitledBorder.BOTTOM, font);
+            border.setTitleColor(Color.WHITE);
             b.setBorder(border);
             curHandRight.add(b);
             curHandRightMinions.add(b);
