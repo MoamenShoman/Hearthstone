@@ -405,7 +405,7 @@ public class GameView extends JFrame {
         updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
-        curHero.setBounds(insets.left + 600, insets.top + 110, size.width - 77, size.height);
+        curHero.setBounds(insets.left + 600, insets.top + 170, size.width, size.height);
 
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
@@ -496,12 +496,12 @@ public class GameView extends JFrame {
     }
 
     public void updateOppManaCrystalsNum(int currentManaCrystals, int totalManaCrystals) {
-        oppManaCrystalsNum.setText("Remaining\nMana Crystals: " + currentManaCrystals + "/" +
+        oppManaCrystalsNum.setText("Remaining\nMana Crystals:\n" + currentManaCrystals + "/" +
                 totalManaCrystals);
     }
 
     public void updateCurManaCrystalsNum(int currentManaCrystals, int total) {
-        curManaCrystalsNum.setText("Remaining\nMana Crystals: " + currentManaCrystals + "/" + total);
+        curManaCrystalsNum.setText("Remaining\nMana Crystals:\n" + currentManaCrystals + "/" + total);
     }
 
     public void updateCurDeckNum(int size) {
@@ -547,17 +547,8 @@ public class GameView extends JFrame {
         oppFieldAttacks = new ArrayList<>();
         oppFieldManaCosts = new ArrayList<>();
 
-        int space = (7 - field.size()) / 2;
-        if (field.size() > 0)
-            for (int i = 0; i < space ; i++) {
-                JPanel j = new JPanel();
-                j.setVisible(false);
-                curField.add(j);
-            }
-
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
-            System.out.println(field.get(i).getName());
             BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
@@ -587,8 +578,7 @@ public class GameView extends JFrame {
         size = oppField.getPreferredSize();
         oppPanel.add(oppField);
         Insets insets = oppPanel.getInsets();
-        oppField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (115 * getHeight() / 412), size.width,
-                size.height);
+        oppField.setBounds(insets.left + 220, insets.top + 215, size.width, size.height);
         setOppFieldAttributes(field);
         setOppFieldAttributesLocations();
     }
@@ -654,16 +644,6 @@ public class GameView extends JFrame {
         curFieldAttacks = new ArrayList<>();
         curFieldManaCosts = new ArrayList<>();
 
-        int space = (7 - field.size()) / 2;
-        if (field.size() > 0)
-            for (int i = 0; i < space ; i++) {
-                JPanel j = new JPanel();
-                j.setVisible(false);
-
-                curField.add(j);
-            }
-
-
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
@@ -694,8 +674,7 @@ public class GameView extends JFrame {
         Dimension size;
         Insets insets = curentPanel.getInsets();
         size = curField.getPreferredSize();
-        curField.setBounds(insets.left + (4 * getWidth() / 23), insets.top + (5 * getHeight() / 216), size.width,
-                size.height);
+        curField.setBounds(insets.left + 220, insets.top + 18, size.width,size.height);
         setCurFieldAttributes(field);
         setCurFieldAttributesLocations();
     }
