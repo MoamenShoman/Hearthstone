@@ -10,6 +10,7 @@ public class Server {
     private Socket socket = null;
     private ServerSocket server = null;
     private DataInputStream in = null;
+    private  DataOutputStream out = null;
 
     // constructor with port
     public Server(int port) {
@@ -35,9 +36,11 @@ public class Server {
                     line = in.readUTF();
                     System.out.println(line);
 
+
                 } catch (IOException i) {
                     System.out.println(i);
                 }
+
             }
             System.out.println("Closing connection");
 
