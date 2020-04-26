@@ -553,7 +553,7 @@ public class GameView extends JFrame{
             JButton b = new JButton();
             System.out.println(field.get(i).getName());
             BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -634,7 +634,7 @@ public class GameView extends JFrame{
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
             BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 85 * getHeight() / 432, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -661,6 +661,7 @@ public class GameView extends JFrame{
 
             curHandAttacks.add(new JTextArea(hand.get(i) instanceof Minion ?
                     ((Minion) hand.get(i)).getAttack() + "" : ""));
+
             curHandAttacks.get(i).setFont(font);
             curHandAttacks.get(i).setEditable(false);
             curHandAttacks.get(i).setOpaque(false);
@@ -752,7 +753,7 @@ public class GameView extends JFrame{
                 }
             }
             BufferedImage image = ImageIO.read(new File(p));
-            ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(-1, 170 * getHeight() / 864, Image.SCALE_SMOOTH));
+            ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -770,7 +771,7 @@ public class GameView extends JFrame{
             rem--;
         }
         size = curHandRight.getPreferredSize();
-        curHandRight.setBounds(insets.left + 850 * getWidth() / 1536, insets.top + 230 * getHeight() / 864, size.width - 100 * getWidth() / 1536, size.height);
+        curHandRight.setBounds(insets.left + 850 * getWidth() / 1536, insets.top + 190, size.width - 100 * getWidth() / 1536, size.height);
         setCurHandAttributes(cards);
         setCurHandAttributesLocations();
     }
@@ -808,19 +809,19 @@ public class GameView extends JFrame{
 
             Dimension size = curHandHPs.get(j).getPreferredSize();
             if (!curHandHPs.get(j).getText().equals("")) {
-                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
-                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 95 : 100) ,
+                        insets.top + 160, size.width, size.height);
             }
             size = curHandAttacks.get(j).getPreferredSize();
 
             if (!curHandAttacks.get(j).getText().equals("")) {
-                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
-                        insets.top + (133 * getHeight() / 810), size.width, size.height);
+                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ?-6 : 3),
+                        insets.top + 160, size.width, size.height);
             }
 
             size = curHandManaCosts.get(j).getPreferredSize();
             curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 0 : 5) * getWidth() / 1440,
-                    insets.top + (13 * getHeight() / 810), size.width, size.height);
+                    insets.top + (18 * getHeight() / 810), size.width, size.height);
         }
 
         if (curHandRightMinions.size() > 0) {
