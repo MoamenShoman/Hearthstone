@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 
-public class Controller implements GameListener, MouseListener, ItemListener, ActionListener{
+public class Controller implements GameListener, MouseListener, ItemListener, ActionListener {
     private Game game;
     private GameView gameView;
     private Hero firstHero;
@@ -1748,7 +1748,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == gameView.getPlayAgain()){
+        if (e.getSource() == gameView.getPlayAgain()) {
             gameView.setVisible(false);
             c.stop();
             gameView = null;
@@ -1769,7 +1769,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
             } catch (UnsupportedAudioFileException ex) {
                 ex.printStackTrace();
             }
-        }else{
+        } else {
             System.exit(0);
         }
     }
