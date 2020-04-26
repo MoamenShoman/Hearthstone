@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameView extends JFrame{
+public class GameView extends JFrame {
 
     private ArrayList<JTextArea> curFieldHPs, curFieldAttacks, curFieldManaCosts, oppFieldHPs, oppFieldAttacks, oppFieldManaCosts,
             curHandHPs, curHandAttacks, curHandManaCosts;
@@ -127,10 +127,9 @@ public class GameView extends JFrame{
         startButton0.setIcon(startImageIcon);
         startButton0.setContentAreaFilled(false);
         startButton0.setBorderPainted(false);
-        Insets insets =startButton0.getInsets();
-        Dimension size=startButton0.getPreferredSize();
-        startButton0.setBounds(insets.left+445, insets.top+150, size.width-500, size.height-390);
-
+        Insets insets = startButton0.getInsets();
+        Dimension size = startButton0.getPreferredSize();
+        startButton0.setBounds(insets.left + 445, insets.top + 150, size.width - 500, size.height - 390);
 
 
         exitButton0 = new JButton();
@@ -139,9 +138,9 @@ public class GameView extends JFrame{
         exitButton0.setIcon(exitIcon);
         exitButton0.setContentAreaFilled(false);
         exitButton0.setBorderPainted(false);
-        insets =exitButton0.getInsets();
-        size=exitButton0.getPreferredSize();
-        exitButton0.setBounds(insets.left+600, insets.top+450 ,size.width-810, size.height-390);
+        insets = exitButton0.getInsets();
+        size = exitButton0.getPreferredSize();
+        exitButton0.setBounds(insets.left + 600, insets.top + 450, size.width - 810, size.height - 390);
 
 
         add(startButton0);
@@ -149,7 +148,6 @@ public class GameView extends JFrame{
 
         //start.add(startButton0);
         //exit.add(exitButton0);
-
 
 
         revalidate();
@@ -407,7 +405,7 @@ public class GameView extends JFrame{
         updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
-        curHero.setBounds(insets.left + 600, insets.top + 110, size.width-77, size.height);
+        curHero.setBounds(insets.left + 600, insets.top + 110, size.width - 77, size.height);
 
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
@@ -433,7 +431,7 @@ public class GameView extends JFrame{
         curentPanel.add(endTurnButton);
         size = endTurnButton.getPreferredSize();
         endTurnButton.setContentAreaFilled(false);
-        endTurnButton.setBounds(insets.left + 1291, insets.top, size.width-248, size.height-148);
+        endTurnButton.setBounds(insets.left + 1291, insets.top, size.width - 248, size.height - 148);
 
         heroPowerButton = new JButton();
         Image heroPowerImage = ImageIO.read(new File("HeroPower.png"));
@@ -446,7 +444,7 @@ public class GameView extends JFrame{
         heroPowerButton.setContentAreaFilled(false);
         size = heroPowerButton.getPreferredSize();
         insets = heroPowerButton.getInsets();
-        heroPowerButton.setBounds(insets.left+1255 , insets.top+45 , size.width-185, size.height-100);
+        heroPowerButton.setBounds(insets.left + 1255, insets.top + 45, size.width - 185, size.height - 100);
 
         add(oppPanel);
         add(curentPanel);
@@ -549,6 +547,14 @@ public class GameView extends JFrame{
         oppFieldAttacks = new ArrayList<>();
         oppFieldManaCosts = new ArrayList<>();
 
+        int space = (7 - field.size()) / 2;
+        if (field.size() > 0)
+            for (int i = 0; i < space ; i++) {
+                JPanel j = new JPanel();
+                j.setVisible(false);
+                curField.add(j);
+            }
+
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
             System.out.println(field.get(i).getName());
@@ -558,14 +564,14 @@ public class GameView extends JFrame{
             b.setContentAreaFilled(false);
             font = font.deriveFont(Font.PLAIN, 13);
             String borderTitle = field.get(i).getRarity().toString();
-            if(field.get(i) instanceof Minion){
-                if(((Minion) field.get(i)).isTaunt()){
+            if (field.get(i) instanceof Minion) {
+                if (((Minion) field.get(i)).isTaunt()) {
                     borderTitle += "/T";
                 }
-                if(((Minion) field.get(i)).isDivine()){
+                if (((Minion) field.get(i)).isDivine()) {
                     borderTitle += "/D";
                 }
-                if(((Minion) field.get(i)).isCharge()){
+                if (((Minion) field.get(i)).isCharge()) {
                     borderTitle += "/C";
                 }
             }
@@ -648,23 +654,32 @@ public class GameView extends JFrame{
         curFieldAttacks = new ArrayList<>();
         curFieldManaCosts = new ArrayList<>();
 
+        int space = (7 - field.size()) / 2;
+        if (field.size() > 0)
+            for (int i = 0; i < space ; i++) {
+                JPanel j = new JPanel();
+                j.setVisible(false);
+
+                curField.add(j);
+            }
+
+
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
-            System.out.println(field.get(i).getName());
             BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
             font = font.deriveFont(Font.PLAIN, 13);
             String borderTitle = field.get(i).getRarity().toString();
-            if(field.get(i) instanceof Minion){
-                if(((Minion) field.get(i)).isTaunt()){
+            if (field.get(i) instanceof Minion) {
+                if (((Minion) field.get(i)).isTaunt()) {
                     borderTitle += "/T";
                 }
-                if(((Minion) field.get(i)).isDivine()){
+                if (((Minion) field.get(i)).isDivine()) {
                     borderTitle += "/D";
                 }
-                if(((Minion) field.get(i)).isCharge()){
+                if (((Minion) field.get(i)).isCharge()) {
                     borderTitle += "/C";
                 }
             }
@@ -736,7 +751,7 @@ public class GameView extends JFrame{
         Dimension size;
         Insets insets = curentPanel.getInsets();
         size = curHandLeft.getPreferredSize();
-        curHandLeft.setBounds(insets.left, insets.top + 190, size.width + 680, size.height +196);
+        curHandLeft.setBounds(insets.left, insets.top + 190, size.width + 680, size.height + 196);
         for (int i = 0; i < 5 && j < cards.size(); i++, j++) {
             JButton b = new JButton();
             String p;
@@ -757,14 +772,14 @@ public class GameView extends JFrame{
             b.setContentAreaFilled(false);
             font = font.deriveFont(Font.PLAIN, 13);
             String borderTitle = cards.get(j).getRarity().toString();
-            if(cards.get(j) instanceof Minion){
-                if(((Minion) cards.get(j)).isTaunt()){
+            if (cards.get(j) instanceof Minion) {
+                if (((Minion) cards.get(j)).isTaunt()) {
                     borderTitle += "/T";
                 }
-                if(((Minion) cards.get(j)).isDivine()){
+                if (((Minion) cards.get(j)).isDivine()) {
                     borderTitle += "/D";
                 }
-                if(((Minion) cards.get(j)).isCharge()){
+                if (((Minion) cards.get(j)).isCharge()) {
                     borderTitle += "/C";
                 }
             }
@@ -778,7 +793,7 @@ public class GameView extends JFrame{
             curHand.add(b);
         }
         int rem = 5 - curHand.size();
-        while(rem > 0){
+        while (rem > 0) {
             JButton b = new JButton();
             b.setPreferredSize(new Dimension(140, 193));
             b.setContentAreaFilled(false);
@@ -810,14 +825,14 @@ public class GameView extends JFrame{
             b.setContentAreaFilled(false);
             font = font.deriveFont(Font.PLAIN, 13);
             String borderTitle = cards.get(j).getRarity().toString();
-            if(cards.get(j) instanceof Minion){
-                if(((Minion) cards.get(j)).isTaunt()){
+            if (cards.get(j) instanceof Minion) {
+                if (((Minion) cards.get(j)).isTaunt()) {
                     borderTitle += "/T";
                 }
-                if(((Minion) cards.get(j)).isDivine()){
+                if (((Minion) cards.get(j)).isDivine()) {
                     borderTitle += "/D";
                 }
-                if(((Minion) cards.get(j)).isCharge()){
+                if (((Minion) cards.get(j)).isCharge()) {
                     borderTitle += "/C";
                 }
             }
@@ -831,7 +846,7 @@ public class GameView extends JFrame{
             curHand.add(b);
         }
         rem = 10 - curHand.size();
-        while(rem > 0){
+        while (rem > 0) {
             JButton b = new JButton();
             b.setPreferredSize(new Dimension(140, 193));
             b.setContentAreaFilled(false);
@@ -878,13 +893,13 @@ public class GameView extends JFrame{
 
             Dimension size = curHandHPs.get(j).getPreferredSize();
             if (!curHandHPs.get(j).getText().equals("")) {
-                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 95 : 100) ,
+                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 95 : 100),
                         insets.top + 160, size.width, size.height);
             }
             size = curHandAttacks.get(j).getPreferredSize();
 
             if (!curHandAttacks.get(j).getText().equals("")) {
-                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ?-6 : 3),
+                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? -6 : 3),
                         insets.top + 160, size.width, size.height);
             }
 
