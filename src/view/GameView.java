@@ -314,7 +314,7 @@ public class GameView extends JFrame {
         updateOppHeroIcon(game.getOpponent().getName());
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
-        oppHero.setBounds(insets.left + 655, insets.top +10, size.width, size.height);
+        oppHero.setBounds(insets.left + 655, insets.top + 10, size.width, size.height);
 
         oppHeroHP = new JTextArea("");
         updateOppHeroHP(game.getOpponent().getCurrentHP());
@@ -433,7 +433,7 @@ public class GameView extends JFrame {
         size = endTurnButton.getPreferredSize();
         endTurnButton.setContentAreaFilled(false);
         endTurnButton.setBorderPainted(false);
-        endTurnButton.setBounds(insets.left + 1305, insets.top, size.width, size.height);
+        endTurnButton.setBounds(insets.left + 1295, insets.top, size.width, size.height);
 
         heroPowerButton = new JButton();
         Image heroPowerImage = ImageIO.read(new File("HeroPower.png"));
@@ -446,7 +446,7 @@ public class GameView extends JFrame {
         heroPowerButton.setContentAreaFilled(false);
         size = heroPowerButton.getPreferredSize();
         insets = heroPowerButton.getInsets();
-        heroPowerButton.setBounds(insets.left + 1300, insets.top + 60, size.width, size.height);
+        heroPowerButton.setBounds(insets.left + 1281, insets.top + 60, size.width, size.height);
 
         add(oppPanel);
         add(curentPanel);
@@ -549,14 +549,13 @@ public class GameView extends JFrame {
         oppFieldAttacks = new ArrayList<>();
         oppFieldManaCosts = new ArrayList<>();
 
-        int space = (7 - field.size())/2;
+        int space = (7 - field.size()) / 2;
 
-        if(!field.isEmpty())
-            for (int i = 0 ; i < space ; i++)
-            {
+        if (!field.isEmpty())
+            for (int i = 0; i < space; i++) {
                 JPanel j = new JPanel();
                 j.setVisible(false);
-                j.setBounds(new Rectangle(140,145));
+                j.setBounds(new Rectangle(140, 145));
                 oppField.add(j);
             }
 
@@ -657,13 +656,12 @@ public class GameView extends JFrame {
         curFieldAttacks = new ArrayList<>();
         curFieldManaCosts = new ArrayList<>();
 
-        int space = (7 - field.size())/2;
-        if(!field.isEmpty())
-            for (int i = 0 ; i < space ; i++)
-            {
+        int space = (7 - field.size()) / 2;
+        if (!field.isEmpty())
+            for (int i = 0; i < space; i++) {
                 JPanel j = new JPanel();
                 j.setVisible(false);
-                j.setBounds(new Rectangle(140,145));
+                j.setBounds(new Rectangle(140, 145));
                 curField.add(j);
             }
 
@@ -697,7 +695,7 @@ public class GameView extends JFrame {
         Dimension size;
         Insets insets = curentPanel.getInsets();
         size = curField.getPreferredSize();
-        curField.setBounds(insets.left + 220, insets.top + 18, size.width,size.height);
+        curField.setBounds(insets.left + 220, insets.top + 18, size.width, size.height);
         setCurFieldAttributes(field);
         setCurFieldAttributesLocations();
     }
@@ -755,7 +753,15 @@ public class GameView extends JFrame {
         Insets insets = curentPanel.getInsets();
         size = curHandLeft.getPreferredSize();
         curHandLeft.setBounds(insets.left, insets.top + 210, size.width + 645, size.height + 180);
-        for (int i = 0; i < 5 && j < cards.size(); i++, j++) {
+        int i = 0;
+        for (; i < 5 - (cards.size() / 2); i++) {
+            JLabel transLabel = new JLabel();
+            transLabel.setVisible(false);
+            transLabel.setBounds(new Rectangle(129,178));
+            curHandLeft.add(transLabel);
+        }
+
+        for (; i < 5 && j < cards.size(); i++, j++) {
             JButton b = new JButton();
             String p;
 
@@ -795,7 +801,7 @@ public class GameView extends JFrame {
             curHandLeftMinions.add(b);
             curHand.add(b);
         }
-        int rem = 5 - curHand.size();
+       /* int rem = 5 - curHand.size();
         while (rem > 0) {
             JButton b = new JButton();
             b.setPreferredSize(new Dimension(140, 193));
@@ -803,14 +809,14 @@ public class GameView extends JFrame {
             b.setBorderPainted(false);
             curHandLeft.add(b);
             rem--;
-        }
+        }*/
 
         curentPanel.add(curHandRight);
         curHandRight.setLayout(new GridLayout(1, 5));
         curHandRight.setOpaque(false);
         curHandRightMinions = new ArrayList<>();
         curHandRight.setBounds(insets.left + 800, insets.top + 210, size.width + 645, size.height + 180);
-        for (int i = 0; i < 5 && j < cards.size(); i++, j++) {
+        for ( i = 0; i < 5 && j < cards.size(); i++, j++) {
             JButton b = new JButton();
 
             String p;
@@ -849,10 +855,10 @@ public class GameView extends JFrame {
             curHandRightMinions.add(b);
             curHand.add(b);
         }
-        rem = 10 - curHand.size();
+       int rem = 5 - (cards.size()/2 + cards.size()%2);
         while (rem > 0) {
             JButton b = new JButton();
-            b.setPreferredSize(new Dimension(140, 193));
+            b.setPreferredSize(new Dimension(129, 193));
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
             curHandRight.add(b);
