@@ -405,7 +405,7 @@ public class GameView extends JFrame {
         updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
-        curHero.setBounds(insets.left + 655, insets.top + 190, size.width, size.height);
+        curHero.setBounds(insets.left + 600, insets.top + 170, size.width, size.height);
 
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
@@ -432,11 +432,11 @@ public class GameView extends JFrame {
         curentPanel.add(endTurnButton);
         size = endTurnButton.getPreferredSize();
         endTurnButton.setContentAreaFilled(false);
-        endTurnButton.setBounds(insets.left + 1291, insets.top, size.width - 240, size.height - 148);
+        endTurnButton.setBounds(insets.left + 1320, insets.top, size.width - 248, size.height - 148);
 
         heroPowerButton = new JButton();
         Image heroPowerImage = ImageIO.read(new File("HeroPower.png"));
-        ImageIcon heroPowerImageIcon = new ImageIcon(heroPowerImage.getScaledInstance(300, -1, Image.SCALE_SMOOTH));
+        ImageIcon heroPowerImageIcon = new ImageIcon(heroPowerImage);
         heroPowerButton.setIcon(heroPowerImageIcon);
         heroPowerButton.setContentAreaFilled(false);
         heroPowerButton.setBorderPainted(false);
@@ -445,7 +445,7 @@ public class GameView extends JFrame {
         heroPowerButton.setContentAreaFilled(false);
         size = heroPowerButton.getPreferredSize();
         insets = heroPowerButton.getInsets();
-        heroPowerButton.setBounds(insets.left + 1255, insets.top + 45, size.width - 185, size.height - 100);
+        heroPowerButton.setBounds(insets.left + 1300, insets.top + 55, size.width - 243, size.height - 143);
 
         add(oppPanel);
         add(curentPanel);
