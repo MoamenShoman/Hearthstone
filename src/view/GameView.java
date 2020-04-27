@@ -140,7 +140,7 @@ public class GameView extends JFrame {
         exitButton0.setBorderPainted(false);
         insets = exitButton0.getInsets();
         size = exitButton0.getPreferredSize();
-        exitButton0.setBounds(insets.left + 600, insets.top + 450, size.width - 810, size.height - 390);
+        exitButton0.setBounds(insets.left + 600, insets.top + 450, size.width - 790, size.height - 390);
 
 
         add(startButton0);
@@ -405,7 +405,7 @@ public class GameView extends JFrame {
         updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
-        curHero.setBounds(insets.left + 600, insets.top + 170, size.width, size.height);
+        curHero.setBounds(insets.left + 655, insets.top + 190, size.width, size.height);
 
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
@@ -432,7 +432,8 @@ public class GameView extends JFrame {
         curentPanel.add(endTurnButton);
         size = endTurnButton.getPreferredSize();
         endTurnButton.setContentAreaFilled(false);
-        endTurnButton.setBounds(insets.left + 1320, insets.top, size.width - 248, size.height - 148);
+        endTurnButton.setBorderPainted(false);
+        endTurnButton.setBounds(insets.left + 1305, insets.top, size.width, size.height);
 
         heroPowerButton = new JButton();
         Image heroPowerImage = ImageIO.read(new File("HeroPower.png"));
@@ -445,7 +446,7 @@ public class GameView extends JFrame {
         heroPowerButton.setContentAreaFilled(false);
         size = heroPowerButton.getPreferredSize();
         insets = heroPowerButton.getInsets();
-        heroPowerButton.setBounds(insets.left + 1300, insets.top + 55, size.width - 243, size.height - 143);
+        heroPowerButton.setBounds(insets.left + 1300, insets.top + 60, size.width, size.height);
 
         add(oppPanel);
         add(curentPanel);
@@ -519,16 +520,16 @@ public class GameView extends JFrame {
             Insets insets = oppFieldMinions.get(i).getInsets();
 
             Dimension size = oppFieldHPs.get(i).getPreferredSize();
-            oppFieldHPs.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldHPs.get(i).getText()) > 9 ? 88 : 92) * getWidth() / 1440,
-                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+            oppFieldHPs.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldHPs.get(i).getText()) > 9 ? 115 : 119),
+                    insets.top + 101, size.width, size.height);
 
             size = oppFieldAttacks.get(i).getPreferredSize();
-            oppFieldAttacks.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldAttacks.get(i).getText()) > 9 ? 10 : 13) * getWidth() / 1440,
-                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+            oppFieldAttacks.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldAttacks.get(i).getText()) > 9 ? 10 : 13),
+                    insets.top + 101, size.width, size.height);
 
             size = oppFieldManaCosts.get(i).getPreferredSize();
-            oppFieldManaCosts.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldManaCosts.get(i).getText()) > 9 ? 8 : 13) * getWidth() / 1440,
-                    insets.top + (13 * getHeight() / 810), size.width, size.height);
+            oppFieldManaCosts.get(i).setBounds(insets.left + (Integer.parseInt(oppFieldManaCosts.get(i).getText()) > 9 ? 8 : 13),
+                    insets.top + 6, size.width, size.height);
         }
     }
 
@@ -598,19 +599,19 @@ public class GameView extends JFrame {
     public void setOppFieldAttributes(ArrayList<Minion> field) {
         for (int i = 0; i < field.size(); i++) {
             oppFieldHPs.add(new JTextArea(field.get(i).getCurrentHP() + ""));
-            oppFieldHPs.get(i).setFont(font);
+            oppFieldHPs.get(i).setFont(font.deriveFont(Font.PLAIN, 14));
             oppFieldHPs.get(i).setEditable(false);
             oppFieldHPs.get(i).setOpaque(false);
             oppFieldHPs.get(i).setForeground(Color.WHITE);
 
             oppFieldAttacks.add(new JTextArea(field.get(i).getAttack() + ""));
-            oppFieldAttacks.get(i).setFont(font);
+            oppFieldAttacks.get(i).setFont(font.deriveFont(Font.PLAIN, 14));
             oppFieldAttacks.get(i).setEditable(false);
             oppFieldAttacks.get(i).setOpaque(false);
-            oppFieldAttacks.get(i).setForeground(Color.WHITE);
+            oppFieldAttacks.get(i).setForeground(Color.BLACK);
 
             oppFieldManaCosts.add(new JTextArea(field.get(i).getManaCost() + ""));
-            oppFieldManaCosts.get(i).setFont(font);
+            oppFieldManaCosts.get(i).setFont(font.deriveFont(Font.PLAIN, 18));
             oppFieldManaCosts.get(i).setEditable(false);
             oppFieldManaCosts.get(i).setOpaque(false);
             oppFieldManaCosts.get(i).setForeground(Color.WHITE);
@@ -621,19 +622,19 @@ public class GameView extends JFrame {
     public void setCurFieldAttributes(ArrayList<Minion> field) {
         for (int i = 0; i < field.size(); i++) {
             curFieldHPs.add(new JTextArea(field.get(i).getCurrentHP() + ""));
-            curFieldHPs.get(i).setFont(font);
+            curFieldHPs.get(i).setFont(font.deriveFont(Font.PLAIN, 14));
             curFieldHPs.get(i).setEditable(false);
             curFieldHPs.get(i).setOpaque(false);
             curFieldHPs.get(i).setForeground(Color.WHITE);
 
             curFieldAttacks.add(new JTextArea(field.get(i).getAttack() + ""));
-            curFieldAttacks.get(i).setFont(font);
+            curFieldAttacks.get(i).setFont(font.deriveFont(Font.PLAIN, 14));
             curFieldAttacks.get(i).setEditable(false);
             curFieldAttacks.get(i).setOpaque(false);
-            curFieldAttacks.get(i).setForeground(Color.WHITE);
+            curFieldAttacks.get(i).setForeground(Color.BLACK);
 
             curFieldManaCosts.add(new JTextArea(field.get(i).getManaCost() + ""));
-            curFieldManaCosts.get(i).setFont(font);
+            curFieldManaCosts.get(i).setFont(font.deriveFont(Font.PLAIN, 18));
             curFieldManaCosts.get(i).setEditable(false);
             curFieldManaCosts.get(i).setOpaque(false);
             curFieldManaCosts.get(i).setForeground(Color.WHITE);
@@ -871,16 +872,16 @@ public class GameView extends JFrame {
             Insets insets = curFieldMinions.get(i).getInsets();
 
             Dimension size = curFieldHPs.get(i).getPreferredSize();
-            curFieldHPs.get(i).setBounds(insets.left + (Integer.parseInt(curFieldHPs.get(i).getText()) > 9 ? 88 : 92) * getWidth() / 1440,
-                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+            curFieldHPs.get(i).setBounds(insets.left + (Integer.parseInt(curFieldHPs.get(i).getText()) > 9 ? 115 : 119),
+                    insets.top + 101, size.width, size.height);
 
             size = curFieldAttacks.get(i).getPreferredSize();
-            curFieldAttacks.get(i).setBounds(insets.left + (Integer.parseInt(curFieldAttacks.get(i).getText()) > 9 ? 10 : 13) * getWidth() / 1440,
-                    insets.top + (133 * getHeight() / 810), size.width, size.height);
+            curFieldAttacks.get(i).setBounds(insets.left + (Integer.parseInt(curFieldAttacks.get(i).getText()) > 9 ? 10 : 13),
+                    insets.top + 101, size.width, size.height);
 
             size = curFieldManaCosts.get(i).getPreferredSize();
-            curFieldManaCosts.get(i).setBounds(insets.left + (Integer.parseInt(curFieldManaCosts.get(i).getText()) > 9 ? 8 : 13) * getWidth() / 1440,
-                    insets.top + (13 * getHeight() / 810), size.width, size.height);
+            curFieldManaCosts.get(i).setBounds(insets.left + (Integer.parseInt(curFieldManaCosts.get(i).getText()) > 9 ? 8 : 13),
+                    insets.top + 6, size.width, size.height);
         }
     }
 
@@ -902,7 +903,7 @@ public class GameView extends JFrame {
 
             curHandAttacks.get(j).setForeground(Color.BLACK);
             if (!curHandAttacks.get(j).getText().equals("")) {
-                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 0 : 9),
+                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 4 : 9),
                         insets.top + 146, size.width, size.height);
             }
 
@@ -929,7 +930,7 @@ public class GameView extends JFrame {
 
                 curHandAttacks.get(j).setForeground(Color.BLACK);
                 if (!curHandAttacks.get(j).getText().equals("")) {
-                    curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 0 : 9),
+                    curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 4 : 9),
                             insets.top + 146, size.width, size.height);
                 }
 
