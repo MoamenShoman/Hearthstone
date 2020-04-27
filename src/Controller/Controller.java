@@ -36,7 +36,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
     public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException, LineUnavailableException, UnsupportedAudioFileException {
         gameView = new GameView();
         gameView.setInitial0();
-        //playMusic("Sound/Hearthstone_Music.wav");
+        playMusic("Sound/Hearthstone_Music.wav");
         gameView.getExitButton0().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
