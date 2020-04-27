@@ -314,7 +314,7 @@ public class GameView extends JFrame {
         updateOppHeroIcon(game.getOpponent().getName());
         size = oppHero.getPreferredSize();
         oppPanel.add(oppHero);
-        oppHero.setBounds(insets.left + 620, insets.top - 90, size.width, size.height);
+        oppHero.setBounds(insets.left + 655, insets.top +10, size.width, size.height);
 
         oppHeroHP = new JTextArea("");
         updateOppHeroHP(game.getOpponent().getCurrentHP());
@@ -326,7 +326,7 @@ public class GameView extends JFrame {
         oppHero.setLayout(null);
         Insets tmpInsets = oppHero.getInsets();
         Dimension tmpSize = oppHeroHP.getPreferredSize();
-        oppHeroHP.setBounds(tmpInsets.left + 189, tmpInsets.top + 234, tmpSize.width, tmpSize.height);
+        oppHeroHP.setBounds(tmpInsets.left + 112, tmpInsets.top + 130, tmpSize.width, tmpSize.height);
 
         JLabel oppHand = new JLabel();
         Image oppHandImage = ImageIO.read(new File("handBack.png"));
@@ -405,7 +405,7 @@ public class GameView extends JFrame {
         updateCurHeroIcon(game.getCurrentHero().getName());
         size = curHero.getPreferredSize();
         curentPanel.add(curHero);
-        curHero.setBounds(insets.left + 600, insets.top + 170, size.width, size.height);
+        curHero.setBounds(insets.left + 655, insets.top + 190, size.width, size.height);
 
         curHeroHP = new JTextArea("");
         updateCurHeroHP(game.getCurrentHero().getCurrentHP());
@@ -413,11 +413,12 @@ public class GameView extends JFrame {
         curHeroHP.setEditable(false);
         curHeroHP.setOpaque(false);
         curHeroHP.setForeground(Color.WHITE);
+        font = font.deriveFont(Font.PLAIN, 20);
         curHeroHP.setFont(font);
         curHero.setLayout(null);
-        tmpInsets = oppHero.getInsets();
+        tmpInsets = curHero.getInsets();
         tmpSize = curHeroHP.getPreferredSize();
-        curHeroHP.setBounds(tmpInsets.left + 189, tmpInsets.top + 234, tmpSize.width, tmpSize.height);
+        curHeroHP.setBounds(tmpInsets.left + 112, tmpInsets.top + 130, tmpSize.width, tmpSize.height);
 
 
         updateCurField(game.getCurrentHero().getField());
@@ -431,7 +432,7 @@ public class GameView extends JFrame {
         curentPanel.add(endTurnButton);
         size = endTurnButton.getPreferredSize();
         endTurnButton.setContentAreaFilled(false);
-        endTurnButton.setBounds(insets.left + 1291, insets.top, size.width - 248, size.height - 148);
+        endTurnButton.setBounds(insets.left + 1291, insets.top, size.width - 240, size.height - 148);
 
         heroPowerButton = new JButton();
         Image heroPowerImage = ImageIO.read(new File("HeroPower.png"));
@@ -701,10 +702,11 @@ public class GameView extends JFrame {
     }
 
     public void setCurHandAttributes(ArrayList<Card> hand) {
+        Font copyFont = font.deriveFont(Font.PLAIN, 18);
         for (int i = 0; i < hand.size(); i++) {
 
             curHandHPs.add(new JTextArea(hand.get(i) instanceof Minion ? ((Minion) hand.get(i)).getCurrentHP() + "" : ""));
-            curHandHPs.get(i).setFont(font);
+            curHandHPs.get(i).setFont(copyFont);
             curHandHPs.get(i).setEditable(false);
             curHandHPs.get(i).setOpaque(false);
             curHandHPs.get(i).setForeground(Color.WHITE);
@@ -712,13 +714,13 @@ public class GameView extends JFrame {
             curHandAttacks.add(new JTextArea(hand.get(i) instanceof Minion ?
                     ((Minion) hand.get(i)).getAttack() + "" : ""));
 
-            curHandAttacks.get(i).setFont(font);
+            curHandAttacks.get(i).setFont(copyFont);
             curHandAttacks.get(i).setEditable(false);
             curHandAttacks.get(i).setOpaque(false);
             curHandAttacks.get(i).setForeground(Color.WHITE);
 
             curHandManaCosts.add(new JTextArea(hand.get(i).getManaCost() + ""));
-            curHandManaCosts.get(i).setFont(font);
+            curHandManaCosts.get(i).setFont(copyFont);
             curHandManaCosts.get(i).setEditable(false);
             curHandManaCosts.get(i).setOpaque(false);
             curHandManaCosts.get(i).setForeground(Color.WHITE);
@@ -751,7 +753,7 @@ public class GameView extends JFrame {
         Dimension size;
         Insets insets = curentPanel.getInsets();
         size = curHandLeft.getPreferredSize();
-        curHandLeft.setBounds(insets.left, insets.top + 190, size.width + 680, size.height + 196);
+        curHandLeft.setBounds(insets.left, insets.top + 210, size.width + 645, size.height + 180);
         for (int i = 0; i < 5 && j < cards.size(); i++, j++) {
             JButton b = new JButton();
             String p;
@@ -770,7 +772,7 @@ public class GameView extends JFrame {
             ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
-            font = font.deriveFont(Font.PLAIN, 13);
+            font = font.deriveFont(Font.PLAIN, 10);
             String borderTitle = cards.get(j).getRarity().toString();
             if (cards.get(j) instanceof Minion) {
                 if (((Minion) cards.get(j)).isTaunt()) {
@@ -806,6 +808,7 @@ public class GameView extends JFrame {
         curHandRight.setLayout(new GridLayout(1, 5));
         curHandRight.setOpaque(false);
         curHandRightMinions = new ArrayList<>();
+        curHandRight.setBounds(insets.left + 800, insets.top + 210, size.width + 645, size.height + 180);
         for (int i = 0; i < 5 && j < cards.size(); i++, j++) {
             JButton b = new JButton();
 
@@ -823,7 +826,7 @@ public class GameView extends JFrame {
             ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
-            font = font.deriveFont(Font.PLAIN, 13);
+            font = font.deriveFont(Font.PLAIN, 10);
             String borderTitle = cards.get(j).getRarity().toString();
             if (cards.get(j) instanceof Minion) {
                 if (((Minion) cards.get(j)).isTaunt()) {
@@ -838,7 +841,7 @@ public class GameView extends JFrame {
             }
             TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
                     borderTitle,
-                    TitledBorder.LEFT, TitledBorder.BOTTOM, font);
+                    TitledBorder.CENTER, TitledBorder.BOTTOM, font);
             border.setTitleColor(Color.WHITE);
             b.setBorder(border);
             curHandRight.add(b);
@@ -855,7 +858,6 @@ public class GameView extends JFrame {
             rem--;
         }
         size = curHandRight.getPreferredSize();
-        curHandRight.setBounds(insets.left + 850 * getWidth() / 1536, insets.top + 190, size.width - 100 * getWidth() / 1536, size.height);
         setCurHandAttributes(cards);
         setCurHandAttributesLocations();
     }
@@ -893,19 +895,20 @@ public class GameView extends JFrame {
 
             Dimension size = curHandHPs.get(j).getPreferredSize();
             if (!curHandHPs.get(j).getText().equals("")) {
-                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 95 : 100),
-                        insets.top + 160, size.width, size.height);
+                curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 98 : 103),
+                        insets.top + 146, size.width, size.height);
             }
             size = curHandAttacks.get(j).getPreferredSize();
 
+            curHandAttacks.get(j).setForeground(Color.BLACK);
             if (!curHandAttacks.get(j).getText().equals("")) {
-                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? -6 : 3),
-                        insets.top + 160, size.width, size.height);
+                curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 0 : 9),
+                        insets.top + 146, size.width, size.height);
             }
 
             size = curHandManaCosts.get(j).getPreferredSize();
-            curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 0 : 5) * getWidth() / 1440,
-                    insets.top + (18 * getHeight() / 810), size.width, size.height);
+            curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 3 : 8),
+                    insets.top + 8, size.width, size.height);
         }
 
         if (curHandRightMinions.size() > 0) {
@@ -918,20 +921,21 @@ public class GameView extends JFrame {
 
                 Dimension size = curHandHPs.get(j).getPreferredSize();
                 if (!curHandHPs.get(j).getText().equals("")) {
-                    curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 77 : 81) * getWidth() / 1440,
-                            insets.top + (133 * getHeight() / 810), size.width, size.height);
+                    curHandHPs.get(j).setBounds(insets.left + (Integer.parseInt(curHandHPs.get(j).getText()) > 9 ? 98 : 103),
+                            insets.top + 146, size.width, size.height);
                 }
 
                 size = curHandAttacks.get(j).getPreferredSize();
 
+                curHandAttacks.get(j).setForeground(Color.BLACK);
                 if (!curHandAttacks.get(j).getText().equals("")) {
-                    curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 1 : 4) * getWidth() / 1440,
-                            insets.top + (133 * getHeight() / 810), size.width, size.height);
+                    curHandAttacks.get(j).setBounds(insets.left + (Integer.parseInt(curHandAttacks.get(j).getText()) > 9 ? 0 : 9),
+                            insets.top + 146, size.width, size.height);
                 }
 
                 size = curHandManaCosts.get(j).getPreferredSize();
-                curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 0 : 5) * getWidth() / 1440,
-                        insets.top + (13 * getHeight() / 810), size.width, size.height);
+                curHandManaCosts.get(j).setBounds(insets.left + (Integer.parseInt(curHandManaCosts.get(j).getText()) > 9 ? 3 : 8),
+                        insets.top + 8, size.width, size.height);
             }
         }
     }
