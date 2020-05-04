@@ -578,7 +578,7 @@ public class GameView extends JFrame {
                     borderTitle += "/C";
                 }
             }
-            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(field.get(i).isSleeping() ? Color.BLACK : Color.decode("0x72BE58"), 2),
                     borderTitle,
                     TitledBorder.CENTER, TitledBorder.BOTTOM, font);
             border.setTitleColor(Color.WHITE);
@@ -684,10 +684,11 @@ public class GameView extends JFrame {
                     borderTitle += "/C";
                 }
             }
-            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(field.get(i).isSleeping() ? Color.BLACK : Color.decode("0x72BE58"), 2),
                     borderTitle,
                     TitledBorder.CENTER, TitledBorder.BOTTOM, font);
             border.setTitleColor(Color.WHITE);
+
             b.setBorder(border);
             curField.add(b);
             curFieldMinions.add(b);
