@@ -689,6 +689,7 @@ public class GameView extends JFrame {
                     TitledBorder.CENTER, TitledBorder.BOTTOM, font);
             border.setTitleColor(Color.WHITE);
             b.setBorder(border);
+
             curField.add(b);
             curFieldMinions.add(b);
         }
