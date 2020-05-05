@@ -70,7 +70,7 @@ public class GameView extends JFrame {
         setSize(1440, 817);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/NewRocker-Regular.ttf"));
+        font = Font.createFont(Font.TRUETYPE_FONT, new File("Assets/Fonts/NewRocker-Regular.ttf"));
         font = font.deriveFont(Font.PLAIN, 20);
     }
 
@@ -108,7 +108,7 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
 
-        BufferedImage bufferedImage = ImageIO.read(new File("initialBackground.png"));
+        BufferedImage bufferedImage = ImageIO.read(new File("Assets/initialBackground.png"));
         setContentPane(new Background(bufferedImage));
         setTitle("Hearthstone");
 
@@ -122,7 +122,7 @@ public class GameView extends JFrame {
 
         startButton0 = new JButton();
 
-        Image startImage = ImageIO.read(new File("startGame.png"));
+        Image startImage = ImageIO.read(new File("Assets/startGame.png"));
         ImageIcon startImageIcon = new ImageIcon(startImage);
         startButton0.setIcon(startImageIcon);
         startButton0.setContentAreaFilled(false);
@@ -133,7 +133,7 @@ public class GameView extends JFrame {
 
 
         exitButton0 = new JButton();
-        Image exitImage = ImageIO.read(new File("EXIT.png"));
+        Image exitImage = ImageIO.read(new File("Assets/EXIT.png"));
         ImageIcon exitIcon = new ImageIcon(exitImage);
         exitButton0.setIcon(exitIcon);
         exitButton0.setContentAreaFilled(false);
@@ -163,7 +163,7 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
 
-        BufferedImage bufferedImage = ImageIO.read(new File("Backgrounds/initial2.jpg"));
+        BufferedImage bufferedImage = ImageIO.read(new File("Assets/Backgrounds/initial2.jpg"));
         setContentPane(new Background(bufferedImage));
         setTitle("Hearthstone");
 
@@ -200,7 +200,7 @@ public class GameView extends JFrame {
         for (int i = 0; i < 5; i++) {
             //JButton button = new JButton();
             JRadioButton button = new JRadioButton();
-            Image image = ImageIO.read(new File("HeroesIntro/" + arr[i]));
+            Image image = ImageIO.read(new File("Assets/HeroesIntro/" + arr[i]));
             Icon icon = new ImageIcon(image.getScaledInstance(-1, 230 * getHeight() / 810, Image.SCALE_SMOOTH));
             button.setContentAreaFilled(false);
             button.setIcon(icon);
@@ -220,7 +220,7 @@ public class GameView extends JFrame {
         for (int i = 0; i < 5; i++) {
             //JButton button = new JButton();
             JRadioButton button = new JRadioButton();
-            Image image = ImageIO.read(new File("HeroesIntro/" + arr[i]));
+            Image image = ImageIO.read(new File("Assets/HeroesIntro/" + arr[i]));
             Icon icon = new ImageIcon(image.getScaledInstance(-1, 230 * getHeight() / 810, Image.SCALE_SMOOTH));
             button.setIcon(icon);
             button.setBorderPainted(true);
@@ -238,7 +238,7 @@ public class GameView extends JFrame {
 
         this.add(player2);
         startGame = new JButton();
-        Image startImage = ImageIO.read(new File("Play.png"));
+        Image startImage = ImageIO.read(new File("Assets/Play.png"));
         ImageIcon startImageIcon = new ImageIcon(startImage.getScaledInstance(300, -1, Image.SCALE_SMOOTH));
         startGame.setIcon(startImageIcon);
         startGame.setContentAreaFilled(false);
@@ -280,7 +280,7 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
 
-        BufferedImage backgroundImage = ImageIO.read(new File("Backgrounds/background.jpg"));
+        BufferedImage backgroundImage = ImageIO.read(new File("Assets/Backgrounds/background.jpg"));
         setContentPane(new Background(backgroundImage));
         setTitle("Hearthstone");
 
@@ -294,7 +294,7 @@ public class GameView extends JFrame {
         Insets insets = oppPanel.getInsets();
 
         JLabel oppDeck = new JLabel();
-        Image oppDeckImage = ImageIO.read(new File("FlippedCard.png"));
+        Image oppDeckImage = ImageIO.read(new File("Assets/FlippedCard.png"));
         ImageIcon oppDeckIcon = new ImageIcon(oppDeckImage.getScaledInstance((5 * getWidth() / 72), -160, Image.SCALE_DEFAULT));
         oppDeck.setIcon(oppDeckIcon);
         Dimension size = oppDeck.getPreferredSize();
@@ -329,7 +329,7 @@ public class GameView extends JFrame {
         oppHeroHP.setBounds(tmpInsets.left + 112, tmpInsets.top + 130, tmpSize.width, tmpSize.height);
 
         JLabel oppHand = new JLabel();
-        Image oppHandImage = ImageIO.read(new File("handBack.png"));
+        Image oppHandImage = ImageIO.read(new File("Assets/handBack.png"));
         ImageIcon oppHandIcon = new ImageIcon(oppHandImage.getScaledInstance(-250, (25 * getHeight() / 103), Image.SCALE_DEFAULT));
         oppHand.setIcon(oppHandIcon);
         size = oppHand.getPreferredSize();
@@ -346,7 +346,7 @@ public class GameView extends JFrame {
         oppHandNum.setBounds(insets.left + (115 * getWidth() / 144), insets.top + (5 * getHeight() / 103), size.width, size.height);
 
         JLabel oppManaCrystal = new JLabel();
-        Image oppManaCrystalImage = ImageIO.read(new File("manaCrystal.png"));
+        Image oppManaCrystalImage = ImageIO.read(new File("Assets/manaCrystal.png"));
         ImageIcon oppManaCrystalsIcon = new ImageIcon(oppManaCrystalImage.getScaledInstance(-100, (15 * getHeight() / 206), Image.SCALE_DEFAULT));
         oppManaCrystal.setIcon(oppManaCrystalsIcon);
         size = oppManaCrystal.getPreferredSize();
@@ -425,7 +425,7 @@ public class GameView extends JFrame {
 
 
         endTurnButton = new JButton();
-        Image endTurnImage = ImageIO.read(new File("endTurn.png"));
+        Image endTurnImage = ImageIO.read(new File("Assets/endTurn.png"));
         ImageIcon endTurnImageIcon = new ImageIcon(endTurnImage);
         endTurnButton.setIcon(endTurnImageIcon);
         //endTurnButton.setFont(font);
@@ -436,7 +436,7 @@ public class GameView extends JFrame {
         endTurnButton.setBounds(insets.left + 1295, insets.top, size.width, size.height);
 
         heroPowerButton = new JButton();
-        Image heroPowerImage = ImageIO.read(new File("HeroPower.png"));
+        Image heroPowerImage = ImageIO.read(new File("Assets/HeroPower.png"));
         ImageIcon heroPowerImageIcon = new ImageIcon(heroPowerImage);
         heroPowerButton.setIcon(heroPowerImageIcon);
         heroPowerButton.setContentAreaFilled(false);
@@ -458,13 +458,13 @@ public class GameView extends JFrame {
     }
 
     public void updateCurHeroIcon(String name) throws IOException {
-        Image currImage = ImageIO.read(new File("Heroes/" + name + ".png"));
+        Image currImage = ImageIO.read(new File("Assets/Heroes/" + name + ".png"));
         ImageIcon curIcon = new ImageIcon(currImage);
         curHero.setIcon(curIcon);
     }
 
     public void updateOppHeroIcon(String name) throws IOException {
-        Image oppImage = ImageIO.read(new File("Heroes/" + name + ".png"));
+        Image oppImage = ImageIO.read(new File("Assets/Heroes/" + name + ".png"));
         ImageIcon oppIcon = new ImageIcon(oppImage);
         oppHero.setIcon(oppIcon);
     }
@@ -561,7 +561,7 @@ public class GameView extends JFrame {
 
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
+            BufferedImage image = ImageIO.read(new File("Assets/Field Minions/" + field.get(i).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -578,7 +578,7 @@ public class GameView extends JFrame {
                     borderTitle += "/C";
                 }
             }
-            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(field.get(i).isSleeping() ? Color.BLACK : Color.decode("0x72BE58"), 2),
                     borderTitle,
                     TitledBorder.CENTER, TitledBorder.BOTTOM, font);
             border.setTitleColor(Color.WHITE);
@@ -667,7 +667,7 @@ public class GameView extends JFrame {
 
         for (int i = 0; i < field.size(); i++) {
             JButton b = new JButton();
-            BufferedImage image = ImageIO.read(new File("Field Minions/" + field.get(i).getName() + ".png"));
+            BufferedImage image = ImageIO.read(new File("Assets/Field Minions/" + field.get(i).getName() + ".png"));
             ImageIcon imageIcon = new ImageIcon(image);
             b.setIcon(imageIcon);
             b.setContentAreaFilled(false);
@@ -684,10 +684,11 @@ public class GameView extends JFrame {
                     borderTitle += "/C";
                 }
             }
-            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(Color.black),
+            TitledBorder border = BorderFactory.createTitledBorder(new LineBorder(field.get(i).isSleeping() ? Color.BLACK : Color.decode("0x72BE58"), 2),
                     borderTitle,
                     TitledBorder.CENTER, TitledBorder.BOTTOM, font);
             border.setTitleColor(Color.WHITE);
+
             b.setBorder(border);
 
             curField.add(b);
@@ -767,12 +768,12 @@ public class GameView extends JFrame {
             String p;
 
             if (cards.get(j) instanceof ShadowWordDeath) {
-                p = "Spells/Shadow Word Death.png";
+                p = "Assets/Spells/Shadow Word Death.png";
             } else {
                 if (cards.get(j) instanceof Minion) {
-                    p = "Minions/" + cards.get(j).getName() + ".png";
+                    p = "Assets/Minions/" + cards.get(j).getName() + ".png";
                 } else {
-                    p = "Spells/" + cards.get(j).getName() + ".png";
+                    p = "Assets/Spells/" + cards.get(j).getName() + ".png";
                 }
             }
 
@@ -822,12 +823,12 @@ public class GameView extends JFrame {
 
             String p;
             if (cards.get(j) instanceof ShadowWordDeath) {
-                p = "Spells/Shadow Word Death.png";
+                p = "Assets/Spells/Shadow Word Death.png";
             } else {
                 if (cards.get(j) instanceof Minion) {
-                    p = "Minions/" + cards.get(j).getName() + ".png";
+                    p = "Assets/Minions/" + cards.get(j).getName() + ".png";
                 } else {
-                    p = "Spells/" + cards.get(j).getName() + ".png";
+                    p = "Assets/Spells/" + cards.get(j).getName() + ".png";
                 }
             }
             BufferedImage image = ImageIO.read(new File(p));
@@ -955,7 +956,7 @@ public class GameView extends JFrame {
 
         setLayout(null);
         setPreferredSize(new Dimension(1440, 817));
-        BufferedImage bufferedImage = ImageIO.read(new File("HeroesIntro/" + (h instanceof Hunter ? "Rexxar_hero_art.jpg" : h instanceof Mage ?
+        BufferedImage bufferedImage = ImageIO.read(new File("Assets/HeroesIntro/" + (h instanceof Hunter ? "Rexxar_hero_art.jpg" : h instanceof Mage ?
                 "Jaina-full.jpg" : h instanceof Paladin ? "Uther_-_full.jpg" : h instanceof Priest ? "Anduin-full.jpg" : "Gul'dan_full.jpg")));
         setContentPane(new Background(bufferedImage.getScaledInstance(-1, 817, Image.SCALE_SMOOTH)));
 

@@ -36,7 +36,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
     public Controller() throws FullHandException, CloneNotSupportedException, IOException, FontFormatException, LineUnavailableException, UnsupportedAudioFileException {
         gameView = new GameView();
         gameView.setInitial0();
-        playMusic("Sound/Hearthstone_Music.wav");
+        playMusic("Assets/Sound/Hearthstone_Music.wav");
         gameView.getExitButton0().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,7 +56,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
             loser = game.getOpponent();
         }
         try {
-            Thread.sleep(playSound("Sound/Heroes/" + loser.getName() + "/death.wav") / 1000);
+            Thread.sleep(playSound("Assets/Sound/Heroes/" + loser.getName() + "/death.wav") / 1000);
             gameView.setFinal(winner);
             gameView.getPlayAgain().addActionListener(this);
             gameView.getExitFinal().addActionListener(this);
@@ -64,7 +64,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
 
         } catch (IOException e) {
             try {
-                Thread.sleep(playSound("Sound/Heroes/Rexxar/death.wav") / 1000);
+                Thread.sleep(playSound("Assets/Sound/Heroes/Rexxar/death.wav") / 1000);
                 gameView.setFinal(winner);
                 gameView.getPlayAgain().addActionListener(this);
                 gameView.getExitFinal().addActionListener(this);
@@ -174,8 +174,8 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     setOppFieldListeners();
                     gameView.getEndTurnButton().addMouseListener(this);
                     gameView.getHeroPowerButton().addMouseListener(this);
-                    Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/start.wav") / 1000);
-                    Thread.sleep(playSound("Sound/Heroes/" + game.getOpponent().getName() + "/start.wav") / 1000);
+                    Thread.sleep(playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/start.wav") / 1000);
+                    Thread.sleep(playSound("Assets/Sound/Heroes/" + game.getOpponent().getName() + "/start.wav") / 1000);
                 } catch (FullHandException e) {
 
                     e.printStackTrace();
@@ -202,23 +202,23 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     Minion played = (Minion) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton));
                     game.getCurrentHero().playMinion(played);
                     updateUI();
-                    playSound("Sound/Minions/" + played.getName() + "/play.wav");
+                    playSound("Assets/Sound/Minions/" + played.getName() + "/play.wav");
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
                     }
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -244,10 +244,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -265,10 +265,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -317,10 +317,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerSpell = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/mana.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                             } catch (IOException exc) {
 
                             }
@@ -329,10 +329,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerSpell = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/invalidtarget.wav");
                             } catch (IOException exc) {
 
                             }
@@ -356,10 +356,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerSpell = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/mana.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                             } catch (IOException exc) {
 
                             }
@@ -383,10 +383,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerMinion = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/taunt.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/taunt.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/taunt.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/taunt.wav");
                             } catch (IOException exc) {
 
                             }
@@ -396,20 +396,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         targetMinion = null;
                         if (e.getMessage().equals("You can't attack with a sleeping minion")) {
                             try {
-                                playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
+                                playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
                             } catch (IOException ex) {
                                 try {
-                                    playSound("Sound/Heroes/Uther Lightbringer/sleeping.wav");
+                                    playSound("Assets/Sound/Heroes/Uther Lightbringer/sleeping.wav");
                                 } catch (IOException exc) {
 
                                 }
                             }
                         } else if (e.getMessage().equals("Your minion has already attacked")) {
                             try {
-                                playSound("Sound/Heroes/" + game.getCurrentHero() + "/already_attacked.wav");
+                                playSound("Assets/Sound/Heroes/" + game.getCurrentHero() + "/already_attacked.wav");
                             } catch (IOException ex) {
                                 try {
-                                    playSound("Sound/Heroes/Rexxar/already_attacked.wav");
+                                    playSound("Assets/Sound/Heroes/Rexxar/already_attacked.wav");
                                 } catch (IOException exc) {
 
                                 }
@@ -424,10 +424,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerMinion = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/invalidtarget.wav");
                             } catch (IOException exc) {
 
                             }
@@ -445,12 +445,12 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     targetMinion = game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton));
                     try {
                         game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
-                        Thread.sleep(playSound("Sound/Minions/" + attackerMinion.getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Minions/" + attackerMinion.getName() + "/attack.wav") / 1000);
                         if (targetMinion.getCurrentHP() <= 0) {
-                            playSound("Sound/Minions/" + targetMinion.getName() + "/death.wav");
+                            playSound("Assets/Sound/Minions/" + targetMinion.getName() + "/death.wav");
                         }
                         if (attackerMinion.getCurrentHP() <= 0) {
-                            playSound("Sound/Minions/" + attackerMinion.getName() + "/death.wav");
+                            playSound("Assets/Sound/Minions/" + attackerMinion.getName() + "/death.wav");
                         }
                         attackerMinion = null;
                         targetMinion = null;
@@ -472,10 +472,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerMinion = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/taunt.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/taunt.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/taunt.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/taunt.wav");
                             } catch (IOException exc) {
 
                             }
@@ -485,20 +485,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         targetMinion = null;
                         if (e.getMessage().equals("You can't attack with a sleeping minion")) {
                             try {
-                                playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
+                                playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
                             } catch (IOException ex) {
                                 try {
-                                    playSound("Sound/Heroes/Uther Lightbringer/sleeping.wav");
+                                    playSound("Assets/Sound/Heroes/Uther Lightbringer/sleeping.wav");
                                 } catch (IOException exc) {
 
                                 }
                             }
                         } else if (e.getMessage().equals("Your minion has already attacked")) {
                             try {
-                                playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/already_attacked.wav");
+                                playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/already_attacked.wav");
                             } catch (IOException ex) {
                                 try {
-                                    playSound("Sound/Heroes/Rexxar/already_attacked.wav");
+                                    playSound("Assets/Sound/Heroes/Rexxar/already_attacked.wav");
                                 } catch (IOException exc) {
                                     exc.printStackTrace();
                                 }
@@ -513,10 +513,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerMinion = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/invalidtarget.wav");
                             } catch (IOException exc) {
 
                             }
@@ -540,10 +540,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerSpell = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/mana.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                             } catch (IOException exc) {
 
                             }
@@ -567,10 +567,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         attackerSpell = null;
                         targetMinion = null;
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/mana.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                             } catch (IOException exc) {
 
                             }
@@ -582,10 +582,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     ((Mage) heroPowerUser).useHeroPower(game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton)));
                     heroPowerUser = null;
                     try {
-                        Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
                     } catch (IOException e) {
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                         } catch (IOException | InterruptedException ex) {
 
                         }
@@ -599,10 +599,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -610,10 +610,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (FullHandException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -625,10 +625,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
@@ -636,10 +636,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (HeroPowerAlreadyUsedException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/heropower.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                         } catch (IOException exc) {
 
                         }
@@ -652,10 +652,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton)));
                     try {
-                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
                     } catch (IOException e) {
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                         } catch (IOException | InterruptedException ex) {
 
                         }
@@ -671,10 +671,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -682,10 +682,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (FullHandException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -697,10 +697,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
@@ -708,10 +708,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (HeroPowerAlreadyUsedException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/heropower.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                         } catch (IOException exc) {
 
                         }
@@ -724,10 +724,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getCurrentHero().getField().get(gameView.getCurFieldMinions().indexOf(clickedButton)));
                     try {
-                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
                     } catch (IOException e) {
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                         } catch (IOException | InterruptedException ex) {
 
                         }
@@ -742,10 +742,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -753,10 +753,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (FullHandException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -768,10 +768,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
@@ -779,10 +779,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (HeroPowerAlreadyUsedException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/heropower.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                         } catch (IOException exc) {
 
                         }
@@ -795,10 +795,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getOpponent().getField().get(gameView.getOppFieldMinions().indexOf(clickedButton)));
                     try {
-                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
                     } catch (IOException e) {
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                         } catch (IOException | InterruptedException e1) {
                         }
                     }
@@ -812,10 +812,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -823,10 +823,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (FullHandException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -838,10 +838,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
@@ -849,10 +849,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (HeroPowerAlreadyUsedException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/heropower.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                         } catch (IOException exc) {
 
                         }
@@ -865,10 +865,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     try {
                         game.getCurrentHero().useHeroPower();
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
                         } catch (IOException e) {
                             try {
-                                Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                                Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                             } catch (IOException | InterruptedException e1) {
 
                             }
@@ -881,20 +881,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                                 JOptionPane.WARNING_MESSAGE);
                     } catch (NotEnoughManaException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/mana.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                             } catch (IOException exc) {
 
                             }
                         }
                     } catch (FullHandException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/fullhand.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                             } catch (IOException exc) {
 
                             }
@@ -905,20 +905,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                                 JOptionPane.WARNING_MESSAGE);
                     } catch (FullFieldException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/fullfield.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                                playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                             } catch (IOException exc) {
 
                             }
                         }
                     } catch (HeroPowerAlreadyUsedException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/heropower.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/heropower.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/heropower.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                             } catch (IOException exc) {
 
                             }
@@ -936,10 +936,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     try {
                         ((Paladin) game.getCurrentHero()).useHeroPower();
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
                         } catch (IOException e) {
                             try {
-                                Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                                Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                             } catch (IOException | InterruptedException e1) {
 
                             }
@@ -952,20 +952,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                                 JOptionPane.WARNING_MESSAGE);
                     } catch (NotEnoughManaException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/mana.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                             } catch (IOException exc) {
 
                             }
                         }
                     } catch (FullHandException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero() + "/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero() + "/fullhand.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                             } catch (IOException exc) {
 
                             }
@@ -976,20 +976,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                                 JOptionPane.WARNING_MESSAGE);
                     } catch (FullFieldException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/fullfield.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                                playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                             } catch (IOException exc) {
 
                             }
                         }
                     } catch (HeroPowerAlreadyUsedException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/heropower.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/heropower.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/heropower.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                             } catch (IOException exc) {
 
                             }
@@ -1007,10 +1007,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     try {
                         game.getCurrentHero().useHeroPower();
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/attack.wav") / 1000);
                         } catch (IOException e) {
                             try {
-                                Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                                Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                             } catch (IOException | InterruptedException e1) {
 
                             }
@@ -1023,20 +1023,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                                 JOptionPane.WARNING_MESSAGE);
                     } catch (NotEnoughManaException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Gul'dan/mana.wav");
+                                playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                             } catch (IOException exc) {
 
                             }
                         }
                     } catch (FullHandException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/fullhand.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                             } catch (IOException exc) {
 
                             }
@@ -1047,20 +1047,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                                 JOptionPane.WARNING_MESSAGE);
                     } catch (FullFieldException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/fullfield.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                                playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                             } catch (IOException exc) {
 
                             }
                         }
                     } catch (HeroPowerAlreadyUsedException e) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/heropower.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/heropower.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/heropower.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                             } catch (IOException exc) {
 
                             }
@@ -1113,10 +1113,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         ex.printStackTrace();
                     }
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1135,10 +1135,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getCurrentHero());
                     try {
-                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
                     } catch (IOException e) {
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                         } catch (IOException | InterruptedException e1) {
 
                         }
@@ -1153,10 +1153,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1164,10 +1164,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (FullHandException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1179,10 +1179,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1190,10 +1190,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (HeroPowerAlreadyUsedException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/heropower.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1206,10 +1206,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 try {
                     ((Mage) heroPowerUser).useHeroPower(game.getOpponent());
                     try {
-                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
                     } catch (IOException e) {
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                         } catch (IOException | InterruptedException e1) {
 
                         }
@@ -1224,10 +1224,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1235,10 +1235,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (FullHandException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1250,10 +1250,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1261,10 +1261,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (HeroPowerAlreadyUsedException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/heropower.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1277,10 +1277,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getCurrentHero());
                     try {
-                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
                     } catch (IOException e) {
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                         } catch (IOException | InterruptedException e1) {
 
                         }
@@ -1295,10 +1295,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1306,10 +1306,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (FullHandException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1321,10 +1321,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1332,10 +1332,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (HeroPowerAlreadyUsedException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/heropower.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1348,10 +1348,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 try {
                     ((Priest) heroPowerUser).useHeroPower(game.getOpponent());
                     try {
-                        Thread.sleep(playSound("Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
+                        Thread.sleep(playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/attack.wav") / 1000);
                     } catch (IOException e) {
                         try {
-                            Thread.sleep(playSound("Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
+                            Thread.sleep(playSound("Assets/Sound/Heroes/Uther Lightbringer/attack.wav") / 1000);
                         } catch (IOException | InterruptedException e1) {
 
                         }
@@ -1366,10 +1366,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (NotEnoughManaException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1377,10 +1377,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (FullHandException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullhand.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/fullhand.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/fullhand.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1392,10 +1392,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             JOptionPane.WARNING_MESSAGE);
                 } catch (FullFieldException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/fullfield.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Anduin Wrynn/fullfield.wav");
+                            playSound("Assets/Sound/Heroes/Anduin Wrynn/fullfield.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1403,10 +1403,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     heroPowerUser = null;
                 } catch (HeroPowerAlreadyUsedException e) {
                     try {
-                        playSound("Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
+                        playSound("Assets/Sound/Heroes/" + heroPowerUser.getName() + "/heropower.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/heropower.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/heropower.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1419,7 +1419,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 targetHero = game.getOpponent();
                 try {
                     game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
-                    playSound("Sound/Minions/" + attackerMinion.getName() + "/attack.wav");
+                    playSound("Assets/Sound/Minions/" + attackerMinion.getName() + "/attack.wav");
                     attackerMinion = null;
                     targetHero = null;
                     updateUI();
@@ -1438,10 +1438,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     attackerMinion = null;
                     targetHero = null;
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/taunt.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/taunt.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/taunt.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/taunt.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1451,20 +1451,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     targetHero = null;
                     if (e.getMessage().equals("You can't attack with a sleeping minion")) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Uther Lightbringer/sleeping.wav");
+                                playSound("Assets/Sound/Heroes/Uther Lightbringer/sleeping.wav");
                             } catch (IOException exc) {
 
                             }
                         }
                     } else if (e.getMessage().equals("Your minion has already attacked")) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/already_attacked.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/already_attacked.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/already_attacked.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/already_attacked.wav");
                             } catch (IOException exc) {
 
                             }
@@ -1479,10 +1479,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     attackerMinion = null;
                     targetHero = null;
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/invalidtarget.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1506,10 +1506,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     attackerMinion = null;
                     targetHero = null;
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/taunt.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/taunt.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Rexxar/taunt.wav");
+                            playSound("Assets/Sound/Heroes/Rexxar/taunt.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1519,20 +1519,20 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     targetHero = null;
                     if (e.getMessage().equals("You can't attack with a sleeping minion")) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/sleeping.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Uther Lightbringer/sleeping.wav");
+                                playSound("Assets/Sound/Heroes/Uther Lightbringer/sleeping.wav");
                             } catch (IOException exc) {
 
                             }
                         }
                     } else if (e.getMessage().equals("Your minion has already attacked")) {
                         try {
-                            playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/already_attacked.wav");
+                            playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/already_attacked.wav");
                         } catch (IOException ex) {
                             try {
-                                playSound("Sound/Heroes/Rexxar/already_attacked.wav");
+                                playSound("Assets/Sound/Heroes/Rexxar/already_attacked.wav");
                             } catch (IOException exc) {
 
                             }
@@ -1547,10 +1547,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     attackerMinion = null;
                     targetHero = null;
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/invalidtarget.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/invalidtarget.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/invalidtarget.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1574,10 +1574,10 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     attackerSpell = null;
                     targetHero = null;
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
@@ -1601,12 +1601,12 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                     attackerSpell = null;
                     targetHero = null;
                     try {
-                        playSound("Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
+                        playSound("Assets/Sound/Heroes/" + game.getCurrentHero().getName() + "/mana.wav");
                     } catch (IOException ex) {
                         try {
                             attackerSpell = null;
                             targetHero = null;
-                            playSound("Sound/Heroes/Gul'dan/mana.wav");
+                            playSound("Assets/Sound/Heroes/Gul'dan/mana.wav");
                         } catch (IOException exc) {
 
                         }
