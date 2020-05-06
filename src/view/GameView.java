@@ -494,7 +494,7 @@ public class GameView extends JFrame {
     }
 
     public void updateOppHandNum(int size) {
-        oppHandNum.setText("Remaining\ncards\nin the hand: " + size);
+        oppHandNum.setText("Remaining\ncards\nin the hand:\n" + size);
     }
 
     public void updateOppManaCrystalsNum(int currentManaCrystals, int totalManaCrystals) {
