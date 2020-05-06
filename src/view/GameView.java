@@ -208,7 +208,7 @@ public class GameView extends JFrame {
             button.setHorizontalAlignment(SwingConstants.CENTER);
             TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                     names[i], TitledBorder.CENTER,
-                    TitledBorder.BOTTOM, font);
+                    TitledBorder.TOP, font);
             border.setTitleColor(Color.WHITE);
             button.setBorder(border);
             player1.add(button);
