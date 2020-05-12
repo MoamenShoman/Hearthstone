@@ -80,6 +80,8 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
             AudioInputStream a = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
             c = AudioSystem.getClip();
             c.open(a);
+            FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-10.0f);
             c.start();
             c.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException | LineUnavailableException e) {

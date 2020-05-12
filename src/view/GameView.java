@@ -218,7 +218,7 @@ public class GameView extends JFrame {
             button.setHorizontalAlignment(SwingConstants.CENTER);
             TitledBorder border = BorderFactory.createTitledBorder(new BevelBorder(BevelBorder.RAISED, Color.BLACK, Color.GRAY),
                     names[i], TitledBorder.CENTER,
-                    TitledBorder.BOTTOM, font);
+                    TitledBorder.TOP, font);
             border.setTitleColor(Color.WHITE);
             button.setBorder(border);
             player1.add(button);
@@ -504,7 +504,7 @@ public class GameView extends JFrame {
     }
 
     public void updateOppHandNum(int size) {
-        oppHandNum.setText("Remaining\ncards\nin the hand: " + size);
+        oppHandNum.setText("Remaining\ncards\nin the hand:\n" + size);
     }
 
     public void updateOppManaCrystalsNum(int currentManaCrystals, int totalManaCrystals) {
@@ -700,6 +700,7 @@ public class GameView extends JFrame {
             border.setTitleColor(Color.WHITE);
 
             b.setBorder(border);
+
             curField.add(b);
             curFieldMinions.add(b);
         }
