@@ -64,6 +64,16 @@ public class GameView extends JFrame {
     private JButton playAgain;
     private JButton exitFinal;
 
+
+    public JTextArea getCurHeroHP() {
+        return curHeroHP;
+    }
+
+    public JTextArea getOppHeroHP() {
+        return oppHeroHP;
+    }
+
+
     public GameView() throws IOException, FontFormatException {
         super();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();

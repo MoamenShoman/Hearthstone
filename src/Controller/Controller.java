@@ -292,6 +292,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         JOptionPane.WARNING_MESSAGE);
                 attackerSpell = (Spell) game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton));
 
+
             } else if (gameView.getCurHand().contains(clickedButton) &&
                     (game.getCurrentHero().getHand().get(gameView.getCurHand().indexOf(clickedButton)) instanceof LeechingSpell)) {
                 JOptionPane.showMessageDialog(gameView,
@@ -875,6 +876,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
 
                             }
                         }
+                        animate(gameView.getOppHeroHP());
                         updateUI();
                     } catch (NotYourTurnException | CloneNotSupportedException e) {
                         JOptionPane.showMessageDialog(gameView,
@@ -1130,7 +1132,6 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 }
             }
 
-
         } else if (mouseEvent.getComponent() instanceof JLabel) {
             JLabel clicked = (JLabel) mouseEvent.getComponent();
             if (gameView.getCurHero() == clicked && heroPowerUser != null && heroPowerUser instanceof Mage) {
@@ -1146,6 +1147,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         }
                     }
                     heroPowerUser = null;
+                    animate(gameView.getCurHeroHP());
                     updateUI();
                 } catch (NotYourTurnException | CloneNotSupportedException e) {
                     heroPowerUser = null;
@@ -1217,6 +1219,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         }
                     }
                     heroPowerUser = null;
+                    animate(gameView.getOppHeroHP());
                     updateUI();
                 } catch (NotYourTurnException | CloneNotSupportedException e) {
                     heroPowerUser = null;
@@ -1287,6 +1290,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
 
                         }
                     }
+                    animate(gameView.getCurHeroHP());
                     heroPowerUser = null;
                     updateUI();
                 } catch (NotYourTurnException | CloneNotSupportedException e) {
@@ -1359,6 +1363,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                         }
                     }
                     heroPowerUser = null;
+                    animate(gameView.getOppHeroHP());
                     updateUI();
                 } catch (NotYourTurnException | CloneNotSupportedException e) {
                     heroPowerUser = null;
@@ -1422,6 +1427,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                 try {
                     game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
                     playSound("Assets/Sound/Minions/" + attackerMinion.getName() + "/attack.wav");
+                    animate(gameView.getOppHeroHP());
                     attackerMinion = null;
                     targetHero = null;
                     updateUI();
@@ -1433,6 +1439,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (IOException e) {
+                    animate(gameView.getOppHeroHP());
                     attackerMinion = null;
                     targetHero = null;
                     updateUI();
@@ -1493,6 +1500,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
             } else if (gameView.getCurHero() == clicked && attackerMinion != null) {
                 targetHero = game.getCurrentHero();
                 try {
+                    animate(targetHero == game.getCurrentHero() ? gameView.getCurHeroHP() : gameView.getOppHeroHP());
                     game.getCurrentHero().attackWithMinion(attackerMinion, targetHero);
                     attackerMinion = null;
                     targetHero = null;
@@ -1561,9 +1569,11 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
             } else if (gameView.getCurHero() == clicked && attackerSpell != null && attackerSpell instanceof HeroTargetSpell) {
                 targetHero = game.getCurrentHero();
                 try {
+                    animate(targetHero == game.getCurrentHero() ? gameView.getCurHeroHP() : gameView.getOppHeroHP());
                     game.getCurrentHero().castSpell((HeroTargetSpell) attackerSpell, targetHero);
                     attackerSpell = null;
                     targetHero = null;
+
                     updateUI();
                 } catch (NotYourTurnException e) {
                     attackerSpell = null;
@@ -1588,6 +1598,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
             } else if (gameView.getOppHero() == clicked && attackerSpell != null && attackerSpell instanceof HeroTargetSpell) {
                 targetHero = game.getOpponent();
                 try {
+                    animate(targetHero == game.getCurrentHero() ? gameView.getCurHeroHP() : gameView.getOppHeroHP());
                     game.getCurrentHero().castSpell((HeroTargetSpell) attackerSpell, targetHero);
                     attackerSpell = null;
                     targetHero = null;
@@ -1670,6 +1681,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
         }
     }
 
+
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
 
@@ -1700,12 +1712,45 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
         }
     }
 
+    private void animate(JTextArea text) {
+        final Point point = text.getLocation();
+        final int delay = 30;
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        moveText(new Point(point.x + 3, point.y - 3), text);
+                        Thread.sleep(delay);
+                        moveText(point, text);
+                        Thread.sleep(delay);
+                        moveText(new Point(point.x - 3, point.y - 3), text);
+                        Thread.sleep(delay);
+                        moveText(point, text);
+                        Thread.sleep(delay);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+
+    }
+
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
         if (mouseEvent.getComponent() instanceof JButton) {
 
             JButton button = (JButton) mouseEvent.getComponent();
-            if (gameView.getStartGame() != button) {
+            if (true) {
                 final Point point = button.getLocation();
                 final int delay = 35;
                 Runnable r = new Runnable() {
@@ -1733,6 +1778,15 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
 
             }
         }
+    }
+
+    private void moveText(final Point p, JTextArea button) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                button.setLocation(p);
+            }
+        });
     }
 
     private void moveButton(final Point p, JButton button) {
