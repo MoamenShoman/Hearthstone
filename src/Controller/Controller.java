@@ -1439,6 +1439,7 @@ public class Controller implements GameListener, MouseListener, ItemListener, Ac
                             "Hearthstone",
                             JOptionPane.WARNING_MESSAGE);
                 } catch (IOException e) {
+                    animate(gameView.getOppHeroHP());
                     attackerMinion = null;
                     targetHero = null;
                     updateUI();
