@@ -290,7 +290,7 @@ public class GameView extends JFrame {
         revalidate();
         repaint();
 
-        BufferedImage backgroundImage = ImageIO.read(new File("Assets/Backgrounds/background.jpg"));
+        BufferedImage backgroundImage = ImageIO.read(new File("Assets/Backgrounds/background2.png"));
         setContentPane(new Background(backgroundImage));
         setTitle("Hearthstone");
 
@@ -501,23 +501,28 @@ public class GameView extends JFrame {
 
     public void updateOppDeckNum(int size) {
         oppDeckNum.setText("Remaining\ncards\nin the deck: " + size);
+        oppDeckNum.setForeground(Color.WHITE);
     }
 
     public void updateOppHandNum(int size) {
         oppHandNum.setText("Remaining\ncards\nin the hand:\n" + size);
+        oppHandNum.setForeground(Color.WHITE);
     }
 
     public void updateOppManaCrystalsNum(int currentManaCrystals, int totalManaCrystals) {
         oppManaCrystalsNum.setText("Remaining\nMana Crystals:\n" + currentManaCrystals + "/" +
                 totalManaCrystals);
+        oppManaCrystalsNum.setForeground(Color.WHITE);
     }
 
     public void updateCurManaCrystalsNum(int currentManaCrystals, int total) {
         curManaCrystalsNum.setText("Remaining\nMana Crystals:\n" + currentManaCrystals + "/" + total);
+        curManaCrystalsNum.setForeground(Color.WHITE);
     }
 
     public void updateCurDeckNum(int size) {
-        curDeckNum.setText("Remaining\ncards\nin deck: " + size);
+        curDeckNum.setText("Remaining\ncards\nin the deck: " + size);
+        curDeckNum.setForeground(Color.WHITE);
     }
 
 
