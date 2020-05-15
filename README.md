@@ -1,4 +1,6 @@
-# Hearthstone Instructions
+# Description
+Clone of Hearthstone game implemented with Java programming language using Object Oriented Programming features. The **M**odel-**V**iew-**C**ontroller (MVC) design pattern is used.
+# Instructions
 1.  **Selecting Heroes:** After pressing on “Start Game” button at
     initial screen, you will be directed to a page that is divided into
     2 parts. Each part is intended for one player and contains 5 buttons
